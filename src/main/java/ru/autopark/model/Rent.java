@@ -1,11 +1,13 @@
-/**
- * Создал Андрей Антонов 29.06.2023 7:23
- **/
 package ru.autopark.model;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class Rent {
     private Long vehicleId;
     private Long customerId;
+    private LocalDateTime createDateTime;
+    private Duration duration;
 
     public Rent() {
     }

@@ -1,6 +1,3 @@
-/**
- * Создал Андрей Антонов 29.06.2023 6:51
- **/
 package ru.autopark.model;
 
 public class AutoPark {
