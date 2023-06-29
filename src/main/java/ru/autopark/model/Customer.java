@@ -1,12 +1,8 @@
-/**
- * Создал Андрей Антонов 29.06.2023 7:09
- **/
 package ru.autopark.model;
 
 public class Customer {
     private Long id;
     private String name;
-
     private Long autoParkId;
 
     public Customer(Long id, String name, Long autoParkId) {

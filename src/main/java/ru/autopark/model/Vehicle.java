@@ -1,6 +1,3 @@
-/**
- * Создал Андрей Антонов 29.06.2023 6:53
- **/
 package ru.autopark.model;
 
 import ru.autopark.model.enums.Brand;
@@ -10,23 +7,22 @@ import java.time.LocalDate;
 
 public class Vehicle {
     private Long id;
-    /* марка, модель, год выпуска, пробег*/
     private Brand brand;
     private Model model;
     private LocalDate releaseDate;
     private int mileage;
-    private Long vehicleId;
+    private Long autoParkId;
 
     public Vehicle() {
     }
 
-    public Vehicle(Long id, Brand brand, Model model, LocalDate releaseDate, Integer mileage, Long vehicleId) {
+    public Vehicle(Long id, Brand brand, Model model, LocalDate releaseDate, Integer mileage, Long autoParkId) {
         this.id = id;
         this.brand = brand;
         this.model = model;
         this.releaseDate = releaseDate;
         this.mileage = mileage;
-        this.vehicleId = vehicleId;
+        this.autoParkId = autoParkId;
     }
 
     public Long getId() {
@@ -73,12 +69,12 @@ public class Vehicle {
         this.mileage = mileage;
     }
 
-    public Long getVehicleId() {
-        return vehicleId;
+    public Long getAutoParkId() {
+        return autoParkId;
     }
 
-    public void setVehicleId(Long vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setAutoParkId(Long autoParkId) {
+        this.autoParkId = autoParkId;
     }
 
     @Override
@@ -89,7 +85,7 @@ public class Vehicle {
                 ", model=" + model +
                 ", releaseDate=" + releaseDate +
                 ", mileage=" + mileage +
-                ", vehicleId=" + vehicleId +
+                ", vehicleId=" + autoParkId +
                 '}';
     }
 }
