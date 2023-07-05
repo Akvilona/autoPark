@@ -4,18 +4,20 @@
 package ru.autopark.repository;
 
 import ru.autopark.model.Customer;
-import ru.autopark.model.Rent;
-
-import javax.naming.Name;
 
 public interface CustomerRepository {
 
-    long add(Long id, String name, String address, String phone, Long autoParkId);
+    Customer save(Customer customer);
 
-    long find(String name, String phone);
+    //Опционально
+    Customer findByNameAndPhone(String name, String phone);
 
-    Customer get(long customerId);
+    Customer findById(long customerId);
 
-    long delete(long customerId);
+    Customer[] findAll();
+
+    boolean deleteById(long customerId);
+
+    Customer update(Customer customer);
 
 }

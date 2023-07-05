@@ -4,6 +4,7 @@
 package ru.autopark.repository;
 
 public interface AutoParkRepository {
-    long add(String name);
-    long delete (String name);
+    long add(long id, String name);
+
+    boolean deleteByName(String name);
 }

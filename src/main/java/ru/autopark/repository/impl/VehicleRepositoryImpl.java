@@ -19,7 +19,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 
         Vehicle vehicle = new Vehicle(id, brand, model, releaseDate, mileage, autoParkId);
 
-        long index = findEmptyIndex(); /** поиск первого свободного элемента */
+        long index = findEmptyIndex();
         if (index == -1) {
             System.out.println("Vehicle is full");
             return null;
@@ -40,7 +40,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     public Vehicle[] findVehicle(Brand brand, Model model, LocalDate releaseDate, Integer mileage, Long autoParkId) {
 
         Vehicle[] vehicle = new Vehicle[(int) 100];
-        int ret[] = new int[100];
+        int[] ret = new int[100];
         ret = findVehicleArray(brand, model, releaseDate, mileage, autoParkId); // получение списка идентификаторов подходящих по критериям
         if (ret.length > 0) {
             for (int i = 0; i < ret.length; i++) {
@@ -67,7 +67,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     public long findEmptyIndex() { /** поиск первого пустого */
-        for (Long i = 1l; i < this.vehicles.length; i++) {
+        for (Long i = 1L; i < this.vehicles.length; i++) {
             if (vehicles[Math.toIntExact(i)] == null) {
                 return i;
             }

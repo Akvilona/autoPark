@@ -3,7 +3,6 @@
  **/
 package ru.autopark.repository;
 
-import ru.autopark.model.Customer;
 import ru.autopark.model.Rent;
 
 import java.time.Duration;
@@ -15,8 +14,8 @@ public interface RentRepository {
 
     long delete(long index);
 
-    Rent[] findAutoPark(Long autoParkId);
+    Rent[] findRentsByAutoParkId(Long autoParkId);
 
-    Rent[] findCustomer(Long customerId);
+    Rent[] findRentsByCustomerId(Long customerId);
 
 }
