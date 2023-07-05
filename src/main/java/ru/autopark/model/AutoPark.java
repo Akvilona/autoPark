@@ -1,6 +1,6 @@
 package ru.autopark.model;
 
-public class AutoPark {
+public abstract class AutoPark {
     private Long id;
     private String name;
 
@@ -28,11 +28,13 @@ public class AutoPark {
         this.name = name;
     }
 
-    @Override
+    @Override 
     public String toString() {
         return "AutoPark{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    public abstract long add(String name);
 }

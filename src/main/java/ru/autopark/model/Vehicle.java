@@ -10,7 +10,7 @@ public class Vehicle {
     private Brand brand;
     private Model model;
     private LocalDate releaseDate;
-    private int mileage;
+    private Integer mileage;
     private Long autoParkId;
 
     public Vehicle() {
