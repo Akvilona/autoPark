@@ -5,35 +5,33 @@ package ru.autopark.repository.impl;
 
 import ru.autopark.model.AutoPark;
 import ru.autopark.repository.AutoParkRepository;
+import ru.autopark.util.Util;
 
 public class AutoParkRepositoryImpl implements AutoParkRepository {
-    private final AutoPark[] autoPark = new AutoPark[50]; //  этот массив вместо базы данных
+    private static final int AUTO_PARK_COUNT = 60;
+    private final AutoPark[] autoPark = new AutoPark[AUTO_PARK_COUNT];
 
     @Override
-    public long add (String name) {
-        return find(name);
+    public long add(final long id, final String name) {
+        int index = Util.findEmptyIndex(autoPark);
+        AutoPark newAutoPark = new AutoPark(id, name);
+
+        if (index == -1) {
+            return index;
+        }
+
+        autoPark[index] = newAutoPark;
+        return index;
     }
 
     @Override
-    public long delete (String name) {
+    public boolean deleteByName(String name) {
         for (int i = 0; i < autoPark.length; i++) {
-            if ( autoPark[i].getName() == name) {
-                autoPark[i].setName(null);
-                autoPark[i].setId(null);
-                return i;
+            if (autoPark[i].getName().equals(name)) {
+                autoPark[i] = null;
+                return true;
             }
         }
-        return -1;
-    }
-
-    public long find (String name) {
-        for (int i = 0; i < autoPark.length; i++) {
-            if ( autoPark[i].getName() == null) {
-                autoPark[i].setId((long) i);
-                autoPark[i].setName(name);
-                return i;
-            }
-        }
-        return -1;
+        return false;
     }
 }

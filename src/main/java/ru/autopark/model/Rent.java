@@ -6,13 +6,15 @@ import java.time.LocalDateTime;
 public class Rent {
     private Long vehicleId;
     private Long customerId;
-
     private Long autoParkId;
-
     private LocalDateTime createDateTime;
     private Duration duration;
 
-    public Rent(Long vehicleId, Long customerId, Long autoParkId, LocalDateTime createDateTime, Duration duration) {
+    public Rent(final Long vehicleId,
+                final Long customerId,
+                final Long autoParkId,
+                final LocalDateTime createDateTime,
+                final Duration duration) {
         this.vehicleId = vehicleId;
         this.customerId = customerId;
         this.autoParkId = autoParkId;

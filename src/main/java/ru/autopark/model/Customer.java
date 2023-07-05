@@ -1,5 +1,7 @@
 package ru.autopark.model;
 
+import java.util.Objects;
+
 public class Customer {
     private Long id;
     private String name;
@@ -56,6 +58,21 @@ public class Customer {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(phone, customer.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, phone);
     }
 
     @Override

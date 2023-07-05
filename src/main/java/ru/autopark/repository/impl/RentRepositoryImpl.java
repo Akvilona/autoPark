@@ -11,7 +11,16 @@ import java.time.LocalDateTime;
 
 public class RentRepositoryImpl implements RentRepository {
 
-    private final Rent[] rents = new Rent[50]; //  этот массив вместо базы данных
+    private final Rent[] rents = new Rent[50];
+
+    public static Long findEmptyIndex(Rent[] rents) {
+        for (int i = 0; i < rents.length; i++) {
+            if (rents[i] == null) {
+                return Long.valueOf(i);
+            }
+        }
+        return Long.valueOf(-1);
+    }
 
     @Override
     public Rent add(Long vehicleId, Long customerId, Long autoParkId, LocalDateTime createDateTime, Duration duration) {
@@ -36,7 +45,7 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public Rent[] findAutoPark(Long autoParkId) {
+    public Rent[] findRentsByAutoParkId(Long autoParkId) {
         final Rent[] rents1 = new Rent[50]; //  этот выходной массив
         int j = 0;
         for (int i = 0; i < rents.length; i++) {
@@ -49,8 +58,8 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public Rent[] findCustomer(Long customerId) {
-        final Rent[] rents1 = new Rent[50]; //  этот выходной массив
+    public Rent[] findRentsByCustomerId(Long customerId) {
+        final Rent[] rents1 = new Rent[50];
         int j = 0;
         for (int i = 0; i < rents.length; i++) {
             if (rents[i].getCustomerId() == customerId) {
@@ -59,14 +68,5 @@ public class RentRepositoryImpl implements RentRepository {
             }
         }
         return rents1;
-    }
-
-    public static Long findEmptyIndex(Rent[] rents) { /** поиск первого свободного место в массиве пользователей  */
-        for (int i = 0; i < rents.length; i++) {
-            if (rents[i] == null) {
-                return Long.valueOf(i);
-            }
-        }
-        return Long.valueOf(-1);
     }
 }
