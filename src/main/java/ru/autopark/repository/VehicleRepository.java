@@ -3,6 +3,7 @@
  **/
 package ru.autopark.repository;
 
+import ru.autopark.model.Customer;
 import ru.autopark.model.Vehicle;
 import ru.autopark.model.enums.Brand;
 import ru.autopark.model.enums.Model;
@@ -11,38 +12,17 @@ import java.time.LocalDate;
 
 public interface VehicleRepository {
 
-    Vehicle createVehicle(Long id,                // идентификатор
-                          Brand brand,            // марка
-                          Model model,            // модель
-                          LocalDate releaseDate,  // год выпуска
-                          Integer mileage,        // пробег
-                          Long autoParkId);       // вторичный ключ
+    Vehicle save(Vehicle vehicle);
 
-    Vehicle createVehicle();
+    //Опционально
+    Vehicle findByAll(Long id, Brand brand, Model model, LocalDate releaseDate, Integer mileage);
 
-    Vehicle[] findVehicle(Brand brand,            // марка
-                          Model model,            // модель
-                          LocalDate releaseDate,  // год выпуска
-                          Integer mileage,        // пробег
-                          Long autoParkId);       // вторичный ключ
+    Vehicle findById(long vehicleId);
 
+    Vehicle[] findAll();
 
-    Vehicle[] deleteVehicle(Brand brand,            // марка
-                            Model model,            // модель
-                            LocalDate releaseDate,  // год выпуска
-                            Integer mileage,        // пробег
-                            Long autoParkId);       // вторичный ключ
+    boolean deleteById(long vehicleId);
 
-    //    Customer save(Customer customer); //1
-    //
-    //    //Опционально
-    //    Customer findByNameAndPhone(String name, String phone);
-    //
-    //    Customer findById(long customerId); //2
-    //
-    //    Customer[] findAll();
-    //
-    //    boolean deleteById(long customerId);//3
-    //
-    //    Customer update(Customer customer);//4
+    Vehicle update(Vehicle vehicle);
+
 }

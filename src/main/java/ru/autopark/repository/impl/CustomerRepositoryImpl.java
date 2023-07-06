@@ -5,7 +5,9 @@ import ru.autopark.repository.CustomerRepository;
 import ru.autopark.util.Util;
 
 public class CustomerRepositoryImpl implements CustomerRepository {
-    private final Customer[] customers = new Customer[50];
+    private static final int CUSTOMERS_COUNT = 50;
+    private final Customer[] customers = new Customer[CUSTOMERS_COUNT];
+
 
     @Override
     public Customer save(Customer customer) {

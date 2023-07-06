@@ -2,6 +2,7 @@ package ru.autopark.util;
 
 import ru.autopark.model.AutoPark;
 import ru.autopark.model.Customer;
+import ru.autopark.model.Rent;
 import ru.autopark.model.Vehicle;
 
 public final class Util {
@@ -27,6 +28,15 @@ public final class Util {
     public static int findEmptyIndex(AutoPark[] autoParks) {
         for (int i = 0; i < autoParks.length; i++) {
             if (autoParks[i] == null) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int findEmptyIndex(Rent[] rents) { /** поиск первого пустого */
+        for (int i = 1; i < rents.length; i++) {
+            if (rents[i] == null) {
                 return i;
             }
         }

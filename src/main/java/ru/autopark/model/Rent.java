@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Rent {
+
+    private Long Id;
     private Long vehicleId;
     private Long customerId;
     private Long autoParkId;
@@ -73,6 +75,14 @@ public class Rent {
 
     public void setDuration(Duration duration) {
         this.duration = duration;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     @Override

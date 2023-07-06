@@ -3,8 +3,22 @@
  **/
 package ru.autopark.repository;
 
-public interface AutoParkRepository {
-    long add(long id, String name);
+import ru.autopark.model.AutoPark;
+import ru.autopark.model.Customer;
 
-    boolean deleteByName(String name);
+public interface AutoParkRepository {
+
+    AutoPark save(AutoPark autoPark);
+
+    //Опционально
+    AutoPark findByName(String name);
+
+    AutoPark findById(long AutoParkId);
+
+    AutoPark[] findAll();
+
+    boolean deleteById(long customerId);
+
+    AutoPark update(AutoPark autoPark);
+
 }

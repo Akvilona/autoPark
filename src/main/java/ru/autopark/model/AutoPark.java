@@ -4,7 +4,7 @@ public class AutoPark {
     private Long id;
     private String name;
 
-    public AutoPark(Long id, String name) {
+    public AutoPark(final Long id, final String name) {
         this.id = id;
         this.name = name;
     }

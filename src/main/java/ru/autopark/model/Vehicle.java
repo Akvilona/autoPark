@@ -38,9 +38,7 @@ public class Vehicle {
         return brand;
     }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
+    public void setBrand(Brand brand) { this.brand = brand; }
 
     public Model getModel() {
         return model;
