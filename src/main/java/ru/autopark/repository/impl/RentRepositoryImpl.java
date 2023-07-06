@@ -9,11 +9,11 @@ import ru.autopark.repository.RentRepository;
 import ru.autopark.util.Util;
 
 public class RentRepositoryImpl implements RentRepository {
-
-    private final Rent[] rents = new Rent[50];
+    private static final int RENT_COUNT = 50;
+    private final Rent[] rents = new Rent[RENT_COUNT];
 
     @Override
-    public Rent save(Rent rent) {
+    public Rent save(final Rent rent) {
         int index = Util.findEmptyIndex(rents);
         if (index == -1) {
             return null;
@@ -23,11 +23,11 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public Rent findByRentName(String CustomerName) {
+    public Rent findByRentName(final String customerName) {
 
-        /** получаем идентификатор записи по имени клиента */
+        // получаем идентификатор записи по имени клиента
         CustomerRepository customerRepository = new CustomerRepositoryImpl();
-        long customerId = customerRepository.findByNameAndPhone(CustomerName, null).getId();
+        long customerId = customerRepository.findByNameAndPhone(customerName, null).getId();
 
         for (Rent rent : rents) {
             if (rent.getCustomerId().equals(customerId)) {
@@ -38,8 +38,8 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public Rent findById(long rentId) {
-        for (Rent rent: rents) {
+    public Rent findById(final long rentId) {
+        for (Rent rent : rents) {
             if (rent.getId() == rentId) {
                 return rent;
             }
@@ -48,7 +48,7 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public boolean deleteById(long customerId) {
+    public boolean deleteById(final long customerId) {
         for (int i = 0; i < rents.length; i++) {
             if (rents[i].getId() == customerId) {
                 rents[i] = null;
@@ -59,7 +59,7 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public Rent update(Rent rent) {
+    public Rent update(final Rent rent) {
         Rent rentForUpdate = findById(rent.getId());
         rentForUpdate.setAutoParkId(rent.getAutoParkId());
         rentForUpdate.setVehicleId(rent.getVehicleId());

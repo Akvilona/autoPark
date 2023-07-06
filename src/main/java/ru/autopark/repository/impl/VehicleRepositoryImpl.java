@@ -3,7 +3,6 @@
  **/
 package ru.autopark.repository.impl;
 
-import ru.autopark.model.Customer;
 import ru.autopark.model.Vehicle;
 import ru.autopark.model.enums.Brand;
 import ru.autopark.model.enums.Model;
@@ -14,10 +13,11 @@ import java.time.LocalDate;
 
 public class VehicleRepositoryImpl implements VehicleRepository {
 
-    private static Vehicle[] vehicles = new Vehicle[100]; // массив вместо таблицы базы данных
+    private static final int VEHICLECOUNT = 100;
+    private static Vehicle[] vehicles = new Vehicle[VEHICLECOUNT]; // массив вместо таблицы базы данных
 
     @Override
-    public Vehicle save(Vehicle vehicle) {
+    public Vehicle save(final Vehicle vehicle) {
         int index = Util.findEmptyIndex(vehicles);
         if (index == -1) {
             return null;
@@ -27,34 +27,30 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
-    public Vehicle findByAll(Long id, Brand brand, Model model, LocalDate releaseDate, Integer mileage) {
+    public Vehicle findByAll(final Long id, final Brand brand, final Model model, final LocalDate releaseDate, final Integer mileage) {
         for (Vehicle vehicle : vehicles) {
-            if (vehicle != null) {
-                if (vehicle.getBrand().equals(brand) &&
-                        vehicle.getModel().equals(model) &&
-                        vehicle.getReleaseDate().equals(releaseDate) &&
-                        vehicle.getMileage().equals(mileage)) {
-                    return vehicle;
-                }
+            if (vehicle != null && vehicle.getBrand().equals(brand)
+                    && vehicle.getModel().equals(model)
+                    && vehicle.getReleaseDate().equals(releaseDate)
+                    && vehicle.getMileage().equals(mileage)) {
+                return vehicle;
             }
         }
         return null;
     }
 
     @Override
-    public Vehicle findById(long vehicleId) {
+    public Vehicle findById(final long vehicleId) {
         for (Vehicle vehicle : vehicles) {
-            if (vehicle != null) {
-                if (vehicle.getId() == vehicleId) {
-                    return vehicle;
-                }
+            if (vehicle != null && vehicle.getId() == vehicleId) {
+                return vehicle;
             }
         }
         return null;
     }
 
     @Override
-    public boolean deleteById(long vehicleId) {
+    public boolean deleteById(final long vehicleId) {
         for (int i = 0; i < vehicles.length; i++) {
             if (vehicles[i].getId() == vehicleId) {
                 vehicles[i] = null;
@@ -65,7 +61,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
-    public Vehicle update(Vehicle vehicle) {
+    public Vehicle update(final Vehicle vehicle) {
         Vehicle vehicleForUpdate = findById(vehicle.getId());
         vehicleForUpdate.setAutoParkId(vehicle.getAutoParkId());
         vehicleForUpdate.setMileage(vehicle.getMileage());

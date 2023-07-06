@@ -17,7 +17,7 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(Long id, Brand brand, Model model, LocalDate releaseDate, Integer mileage, Long autoParkId) {
+    public Vehicle(final Long id, final Brand brand, final Model model, final LocalDate releaseDate, final Integer mileage, final Long autoParkId) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -30,7 +30,7 @@ public class Vehicle {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -38,13 +38,15 @@ public class Vehicle {
         return brand;
     }
 
-    public void setBrand(Brand brand) { this.brand = brand; }
+    public void setBrand(final Brand brand) {
+        this.brand = brand;
+    }
 
     public Model getModel() {
         return model;
     }
 
-    public void setModel(Model model) {
+    public void setModel(final Model model) {
         this.model = model;
     }
 
@@ -52,7 +54,7 @@ public class Vehicle {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDate releaseDate) {
+    public void setReleaseDate(final LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -60,11 +62,11 @@ public class Vehicle {
         return mileage;
     }
 
-    public void setMileage(Integer mileage) {
+    public void setMileage(final Integer mileage) {
         this.mileage = mileage;
     }
 
-    public void setMileage(int mileage) {
+    public void setMileage(final int mileage) {
         this.mileage = mileage;
     }
 
@@ -72,14 +74,18 @@ public class Vehicle {
         return autoParkId;
     }
 
-    public void setAutoParkId(Long autoParkId) {
+    public void setAutoParkId(final Long autoParkId) {
         this.autoParkId = autoParkId;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Vehicle vehicle = (Vehicle) o;
         return Objects.equals(id, vehicle.id) && brand == vehicle.brand && model == vehicle.model && Objects.equals(releaseDate, vehicle.releaseDate) && Objects.equals(mileage, vehicle.mileage) && Objects.equals(autoParkId, vehicle.autoParkId);
     }
@@ -91,13 +97,13 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle{" +
-                "id=" + id +
-                ", brand=" + brand +
-                ", model=" + model +
-                ", releaseDate=" + releaseDate +
-                ", mileage=" + mileage +
-                ", vehicleId=" + autoParkId +
-                '}';
+        return "Vehicle{"
+                + "id=" + id
+                + ", brand=" + brand
+                + ", model=" + model
+                + ", releaseDate=" + releaseDate
+                + ", mileage=" + mileage
+                + ", vehicleId=" + autoParkId
+                + '}';
     }
 }

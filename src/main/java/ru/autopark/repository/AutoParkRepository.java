@@ -4,7 +4,6 @@
 package ru.autopark.repository;
 
 import ru.autopark.model.AutoPark;
-import ru.autopark.model.Customer;
 
 public interface AutoParkRepository {
 
@@ -13,7 +12,7 @@ public interface AutoParkRepository {
     //Опционально
     AutoPark findByName(String name);
 
-    AutoPark findById(long AutoParkId);
+    AutoPark findById(long autoParkId);
 
     AutoPark[] findAll();
 

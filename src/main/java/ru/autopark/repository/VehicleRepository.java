@@ -3,7 +3,6 @@
  **/
 package ru.autopark.repository;
 
-import ru.autopark.model.Customer;
 import ru.autopark.model.Vehicle;
 import ru.autopark.model.enums.Brand;
 import ru.autopark.model.enums.Model;

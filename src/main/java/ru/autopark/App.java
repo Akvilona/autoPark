@@ -25,38 +25,42 @@ public final class App {
         VehicleRepository vehicleRepository = new VehicleRepositoryImpl();
         Vehicle vehicle = getVehicle();
         Vehicle vehicle1 = vehicleRepository.save(vehicle);
-        if (vehicle1.equals(vehicle)){
-            System.out.println("Vehicle: true" );
+        if (vehicle1.equals(vehicle)) {
+            System.out.println("Vehicle: true");
         } else {
-            System.out.println("Vehicle: false" );
+            System.out.println("Vehicle: false");
         }
-        Vehicle vehicle2 = vehicleRepository.findById(22);
+        final int findById = 12;
+        final int mileAge = 1000;
+        final int autoParkId = 1;
+        Vehicle vehicle2 = vehicleRepository.findById(findById);
         System.out.println("vehicleRepository.findById Find Vehicle: " + vehicle2);
         System.out.println("vehicleRepository.findByAll: " + vehicleRepository.findByAll(1L,
                 Brand.valueOf("RENAULT"),
                 Model.valueOf("LOGAN"),
-                LocalDate.parse("2010-01-01"), 1000));
+                LocalDate.parse("2010-01-01"),
+                mileAge));
 
         vehicle.setBrand(Brand.valueOf("RENAULT"));
         vehicle.setModel(Model.valueOf("LOGAN"));
         vehicle.setReleaseDate(LocalDate.parse("2010-01-01"));
-        vehicle.setMileage(1000);
-        vehicle.setAutoParkId(1L);
+        vehicle.setMileage(mileAge);
+        vehicle.setAutoParkId((long) autoParkId);
 
         AutoParkRepository autoParkRepository = new AutoParkRepositoryImpl();
         AutoPark autoPark = getAutoPark();
 
-        AutoPark autoParkSave = autoParkRepository.save (autoPark);
-        System.out.println("autoParkRepository.save: " + autoParkSave );
+        AutoPark autoParkSave = autoParkRepository.save(autoPark);
+        System.out.println("autoParkRepository.save: " + autoParkSave);
 
         AutoPark autoParkSave2 = autoParkRepository.findByName("AutoParkName");
-        System.out.println("autoParkSave2.findByName: " + autoParkSave2 );
+        System.out.println("autoParkSave2.findByName: " + autoParkSave2);
 
         AutoPark autoParkBiId = autoParkRepository.findById(2);
-        System.out.println("autoParkRepository.findById: " + autoParkBiId );
+        System.out.println("autoParkRepository.findById: " + autoParkBiId);
 
-        AutoPark autoParkSave3 = autoParkRepository.save (getAutoParkSecond());
-        System.out.println("autoParkRepository.save(second) " + autoParkSave3 );
+        AutoPark autoParkSave3 = autoParkRepository.save(getAutoParkSecond());
+        System.out.println("autoParkRepository.save(second) " + autoParkSave3);
 
         System.out.println("Find by Name in autoPark " +  autoParkRepository.findByName("dfdf"));
         System.out.println("Find by Id in autoPark " +  autoParkRepository.findById(2));
@@ -113,26 +117,29 @@ public final class App {
         return customer;
     }
 
-    private static AutoPark getAutoPark () {
+    private static AutoPark getAutoPark() {
         AutoPark autoPark = new AutoPark();
         autoPark.setId(2L);
         autoPark.setName("AutoParkName");
         return autoPark;
     }
-    private static AutoPark getAutoParkSecond () {
+    private static AutoPark getAutoParkSecond() {
+        final long autoParkId = 3L;
         AutoPark autoPark = new AutoPark();
-        autoPark.setId(3L);
+        autoPark.setId(autoParkId);
         autoPark.setName("New AutoParkName");
         return autoPark;
     }
 
-    private static Vehicle getVehicle () {
+    private static Vehicle getVehicle() {
+        final long mileage = 1000L;
+        final long vehicleId = 1L;
         Vehicle vehicle = new Vehicle();
-        vehicle.setId(1L);
+        vehicle.setId(vehicleId);
         vehicle.setBrand(Brand.valueOf("RENAULT"));
         vehicle.setModel(Model.valueOf("LOGAN"));
         vehicle.setReleaseDate(LocalDate.parse("2010-01-01"));
-        vehicle.setMileage(1000);
+        vehicle.setMileage((int) mileage);
         vehicle.setAutoParkId(1L);
 
         return vehicle;

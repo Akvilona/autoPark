@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class Rent {
 
-    private Long Id;
+    private Long id;
     private Long vehicleId;
     private Long customerId;
     private Long autoParkId;
@@ -24,15 +24,16 @@ public class Rent {
         this.duration = duration;
     }
 
-    public Rent(Long vehicleId) {
+    public Rent(final Long vehicleId) {
         this.vehicleId = vehicleId;
     }
 
     public Rent() {
-        duration = Duration.ofDays(365);
+        final int ofDays = 365;
+        duration = Duration.ofDays(ofDays);
     }
 
-    public Rent(Long vehicleId, Long customerId) {
+    public Rent(final Long vehicleId, final Long customerId) {
         this.vehicleId = vehicleId;
         this.customerId = customerId;
     }
@@ -41,7 +42,7 @@ public class Rent {
         return vehicleId;
     }
 
-    public void setVehicleId(Long vehicleId) {
+    public void setVehicleId(final Long vehicleId) {
         this.vehicleId = vehicleId;
     }
 
@@ -49,7 +50,7 @@ public class Rent {
         return customerId;
     }
 
-    public void setCustomerId(Long customerId) {
+    public void setCustomerId(final Long customerId) {
         this.customerId = customerId;
     }
 
@@ -57,7 +58,7 @@ public class Rent {
         return autoParkId;
     }
 
-    public void setAutoParkId(Long autoParkId) {
+    public void setAutoParkId(final Long autoParkId) {
         this.autoParkId = autoParkId;
     }
 
@@ -65,7 +66,7 @@ public class Rent {
         return createDateTime;
     }
 
-    public void setCreateDateTime(LocalDateTime createDateTime) {
+    public void setCreateDateTime(final LocalDateTime createDateTime) {
         this.createDateTime = createDateTime;
     }
 
@@ -73,23 +74,23 @@ public class Rent {
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(final Duration duration) {
         this.duration = duration;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(Long id) {
-        Id = id;
+    public void setId(final Long id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
-        return "Rent{" +
-                "vehicleId=" + vehicleId +
-                ", customerId=" + customerId +
-                '}';
+        return "Rent{"
+                + "vehicleId=" + vehicleId
+                + ", customerId=" + customerId
+                + '}';
     }
 }

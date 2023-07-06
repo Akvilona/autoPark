@@ -3,11 +3,7 @@
  **/
 package ru.autopark.repository;
 
-import ru.autopark.model.Customer;
 import ru.autopark.model.Rent;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 public interface RentRepository {
 
@@ -16,7 +12,7 @@ public interface RentRepository {
     //Опционально
     Rent findByRentName(String name);
 
-    Rent findById(long RentId);
+    Rent findById(long rentId);
 
     Rent[] findAll();
 

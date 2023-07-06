@@ -9,7 +9,7 @@ public class Customer {
     private String phone;
     private Long autoParkId;
 
-    public Customer(Long id, String name, String address, String phone, Long autoParkId) {
+    public Customer(final Long id, final String name, final String address, final String phone, final Long autoParkId) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -24,7 +24,7 @@ public class Customer {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -32,7 +32,7 @@ public class Customer {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -40,7 +40,7 @@ public class Customer {
         return autoParkId;
     }
 
-    public void setAutoParkId(Long autoParkId) {
+    public void setAutoParkId(final Long autoParkId) {
         this.autoParkId = autoParkId;
     }
 
@@ -48,7 +48,7 @@ public class Customer {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(final String address) {
         this.address = address;
     }
 
@@ -56,16 +56,18 @@ public class Customer {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(final String phone) {
         this.phone = phone;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Customer customer = (Customer) o;
         return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(phone, customer.phone);
     }
@@ -77,13 +79,13 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", na1me='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", autoParkId=" + autoParkId +
-                '}';
+        return "Customer{"
+                + "id=" + id
+                + ", na1me='" + name + '\''
+                + ", address='" + address + '\''
+                + ", phone='" + phone + '\''
+                + ", autoParkId=" + autoParkId
+                + '}';
     }
 }
 

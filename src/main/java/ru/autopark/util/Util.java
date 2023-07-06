@@ -16,7 +16,7 @@ public final class Util {
      * @param customers an array of Customer objects
      * @return the index of the first empty slot in the array, or -1 if the array is full
      */
-    public static int findEmptyIndex(Customer[] customers) {
+    public static int findEmptyIndex(final Customer[] customers) {
         for (int i = 0; i < customers.length; i++) {
             if (customers[i] == null) {
                 return i;
@@ -25,7 +25,7 @@ public final class Util {
         return -1;
     }
 
-    public static int findEmptyIndex(AutoPark[] autoParks) {
+    public static int findEmptyIndex(final AutoPark[] autoParks) {
         for (int i = 0; i < autoParks.length; i++) {
             if (autoParks[i] == null) {
                 return i;
@@ -34,7 +34,8 @@ public final class Util {
         return -1;
     }
 
-    public static int findEmptyIndex(Rent[] rents) { /** поиск первого пустого */
+    // поиск первого пустого
+    public static int findEmptyIndex(final Rent[] rents) {
         for (int i = 1; i < rents.length; i++) {
             if (rents[i] == null) {
                 return i;
@@ -43,7 +44,8 @@ public final class Util {
         return -1;
     }
 
-    public static int findEmptyIndex(Vehicle[] vehicles) { /** поиск первого пустого */
+    // поиск первого пустого
+    public static int findEmptyIndex(final Vehicle[] vehicles) { // поиск первого пустого
         for (int i = 1; i < vehicles.length; i++) {
             if (vehicles[i] == null) {
                 return i;

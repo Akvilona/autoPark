@@ -10,7 +10,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
 
     @Override
-    public Customer save(Customer customer) {
+    public Customer save(final Customer customer) {
         int index = Util.findEmptyIndex(customers);
         if (index == -1) {
             return null;
@@ -20,7 +20,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public Customer findByNameAndPhone(String name, String phone) {
+    public Customer findByNameAndPhone(final String name, final String phone) {
         for (Customer customer : customers) {
             if (customer.getName().equals(name) && customer.getPhone().equals(phone)) {
                 return customer;
@@ -30,8 +30,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public Customer findById(long customerId) {
-        for (Customer customer: customers) {
+    public Customer findById(final long customerId) {
+        for (Customer customer : customers) {
             if (customer.getId() == customerId) {
                 return customer;
             }
@@ -40,7 +40,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public boolean deleteById(long customerId) {
+    public boolean deleteById(final long customerId) {
         for (int i = 0; i < customers.length; i++) {
             if (customers[i].getId() == customerId) {
                 customers[i] = null;
@@ -51,7 +51,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public Customer update(Customer customer) {
+    public Customer update(final Customer customer) {
         Customer customerForUpdate = findById(customer.getId());
         customerForUpdate.setAddress(customer.getAddress());
         customerForUpdate.setName(customer.getName());
