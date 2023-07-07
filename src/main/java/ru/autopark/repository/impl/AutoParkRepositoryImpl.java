@@ -55,6 +55,9 @@ public class AutoParkRepositoryImpl implements AutoParkRepository {
     @Override
     public AutoPark update(final AutoPark autoPark) {
         AutoPark autoPark1 = findById(autoPark.getId());
+        if (autoPark1 == null) {
+            return null;
+        }
         autoPark1.setName(autoPark.getName());
         return autoPark1;
     }

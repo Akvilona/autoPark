@@ -5,19 +5,19 @@ package ru.autopark.repository;
 
 import ru.autopark.model.Customer;
 
+import java.util.Optional;
+
 public interface CustomerRepository {
 
-    Customer save(Customer customer);
+    Customer save(Customer customer, int index);
 
     //Опционально
     Customer findByNameAndPhone(String name, String phone);
 
-    Customer findById(long customerId);
+    Optional<Customer> findById(long customerId);
 
     Customer[] findAll();
 
     boolean deleteById(long customerId);
-
-    Customer update(Customer customer);
 
 }

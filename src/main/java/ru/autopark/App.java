@@ -5,17 +5,9 @@ import ru.autopark.model.Customer;
 import ru.autopark.model.Vehicle;
 import ru.autopark.model.enums.Brand;
 import ru.autopark.model.enums.Model;
-import ru.autopark.repository.CustomerRepository;
-import ru.autopark.repository.RentRepository;
-import ru.autopark.repository.impl.CustomerRepositoryImpl;
-import ru.autopark.repository.impl.RentRepositoryImpl;
-import ru.autopark.service.CustomerService;
-import ru.autopark.service.RentService;
-import ru.autopark.service.impl.CustomerServiceImpl;
-import ru.autopark.service.impl.RentServiceImpl;
 
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.Optional;
 import java.util.Random;
 
 public final class App {
@@ -24,32 +16,28 @@ public final class App {
     }
 
     public static void main(final String[] args) {
-        CustomerRepository customerRepository = new CustomerRepositoryImpl();
-        CustomerService customerService = new CustomerServiceImpl(customerRepository);
-
-        RentRepository rentRepository = new RentRepositoryImpl();
-
-        RentService rentService = new RentServiceImpl(customerService, rentRepository);
-
-        customerService.save(getCustomer());
-        customerService.save(getCustomer());
-        customerService.save(getCustomer());
-        customerService.save(getCustomer());
-        customerService.save(getCustomer());
-
-        System.out.println(Arrays.toString(customerService.findAll()));
-
-//        rentService.findByCustomerName()
-
     }
 
-    private static Customer getCustomer() {
-        Customer customer = new Customer();
-        customer.setId(new Random().nextLong());
-        customer.setName("name1");
-        customer.setPhone("1234");
-        customer.setAddress("setAddress");
-        return customer;
+    private static AutoPark getAutoPark() {
+        AutoPark autoPark = new AutoPark();
+        autoPark.setId(2L);
+        autoPark.setName("AutoParkName");
+        return autoPark;
+    }
+
+    private static Optional<Customer> getCustomer() {
+        if (new Random().nextBoolean()) {
+            Customer customer = new Customer();
+            customer.setId(new Random().nextLong());
+            customer.setName("name1");
+            customer.setPhone("1234");
+            customer.setAddress("setAddress");
+
+            return Optional.of(customer);
+        } else {
+            Optional<Customer> optionalCustomer = Optional.empty();
+            return optionalCustomer;
+        }
     }
 
     private static Customer getAnotherCustomer() {
@@ -61,12 +49,6 @@ public final class App {
         return customer;
     }
 
-    private static AutoPark getAutoPark() {
-        AutoPark autoPark = new AutoPark();
-        autoPark.setId(2L);
-        autoPark.setName("AutoParkName");
-        return autoPark;
-    }
 
     private static AutoPark getAutoParkSecond() {
         final long autoParkId = 3L;

@@ -10,4 +10,6 @@ public interface CustomerService {
     Customer findByNameAndPhone(String name, String phone);
 
     Customer[] findAll();
+
+    Customer update(Customer customer);
 }

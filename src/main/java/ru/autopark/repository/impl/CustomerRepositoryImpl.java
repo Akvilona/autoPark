@@ -4,17 +4,15 @@ import ru.autopark.model.Customer;
 import ru.autopark.repository.CustomerRepository;
 import ru.autopark.util.Util;
 
+import java.util.Optional;
+
 public class CustomerRepositoryImpl implements CustomerRepository {
     private static final int CUSTOMERS_COUNT = 50;
     private final Customer[] customers = new Customer[CUSTOMERS_COUNT];
 
 
     @Override
-    public Customer save(final Customer customer) {
-        int index = Util.findEmptyIndex(customers);
-        if (index == -1) {
-            return null;
-        }
+    public Customer save(final Customer customer, int index) {
         customers[index] = customer;
         return customer;
     }
@@ -30,13 +28,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public Customer findById(final long customerId) {
+    public Optional<Customer> findById(final long customerId) {
         for (Customer customer : customers) {
             if (customer.getId() == customerId) {
-                return customer;
+                return Optional.of(customer);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -48,15 +46,6 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             }
         }
         return false;
-    }
-
-    @Override
-    public Customer update(final Customer customer) {
-        Customer customerForUpdate = findById(customer.getId());
-        customerForUpdate.setAddress(customer.getAddress());
-        customerForUpdate.setName(customer.getName());
-        customerForUpdate.setPhone(customer.getPhone());
-        return customerForUpdate;
     }
 
     @Override
