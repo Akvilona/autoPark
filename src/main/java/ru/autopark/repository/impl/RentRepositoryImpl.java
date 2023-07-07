@@ -23,21 +23,6 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public Rent findByRentName(final String customerName) {
-
-        // получаем идентификатор записи по имени клиента
-        CustomerRepository customerRepository = new CustomerRepositoryImpl();
-        long customerId = customerRepository.findByNameAndPhone(customerName, null).getId();
-
-        for (Rent rent : rents) {
-            if (rent.getCustomerId().equals(customerId)) {
-                return rent;
-            }
-        }
-        return null;
-    }
-
-    @Override
     public Rent findById(final long rentId) {
         for (Rent rent : rents) {
             if (rent.getId() == rentId) {
@@ -48,9 +33,9 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public boolean deleteById(final long customerId) {
+    public boolean deleteById(final long rentId) {
         for (int i = 0; i < rents.length; i++) {
-            if (rents[i].getId() == customerId) {
+            if (rents[i].getId() == rentId) {
                 rents[i] = null;
                 return true;
             }
@@ -72,5 +57,15 @@ public class RentRepositoryImpl implements RentRepository {
     @Override
     public Rent[] findAll() {
         return this.rents;
+    }
+
+    @Override
+    public Rent findByCustomerId(long customerId) {
+        for (int i = 0; i < rents.length; i++) {
+            if (rents[i] != null && rents[i].getCustomerId() == customerId) {
+                return rents[i];
+            }
+        }
+        return null;
     }
 }

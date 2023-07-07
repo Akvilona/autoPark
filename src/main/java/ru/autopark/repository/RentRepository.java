@@ -9,14 +9,13 @@ public interface RentRepository {
 
     Rent save(Rent rent);
 
-    //Опционально
-    Rent findByRentName(String name);
-
     Rent findById(long rentId);
+
+    Rent findByCustomerId(long customerId);
 
     Rent[] findAll();
 
-    boolean deleteById(long customerId);
+    boolean deleteById(long rentId);
 
     Rent update(Rent rent);
 
