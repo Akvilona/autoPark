@@ -24,7 +24,6 @@ public class AutoParkRepositoryImpl implements AutoParkRepository {
     @Override
     public AutoPark findByName(final String name) {
         for (AutoPark autoPark : autoParks) {
-            // не понимаю, почему если я передаю несуществующее имя в поле name, то autoPark = null
             if (autoPark != null && autoPark.getName().equals(name)) {
                 return autoPark;
             }
@@ -45,7 +44,6 @@ public class AutoParkRepositoryImpl implements AutoParkRepository {
     @Override
     public boolean deleteById(final long autoParkId) {
         for (int i = 0; i < autoParks.length; i++) {
-            // такая же непонятная ситуация, если я предаю несуществующий идентификатор, то объект не существует
             if (autoParks[i] != null && autoParks[i].getId() == autoParkId) {
                 autoParks[i] = null;
                 return true;
