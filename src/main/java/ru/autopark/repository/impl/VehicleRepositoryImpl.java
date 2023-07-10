@@ -4,12 +4,8 @@
 package ru.autopark.repository.impl;
 
 import ru.autopark.model.Vehicle;
-import ru.autopark.model.enums.Brand;
-import ru.autopark.model.enums.Model;
 import ru.autopark.repository.VehicleRepository;
 import ru.autopark.util.Util;
-
-import java.time.LocalDate;
 
 public class VehicleRepositoryImpl implements VehicleRepository {
 
@@ -26,18 +22,18 @@ public class VehicleRepositoryImpl implements VehicleRepository {
         return vehicle;
     }
 
-    @Override
-    public Vehicle findByAll(final Long id, final Brand brand, final Model model, final LocalDate releaseDate, final Integer mileage) {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle != null && vehicle.getBrand().equals(brand)
-                    && vehicle.getModel().equals(model)
-                    && vehicle.getReleaseDate().equals(releaseDate)
-                    && vehicle.getMileage().equals(mileage)) {
-                return vehicle;
-            }
-        }
-        return null;
-    }
+//    @Override
+//    public Vehicle findByAll(final Long id, final Brand brand, final Model model, final LocalDate releaseDate, final Integer mileage) {
+//        for (Vehicle vehicle : vehicles) {
+//            if (vehicle != null && vehicle.getBrand().equals(brand)
+//                    && vehicle.getModel().equals(model)
+//                    && vehicle.getReleaseDate().equals(releaseDate)
+//                    && vehicle.getMileage().equals(mileage)) {
+//                return vehicle;
+//            }
+//        }
+//        return null;
+//    }
 
     @Override
     public Vehicle findById(final long vehicleId) {

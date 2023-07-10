@@ -4,7 +4,6 @@
 package ru.autopark.repository.impl;
 
 import ru.autopark.model.Rent;
-import ru.autopark.repository.CustomerRepository;
 import ru.autopark.repository.RentRepository;
 import ru.autopark.util.Util;
 
@@ -60,7 +59,7 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public Rent findByCustomerId(long customerId) {
+    public Rent findByCustomerId(final long customerId) {
         for (int i = 0; i < rents.length; i++) {
             if (rents[i] != null && rents[i].getCustomerId() == customerId) {
                 return rents[i];

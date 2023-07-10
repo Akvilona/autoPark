@@ -6,7 +6,7 @@ public class CustomerNotFoundExcepton extends RuntimeException {
         super();
     }
 
-    public CustomerNotFoundExcepton(String message) {
+    public CustomerNotFoundExcepton(final String message) {
         super(message);
     }
 }

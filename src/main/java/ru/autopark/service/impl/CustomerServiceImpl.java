@@ -8,12 +8,12 @@ import ru.autopark.service.CustomerService;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(final CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
     @Override
-    public Customer findById(long customerId) {
+    public Customer findById(final long customerId) {
         Customer customer = customerRepository.findById(customerId);
         if (customer == null) {
             throw new CustomerNotFoundExcepton("Cant find customer with id: " + customerId);
@@ -22,7 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer findByNameAndPhone(String name, String phone) {
+    public Customer findByNameAndPhone(final String name, final String phone) {
         Customer customer = customerRepository.findByNameAndPhone(name, phone);
         if (customer == null) {
             throw new CustomerNotFoundExcepton("Cant find customer with name: " + name);
@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer save(Customer customer) {
+    public Customer save(final Customer customer) {
         Customer save = customerRepository.save(customer);
         if (save == null) {
             throw new CustomerNotFoundExcepton("Cant find customer with customer: " + customer);
