@@ -3,6 +3,7 @@
  **/
 package ru.autopark.service.impl;
 
+import ru.autopark.exception.AutoParkNotFoundException;
 import ru.autopark.exception.VehicleNotFoundException;
 import ru.autopark.model.Vehicle;
 import ru.autopark.model.enums.Brand;
@@ -35,12 +36,20 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Vehicle[] findAll() {
-        return vehicleRepository.findAll();
+        Vehicle[] vehicle = vehicleRepository.findAll();
+        if (vehicle == null) {
+            throw new AutoParkNotFoundException("Cant find all vehicle in service ");
+        }
+        return vehicle;
     }
 
     @Override
     public Vehicle[] findAll(final Long id, final Brand brand, final Model model, final LocalDate releaseDate, final Integer mileage) {
-        return new Vehicle[0];
+        Vehicle[] vehicle = vehicleRepository.findAll();
+        if (vehicle == null) {
+            throw new AutoParkNotFoundException("Cant find all vehicle in service ");
+        }
+        return vehicle;
     }
 
     @Override
