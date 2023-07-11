@@ -5,13 +5,16 @@ package ru.autopark.repository;
 
 import ru.autopark.model.Rent;
 
-public interface RentRepository {
+import java.util.Optional;
 
+//TODO: extends CrudRepository
+public interface RentRepository {
+    Rent findByCustomerId(long customerId);
+
+    //TODO: remove
     Rent save(Rent rent);
 
-    Rent findById(long rentId);
-
-    Rent findByCustomerId(long customerId);
+    Optional<Rent> findById(long rentId);
 
     Rent[] findAll();
 

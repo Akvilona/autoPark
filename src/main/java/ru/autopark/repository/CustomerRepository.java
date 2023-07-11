@@ -5,19 +5,10 @@ package ru.autopark.repository;
 
 import ru.autopark.model.Customer;
 
-public interface CustomerRepository {
+import java.util.Optional;
 
-    Customer save(Customer customer);
-
+public interface CustomerRepository extends CrudRepository<Customer> {
     //Опционально
     Customer findByNameAndPhone(String name, String phone);
-
-    Customer findById(long customerId);
-
-    Customer[] findAll();
-
-    boolean deleteById(long customerId);
-
-    Customer update(Customer customer);
 
 }

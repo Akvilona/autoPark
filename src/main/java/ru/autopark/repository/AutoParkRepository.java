@@ -5,14 +5,19 @@ package ru.autopark.repository;
 
 import ru.autopark.model.AutoPark;
 
-public interface AutoParkRepository {
+import java.util.Optional;
 
-    AutoPark save(AutoPark autoPark);
+//TODO: extends CrudRepository
+public interface AutoParkRepository {
 
     //Опционально
     AutoPark findByName(String name);
 
-    AutoPark findById(long autoParkId);
+
+    //TODO: remove
+    AutoPark save(AutoPark autoPark);
+
+    Optional<AutoPark> findById(long autoParkId);
 
     AutoPark[] findAll();
 

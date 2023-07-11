@@ -8,6 +8,8 @@ import ru.autopark.model.AutoPark;
 import ru.autopark.repository.AutoParkRepository;
 import ru.autopark.service.AutoParkService;
 
+import java.util.Optional;
+
 public class AutoParkServiceImpl implements AutoParkService {
     private final AutoParkRepository autoParkRepository;
 
@@ -35,11 +37,8 @@ public class AutoParkServiceImpl implements AutoParkService {
 
     @Override
     public AutoPark findById(final long autoParkId) {
-        AutoPark autoPark = autoParkRepository.findById(autoParkId);
-        if (autoPark == null) {
-            throw new AutoParkNotFoundException("Cant find AutoParkId: " + autoParkId);
-        }
-        return autoPark;
+        Optional<AutoPark> autoPark = autoParkRepository.findById(autoParkId);
+        return autoPark.get();
     }
 
     @Override

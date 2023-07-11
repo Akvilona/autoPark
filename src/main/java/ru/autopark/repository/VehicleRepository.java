@@ -5,11 +5,14 @@ package ru.autopark.repository;
 
 import ru.autopark.model.Vehicle;
 
-public interface VehicleRepository {
+import java.util.Optional;
 
+//TODO: extends CrudRepository
+public interface VehicleRepository {
+    //TODO: remove
     Vehicle save(Vehicle vehicle);
 
-    Vehicle findById(long vehicleId);
+    Optional<Vehicle> findById(long vehicleId);
 
     Vehicle[] findAll();
 

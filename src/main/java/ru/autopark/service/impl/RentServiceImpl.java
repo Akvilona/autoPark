@@ -7,6 +7,8 @@ import ru.autopark.repository.RentRepository;
 import ru.autopark.service.CustomerService;
 import ru.autopark.service.RentService;
 
+import java.util.Optional;
+
 public class RentServiceImpl implements RentService {
 
     private final CustomerService customerService;
@@ -20,11 +22,11 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public Rent findById(final long rentId) {
-        Rent rent1 = rentRepository.findById(rentId);
-        if (rent1 == null) {
+        Optional<Rent> rent1 = rentRepository.findById(rentId);
+        if (rent1.isEmpty()) {
             throw new RentNotFoundException("Cant find RentId" + rentId);
         }
-        return rent1;
+        return rent1.get();
     }
 
     @Override
