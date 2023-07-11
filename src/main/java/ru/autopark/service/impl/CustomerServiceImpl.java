@@ -5,6 +5,8 @@ import ru.autopark.model.Customer;
 import ru.autopark.repository.CustomerRepository;
 import ru.autopark.service.CustomerService;
 
+import java.util.Optional;
+
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
 
@@ -14,11 +16,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer findById(final long customerId) {
-        Customer customer = customerRepository.findById(customerId);
-        if (customer == null) {
-            throw new CustomerNotFoundExcepton("Cant find customer with id: " + customerId);
-        }
-        return customer;
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundExcepton("Cant find customer with id: " + customerId));
     }
 
     @Override

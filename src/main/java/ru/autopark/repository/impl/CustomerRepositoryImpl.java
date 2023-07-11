@@ -4,10 +4,12 @@ import ru.autopark.model.Customer;
 import ru.autopark.repository.CustomerRepository;
 import ru.autopark.util.Util;
 
+import java.util.Optional;
+
 public class CustomerRepositoryImpl implements CustomerRepository {
+    //TODO: refactor with ArrayList
     private static final int CUSTOMERS_COUNT = 50;
     private final Customer[] customers = new Customer[CUSTOMERS_COUNT];
-
 
     @Override
     public Customer save(final Customer customer) {
@@ -30,19 +32,19 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public Customer findById(final long customerId) {
+    public Optional<Customer> findById(final Long customerId) {
         for (Customer customer : customers) {
-            if (customer.getId() == customerId) {
-                return customer;
+            if (customer.getId().equals(customerId)) {
+                return Optional.of(customer);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public boolean deleteById(final long customerId) {
+    public boolean deleteById(final Long customerId) {
         for (int i = 0; i < customers.length; i++) {
-            if (customers[i].getId() == customerId) {
+            if (customers[i].getId().equals(customerId)) {
                 customers[i] = null;
                 return true;
             }
@@ -52,15 +54,17 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public Customer update(final Customer customer) {
-        Customer customerForUpdate = findById(customer.getId());
-        customerForUpdate.setAddress(customer.getAddress());
-        customerForUpdate.setName(customer.getName());
-        customerForUpdate.setPhone(customer.getPhone());
-        return customerForUpdate;
+        Optional<Customer> customerForUpdate = findById(customer.getId());
+        Customer customer1 = customerForUpdate.get();
+        customer1.setAddress(customer.getAddress());
+        customer1.setName(customer.getName());
+        customer1.setPhone(customer.getPhone());
+        return customer1;
     }
 
     @Override
     public Customer[] findAll() {
         return this.customers;
     }
+
 }

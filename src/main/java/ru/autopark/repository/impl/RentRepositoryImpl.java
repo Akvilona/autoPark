@@ -3,11 +3,15 @@
  **/
 package ru.autopark.repository.impl;
 
+import ru.autopark.exception.RentNotFoundException;
 import ru.autopark.model.Rent;
 import ru.autopark.repository.RentRepository;
 import ru.autopark.util.Util;
 
+import java.util.Optional;
+
 public class RentRepositoryImpl implements RentRepository {
+    //TODO: refactor with ArrayList
     private static final int RENT_COUNT = 50;
     private final Rent[] rents = new Rent[RENT_COUNT];
 
@@ -22,13 +26,13 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public Rent findById(final long rentId) {
+    public Optional<Rent> findById(final long rentId) {
         for (Rent rent : rents) {
             if (rent.getId() == rentId) {
-                return rent;
+                return Optional.of(rent);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -44,13 +48,18 @@ public class RentRepositoryImpl implements RentRepository {
 
     @Override
     public Rent update(final Rent rent) {
-        Rent rentForUpdate = findById(rent.getId());
-        rentForUpdate.setAutoParkId(rent.getAutoParkId());
-        rentForUpdate.setVehicleId(rent.getVehicleId());
-        rentForUpdate.setCustomerId(rent.getCustomerId());
-        rentForUpdate.setCreateDateTime(rent.getCreateDateTime());
-        rentForUpdate.setId(rent.getId());
-        return rentForUpdate;
+        Optional<Rent> rentForUpdate = findById(rent.getId());
+        if (rentForUpdate.isPresent()) {
+            Rent rentGet = rentForUpdate.get();
+            rentGet.setAutoParkId(rent.getAutoParkId());
+            rentGet.setVehicleId(rent.getVehicleId());
+            rentGet.setCustomerId(rent.getCustomerId());
+            rentGet.setCreateDateTime(rent.getCreateDateTime());
+            rentGet.setId(rent.getId());
+            return rentGet;
+        }
+
+        throw new RentNotFoundException("Cant find rent with id: " + rent.getId());
     }
 
     @Override

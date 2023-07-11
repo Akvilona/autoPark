@@ -7,8 +7,11 @@ import ru.autopark.model.AutoPark;
 import ru.autopark.repository.AutoParkRepository;
 import ru.autopark.util.Util;
 
+import java.util.Optional;
+
 public class AutoParkRepositoryImpl implements AutoParkRepository {
     private static final int AUTO_PARK_COUNT = 60;
+    //TODO: refactor with ArrayList
     private final AutoPark[] autoParks = new AutoPark[AUTO_PARK_COUNT];
 
     @Override
@@ -32,13 +35,13 @@ public class AutoParkRepositoryImpl implements AutoParkRepository {
     }
 
     @Override
-    public AutoPark findById(final long autoParkId) {
+    public Optional<AutoPark> findById(final long autoParkId) {
         for (AutoPark autoPark : autoParks) {
             if (autoPark != null && autoPark.getId() == autoParkId) {
-                return autoPark;
+                return Optional.of(autoPark);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -54,9 +57,10 @@ public class AutoParkRepositoryImpl implements AutoParkRepository {
 
     @Override
     public AutoPark update(final AutoPark autoPark) {
-        AutoPark autoPark1 = findById(autoPark.getId());
-        autoPark1.setName(autoPark.getName());
-        return autoPark1;
+        Optional<AutoPark> autoPark1 = findById(autoPark.getId());
+        AutoPark autoPark2 = autoPark1.get();
+        autoPark2.setName(autoPark.getName());
+        return autoPark2;
     }
 
     @Override

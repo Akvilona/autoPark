@@ -27,7 +27,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Vehicle findById(final long vehicleId) {
-        Vehicle vehicle = vehicleRepository.findById(vehicleId);
+        Vehicle vehicle = vehicleRepository.findById(vehicleId).get();
         if (vehicle == null) {
             throw new VehicleNotFoundException("Cant find Vehicle with id: " + vehicleId);
         }

@@ -18,6 +18,10 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Random;
 
+//1) ДЗ Методичка 3 (generic)
+//2) Рефакторинг репозиториев с новым репозиторием CrudRepository<T>
+//3) Проверить как это работает
+
 public final class App {
     private App() {
 

@@ -7,8 +7,11 @@ import ru.autopark.model.Vehicle;
 import ru.autopark.repository.VehicleRepository;
 import ru.autopark.util.Util;
 
+import java.util.Optional;
+
 public class VehicleRepositoryImpl implements VehicleRepository {
 
+    //TODO: refactor with ArrayList
     private static final int VEHICLECOUNT = 100;
     private static Vehicle[] vehicles = new Vehicle[VEHICLECOUNT]; // массив вместо таблицы базы данных
 
@@ -36,13 +39,13 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 //    }
 
     @Override
-    public Vehicle findById(final long vehicleId) {
+    public Optional<Vehicle> findById(final long vehicleId) {
         for (Vehicle vehicle : vehicles) {
             if (vehicle != null && vehicle.getId() == vehicleId) {
-                return vehicle;
+                return Optional.of(vehicle);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -58,7 +61,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 
     @Override
     public Vehicle update(final Vehicle vehicle) {
-        Vehicle vehicleForUpdate = findById(vehicle.getId());
+        Vehicle vehicleForUpdate = findById(vehicle.getId()).get();
         vehicleForUpdate.setAutoParkId(vehicle.getAutoParkId());
         vehicleForUpdate.setMileage(vehicle.getMileage());
         vehicleForUpdate.setModel(vehicle.getModel());
