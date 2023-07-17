@@ -9,10 +9,10 @@ import java.util.Optional;
 
 //TODO: extends CrudRepository
 public interface RentRepository {
-    Rent findByCustomerId(long customerId);
+    Optional<Rent> findByCustomerId(long customerId);
 
     //TODO: remove
-    Rent save(Rent rent);
+    Optional<Rent> save(Rent rent);
 
     Optional<Rent> findById(long rentId);
 
@@ -20,6 +20,6 @@ public interface RentRepository {
 
     boolean deleteById(long rentId);
 
-    Rent update(Rent rent);
+    Optional<Rent> update(Rent rent);
 
 }

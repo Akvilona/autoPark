@@ -10,7 +10,7 @@ import java.util.Optional;
 //TODO: extends CrudRepository
 public interface VehicleRepository {
     //TODO: remove
-    Vehicle save(Vehicle vehicle);
+    Optional<Vehicle> save(Vehicle vehicle);
 
     Optional<Vehicle> findById(long vehicleId);
 
@@ -18,6 +18,6 @@ public interface VehicleRepository {
 
     boolean deleteById(long vehicleId);
 
-    Vehicle update(Vehicle vehicle);
+    Optional<Vehicle> update(Vehicle vehicle);
 
 }

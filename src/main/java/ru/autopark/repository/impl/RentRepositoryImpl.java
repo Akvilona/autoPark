@@ -16,13 +16,13 @@ public class RentRepositoryImpl implements RentRepository {
     private final Rent[] rents = new Rent[RENT_COUNT];
 
     @Override
-    public Rent save(final Rent rent) {
+    public Optional<Rent> save(final Rent rent) {
         int index = Util.findEmptyIndex(rents);
         if (index == -1) {
-            return null;
+            return Optional.empty();
         }
         rents[index] = rent;
-        return rent;
+        return Optional.of(rent);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public Rent update(final Rent rent) {
+    public Optional<Rent> update(final Rent rent) {
         Optional<Rent> rentForUpdate = findById(rent.getId());
         if (rentForUpdate.isPresent()) {
             Rent rentGet = rentForUpdate.get();
@@ -56,7 +56,7 @@ public class RentRepositoryImpl implements RentRepository {
             rentGet.setCustomerId(rent.getCustomerId());
             rentGet.setCreateDateTime(rent.getCreateDateTime());
             rentGet.setId(rent.getId());
-            return rentGet;
+            return Optional.of(rentGet);
         }
 
         throw new RentNotFoundException("Cant find rent with id: " + rent.getId());
@@ -68,12 +68,12 @@ public class RentRepositoryImpl implements RentRepository {
     }
 
     @Override
-    public Rent findByCustomerId(final long customerId) {
+    public Optional<Rent> findByCustomerId(final long customerId) {
         for (int i = 0; i < rents.length; i++) {
             if (rents[i] != null && rents[i].getCustomerId() == customerId) {
-                return rents[i];
+                return Optional.of(rents[i]);
             }
         }
-        return null;
+        return Optional.empty();
     }
 }

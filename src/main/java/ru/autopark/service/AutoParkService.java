@@ -5,18 +5,20 @@ package ru.autopark.service;
 
 import ru.autopark.model.AutoPark;
 
+import java.util.Optional;
+
 public interface AutoParkService {
 
-    AutoPark save(AutoPark autoPark);
+    Optional<AutoPark> save(AutoPark autoPark);
 
     //Опционально
-    AutoPark findByName(String name);
+    Optional<AutoPark> findByName(String name);
 
-    AutoPark findById(long autoParkId);
+    Optional<AutoPark> findById(long autoParkId);
 
     AutoPark[] findAll();
 
-    boolean deleteById(long customerId);
+    Optional<Boolean> deleteById(long customerId);
 
-    AutoPark update(AutoPark autoPark);
+    Optional<AutoPark> update(AutoPark autoPark);
 }

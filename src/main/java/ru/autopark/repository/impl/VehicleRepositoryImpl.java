@@ -16,27 +16,14 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     private static Vehicle[] vehicles = new Vehicle[VEHICLECOUNT]; // массив вместо таблицы базы данных
 
     @Override
-    public Vehicle save(final Vehicle vehicle) {
+    public Optional<Vehicle> save(final Vehicle vehicle) {
         int index = Util.findEmptyIndex(vehicles);
         if (index == -1) {
-            return null;
+            return Optional.empty();
         }
         vehicles[index] = vehicle;
-        return vehicle;
+        return Optional.of(vehicle);
     }
-
-//    @Override
-//    public Vehicle findByAll(final Long id, final Brand brand, final Model model, final LocalDate releaseDate, final Integer mileage) {
-//        for (Vehicle vehicle : vehicles) {
-//            if (vehicle != null && vehicle.getBrand().equals(brand)
-//                    && vehicle.getModel().equals(model)
-//                    && vehicle.getReleaseDate().equals(releaseDate)
-//                    && vehicle.getMileage().equals(mileage)) {
-//                return vehicle;
-//            }
-//        }
-//        return null;
-//    }
 
     @Override
     public Optional<Vehicle> findById(final long vehicleId) {
@@ -60,14 +47,18 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
-    public Vehicle update(final Vehicle vehicle) {
-        Vehicle vehicleForUpdate = findById(vehicle.getId()).get();
-        vehicleForUpdate.setAutoParkId(vehicle.getAutoParkId());
-        vehicleForUpdate.setMileage(vehicle.getMileage());
-        vehicleForUpdate.setModel(vehicle.getModel());
-        vehicleForUpdate.setBrand(vehicle.getBrand());
-        vehicleForUpdate.setReleaseDate(vehicle.getReleaseDate());
-        return vehicleForUpdate;
+    public Optional<Vehicle> update(final Vehicle vehicle) {
+        Optional<Vehicle> vehicleOptional = findById(vehicle.getId());
+        if (vehicleOptional.isPresent()) {
+            Vehicle vehicle1 = vehicleOptional.get();
+            vehicle1.setAutoParkId(vehicle.getAutoParkId());
+            vehicle1.setMileage(vehicle.getMileage());
+            vehicle1.setModel(vehicle.getModel());
+            vehicle1.setBrand(vehicle.getBrand());
+            vehicle1.setReleaseDate(vehicle.getReleaseDate());
+            return Optional.of(vehicle1);
+        }
+        return Optional.of(vehicle);
     }
 
     @Override

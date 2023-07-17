@@ -12,26 +12,27 @@ import ru.autopark.repository.impl.VehicleRepositoryImpl;
 import ru.autopark.service.VehicleService;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class VehicleServiceImpl implements VehicleService {
     private VehicleRepositoryImpl vehicleRepository;
 
     @Override
-    public Vehicle save(final Vehicle vehicle) {
+    public Optional<Vehicle> save(final Vehicle vehicle) {
         vehicleRepository.save(vehicle);
         if (vehicle == null) {
             throw new VehicleNotFoundException("Cant find Vehicle with id: " + vehicle);
         }
-        return vehicle;
+        return Optional.of(vehicle);
     }
 
     @Override
-    public Vehicle findById(final long vehicleId) {
+    public Optional<Vehicle> findById(final long vehicleId) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).get();
         if (vehicle == null) {
             throw new VehicleNotFoundException("Cant find Vehicle with id: " + vehicleId);
         }
-        return vehicle;
+        return Optional.of(vehicle);
     }
 
     @Override
@@ -53,16 +54,17 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public boolean deleteById(final long vehicleId) {
+    public Optional<Boolean> deleteById(final long vehicleId) {
         if (!vehicleRepository.deleteById(vehicleId)) {
-            throw new VehicleNotFoundException("Cant delete Vehicle with id: " + vehicleId);
+            return Optional.of(false);
+//            throw new VehicleNotFoundException("Cant delete Vehicle with id: " + vehicleId);
         }
-        return true;
+        return Optional.of(true);
     }
 
     @Override
-    public Vehicle update(final Vehicle vehicle) {
-        Vehicle vehicle1 = vehicleRepository.update(vehicle);
+    public Optional<Vehicle> update(final Vehicle vehicle) {
+        Optional<Vehicle> vehicle1 = vehicleRepository.update(vehicle);
         if (vehicle1 == null) {
             throw new VehicleNotFoundException("Cant find Vehicle with id: " + vehicle);
         }

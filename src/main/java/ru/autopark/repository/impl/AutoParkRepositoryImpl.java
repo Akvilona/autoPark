@@ -11,27 +11,26 @@ import java.util.Optional;
 
 public class AutoParkRepositoryImpl implements AutoParkRepository {
     private static final int AUTO_PARK_COUNT = 60;
-    //TODO: refactor with ArrayList
     private final AutoPark[] autoParks = new AutoPark[AUTO_PARK_COUNT];
 
     @Override
-    public AutoPark save(final AutoPark autoPark) {
+    public Optional<AutoPark> save(final AutoPark autoPark) {
         int index = Util.findEmptyIndex(autoParks);
         if (index == -1) {
-            return null;
+            return Optional.empty();
         }
         autoParks[index] = autoPark;
-        return autoPark;
+        return Optional.of(autoPark);
     }
 
     @Override
-    public AutoPark findByName(final String name) {
+    public Optional<AutoPark> findByName(final String name) {
         for (AutoPark autoPark : autoParks) {
             if (autoPark != null && autoPark.getName().equals(name)) {
-                return autoPark;
+                return Optional.of(autoPark);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -56,11 +55,11 @@ public class AutoParkRepositoryImpl implements AutoParkRepository {
     }
 
     @Override
-    public AutoPark update(final AutoPark autoPark) {
+    public Optional<AutoPark> update(final AutoPark autoPark) {
         Optional<AutoPark> autoPark1 = findById(autoPark.getId());
         AutoPark autoPark2 = autoPark1.get();
         autoPark2.setName(autoPark.getName());
-        return autoPark2;
+        return Optional.of(autoPark2);
     }
 
     @Override

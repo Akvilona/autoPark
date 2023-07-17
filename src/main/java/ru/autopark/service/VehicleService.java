@@ -8,17 +8,18 @@ import ru.autopark.model.enums.Brand;
 import ru.autopark.model.enums.Model;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public interface VehicleService {
-    Vehicle save(Vehicle vehicle);
+    Optional<Vehicle> save(Vehicle vehicle);
 
-    Vehicle findById(long vehicleId);
+    Optional<Vehicle> findById(long vehicleId);
 
     Vehicle[] findAll();
 
     Vehicle[] findAll(Long id, Brand brand, Model model, LocalDate releaseDate, Integer mileage);
 
-    boolean deleteById(long vehicleId);
+    Optional<Boolean> deleteById(long vehicleId);
 
-    Vehicle update(Vehicle vehicle);
+    Optional<Vehicle> update(Vehicle vehicle);
 }

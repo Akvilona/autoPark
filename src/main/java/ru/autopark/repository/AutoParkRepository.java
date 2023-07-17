@@ -7,15 +7,13 @@ import ru.autopark.model.AutoPark;
 
 import java.util.Optional;
 
-//TODO: extends CrudRepository
 public interface AutoParkRepository {
 
     //Опционально
-    AutoPark findByName(String name);
+    Optional<AutoPark> findByName(String name);
 
 
-    //TODO: remove
-    AutoPark save(AutoPark autoPark);
+    Optional<AutoPark> save(AutoPark autoPark);
 
     Optional<AutoPark> findById(long autoParkId);
 
@@ -23,6 +21,6 @@ public interface AutoParkRepository {
 
     boolean deleteById(long customerId);
 
-    AutoPark update(AutoPark autoPark);
+    Optional<AutoPark> update(AutoPark autoPark);
 
 }

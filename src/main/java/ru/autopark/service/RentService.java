@@ -3,18 +3,20 @@ package ru.autopark.service;
 import ru.autopark.model.Rent;
 import ru.autopark.repository.RentRepository;
 
+import java.util.Optional;
+
 public interface RentService {
-    Rent findByCustomerName(String name, String phone);
+    Optional<Rent> findByCustomerName(String name, String phone);
 
-    Rent save(Rent rent);
+    Optional<Rent> save(Rent rent);
 
-    Rent findById(long rentId);
+    Optional<Rent> findById(long rentId);
 
-    Rent findByCustomerId(long customerId);
+    Optional<Rent> findByCustomerId(long customerId);
 
     RentRepository findAll();
 
-    boolean deleteById(long rentId);
+    Optional<Boolean> deleteById(long rentId);
 
-    Rent update(Rent rent);
+    Optional<Rent> update(Rent rent);
 }

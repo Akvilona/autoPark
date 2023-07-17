@@ -21,18 +21,18 @@ public class RentServiceImpl implements RentService {
     }
 
     @Override
-    public Rent findById(final long rentId) {
+    public Optional<Rent> findById(final long rentId) {
         Optional<Rent> rent1 = rentRepository.findById(rentId);
         if (rent1.isEmpty()) {
             throw new RentNotFoundException("Cant find RentId" + rentId);
         }
-        return rent1.get();
+        return Optional.of(rent1.get());
     }
 
     @Override
-    public Rent findByCustomerName(final String name, final String phone) {
-        Customer customer = customerService.findByNameAndPhone(name, phone);
-        Rent rent = rentRepository.findByCustomerId(customer.getId());
+    public Optional<Rent> findByCustomerName(final String name, final String phone) {
+        Optional<Customer> customer = customerService.findByNameAndPhone(name, phone);
+        Optional<Rent> rent = rentRepository.findByCustomerId(customer.get().getId());
         if (rent == null) {
             throw new IllegalArgumentException("Cant find rent by customer name and phone: " + customer);
         }
@@ -40,8 +40,8 @@ public class RentServiceImpl implements RentService {
     }
 
     @Override
-    public Rent save(final Rent rent) {
-        Rent rent1 = rentRepository.save(rent);
+    public Optional<Rent> save(final Rent rent) {
+        Optional<Rent> rent1 = rentRepository.save(rent);
         if (rent1 == null) {
             throw new RentNotFoundException("Cant find Rent" + rent);
         }
@@ -49,9 +49,9 @@ public class RentServiceImpl implements RentService {
     }
 
     @Override
-    public Rent findByCustomerId(final long customerId) {
-        Customer customer = customerService.findById(customerId);
-        Rent rent = rentRepository.findByCustomerId(customer.getId());
+    public Optional<Rent> findByCustomerId(final long customerId) {
+        Optional<Customer> customer = customerService.findById(customerId);
+        Optional<Rent> rent = rentRepository.findByCustomerId(customer.get().getId());
         if (rent == null) {
             throw new IllegalArgumentException("Cant find rent by customer id: " + customerId);
         }
@@ -64,20 +64,20 @@ public class RentServiceImpl implements RentService {
     }
 
     @Override
-    public boolean deleteById(final long rentId) {
+    public Optional<Boolean> deleteById(final long rentId) {
         if (!rentRepository.deleteById(rentId)) {
             throw new IllegalArgumentException("Cant find rent id: " + rentId);
         } else {
-            return false;
+            return Optional.of(false);
         }
     }
 
     @Override
-    public Rent update(final Rent rent) {
-        Rent update = update(rent);
+    public Optional<Rent> update(final Rent rent) {
+        Optional<Rent> update = update(rent);
         if (update == null) {
             throw new IllegalArgumentException("Cant update rent: " + rent);
         }
-        return null;
+        return update;
     }
 }

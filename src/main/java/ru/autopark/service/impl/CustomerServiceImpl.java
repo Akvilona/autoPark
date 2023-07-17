@@ -15,24 +15,24 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer findById(final long customerId) {
-        return customerRepository.findById(customerId)
-                .orElseThrow(() -> new CustomerNotFoundExcepton("Cant find customer with id: " + customerId));
+    public Optional<Customer> findById(final long customerId) {
+        return Optional.ofNullable(customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundExcepton("Cant find customer with id: " + customerId)));
     }
 
     @Override
-    public Customer findByNameAndPhone(final String name, final String phone) {
-        Customer customer = customerRepository.findByNameAndPhone(name, phone);
-        if (customer == null) {
+    public Optional<Customer> findByNameAndPhone(final String name, final String phone) {
+        Optional<Customer> customer = customerRepository.findByNameAndPhone(name, phone);
+        if (customer.isEmpty()) {
             throw new CustomerNotFoundExcepton("Cant find customer with name: " + name);
         }
         return customer;
     }
 
     @Override
-    public Customer save(final Customer customer) {
-        Customer save = customerRepository.save(customer);
-        if (save == null) {
+    public Optional<Customer> save(final Customer customer) {
+        Optional<Customer> save = customerRepository.save(customer);
+        if (Optional.ofNullable(save).isEmpty()) {
             throw new CustomerNotFoundExcepton("Cant find customer with customer: " + customer);
         }
         return save;

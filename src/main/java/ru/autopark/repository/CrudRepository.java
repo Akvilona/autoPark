@@ -1,9 +1,11 @@
 package ru.autopark.repository;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public interface CrudRepository<T> {
-    T save(T t);
+
+    Optional<T> save(T t);
 
     Optional<T> findById(Long tId);
 

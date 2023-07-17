@@ -7,28 +7,27 @@ import ru.autopark.util.Util;
 import java.util.Optional;
 
 public class CustomerRepositoryImpl implements CustomerRepository {
-    //TODO: refactor with ArrayList
     private static final int CUSTOMERS_COUNT = 50;
     private final Customer[] customers = new Customer[CUSTOMERS_COUNT];
 
     @Override
-    public Customer save(final Customer customer) {
+    public Optional<Customer> save(final Customer customer) {
         int index = Util.findEmptyIndex(customers);
         if (index == -1) {
-            return null;
+            return Optional.empty();
         }
         customers[index] = customer;
-        return customer;
+        return Optional.of(customer);
     }
 
     @Override
-    public Customer findByNameAndPhone(final String name, final String phone) {
+    public Optional<Customer> findByNameAndPhone(final String name, final String phone) {
         for (Customer customer : customers) {
             if (customer.getName().equals(name) && customer.getPhone().equals(phone)) {
-                return customer;
+                return Optional.of(customer);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override

@@ -2,12 +2,14 @@ package ru.autopark.service;
 
 import ru.autopark.model.Customer;
 
+import java.util.Optional;
+
 public interface CustomerService {
-    Customer findById(long customerId);
+    Optional<Customer> findById(long customerId);
 
-    Customer save(Customer customer);
+    Optional<Customer> save(Customer customer);
 
-    Customer findByNameAndPhone(String name, String phone);
+    Optional<Customer> findByNameAndPhone(String name, String phone);
 
     Customer[] findAll();
 }

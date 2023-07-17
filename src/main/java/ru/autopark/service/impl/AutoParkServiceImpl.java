@@ -18,27 +18,27 @@ public class AutoParkServiceImpl implements AutoParkService {
     }
 
     @Override
-    public AutoPark save(final AutoPark autoPark) {
-        AutoPark autoPark1 =  autoParkRepository.save(autoPark);
-        if (autoPark1 == null) {
+    public Optional<AutoPark> save(final AutoPark autoPark) {
+        Optional<AutoPark> autoPark1 =  autoParkRepository.save(autoPark);
+        if (autoPark1.isEmpty()) {
             throw new AutoParkNotFoundException("Cant find AutoPark:" + autoPark);
         }
         return autoPark1;
     }
 
     @Override
-    public AutoPark findByName(final String name) {
-        AutoPark autoPark = autoParkRepository.findByName(name);
-        if (autoPark == null) {
+    public Optional<AutoPark> findByName(final String name) {
+        Optional<AutoPark> autoPark = autoParkRepository.findByName(name);
+        if (autoPark.isEmpty()) {
             throw new AutoParkNotFoundException("Cant find AutoPark: " + name);
         }
         return autoPark;
     }
 
     @Override
-    public AutoPark findById(final long autoParkId) {
+    public Optional<AutoPark> findById(final long autoParkId) {
         Optional<AutoPark> autoPark = autoParkRepository.findById(autoParkId);
-        return autoPark.get();
+        return Optional.of(autoPark.get());
     }
 
     @Override
@@ -51,17 +51,17 @@ public class AutoParkServiceImpl implements AutoParkService {
     }
 
     @Override
-    public boolean deleteById(final long customerId) {
+    public Optional<Boolean> deleteById(final long customerId) {
         if (!autoParkRepository.deleteById(customerId)) {
             throw new AutoParkNotFoundException("Cant delete AutoPark by customerId: " + customerId);
         }
-        return true;
+        return Optional.of(true);
     }
 
     @Override
-    public AutoPark update(final AutoPark autoPark) {
-        AutoPark autoPark1 = autoParkRepository.update(autoPark);
-        if (autoPark1 == null) {
+    public Optional<AutoPark> update(final AutoPark autoPark) {
+        Optional<AutoPark> autoPark1 = autoParkRepository.update(autoPark);
+        if (autoPark1.isEmpty()) {
             throw new AutoParkNotFoundException("Cant update AutoPark: " + autoPark);
         }
         return autoPark1;
