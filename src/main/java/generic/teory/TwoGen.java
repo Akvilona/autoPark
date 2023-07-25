@@ -14,7 +14,7 @@ public class TwoGen<T, V> {
         this.obj2 = obj2;
     }
 
-    // создаем метод выода типов параметров
+    // создаем метод вывода типов параметров
     public void showTypes() {
         System.out.println("Type T: " + obj1.getClass().getName());
         System.out.println("Type V: " + obj2.getClass().getName());

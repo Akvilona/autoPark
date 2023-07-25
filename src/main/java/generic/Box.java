@@ -12,6 +12,20 @@ public class Box<T extends Fruit> {
     public void add(final T fruit) {
         this.box.add(fruit);
     }
+    public int sizeBox() {
+        return box.size();
+    }
+    public void addAll(final T[] fruit) {
+        for (int i = 0; i < fruit.length; i++) {
+            this.box.add(fruit[i]);
+        }
+    }
+
+    public void addAllVarArgs(final T... fruits) {
+        for (int i = 0; i < fruits.length; i++) {
+            this.box.add(fruits[i]);
+        }
+    }
 
     public void printBox() {
         for (T fruit: box) {
@@ -29,5 +43,20 @@ public class Box<T extends Fruit> {
 
     public List<T> getBox() {
         return this.box;
+    }
+    public Fruit getFruit(final int i) {
+        return this.box.get(i);
+    }
+
+    public boolean compare(final Box<?> anotherBox) {
+        return this.getWeight() - anotherBox.getWeight() == 0;
+    }
+
+    public boolean pourOver(final ArrayList<T> box) {
+        int count = box.size();
+        for (int i = 0; i < count; i++) {
+            this.box.add((T) getFruit(i));
+        }
+        return true; /* пересыпали */
     }
 }

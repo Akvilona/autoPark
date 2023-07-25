@@ -3,44 +3,21 @@
  **/
 package generic;
 
+import java.util.ArrayList;
+
 public final class Main {
     private Main() {
     }
 
     public static void main(final String[] args) {
+        Box<Banana> bananaBox = new Box<>();
+        Box<Apple>  appleBox  = new Box<>();
 
-/*
-        // первое задание, меняем местами цифры в массиве
-        final int a = 100;
-        final int b = 10;
-        final int c = 20;
+        bananaBox.add(new Banana());
+        appleBox.addAllVarArgs(new Apple(), new Apple());
 
-        ArrayChange array = new ArrayChange();
-        array.addElementArray(a);
-        array.swapPlaces(b, c);
-*/
-// второе задание
-        Box<Orange> orangeBox = new Box<>();
-        Box<Apple> appleBox = new Box<>();
+        System.out.println(bananaBox.compare(appleBox));
 
-        orangeBox.add(new Orange());
-        orangeBox.add(new Orange());
-        orangeBox.add(new Orange());
-        orangeBox.add(new Orange());
-
-        appleBox.add(new Apple());
-        appleBox.add(new Apple());
-        appleBox.add(new Apple());
-        appleBox.add(new Apple());
-
-        orangeBox.printBox();
-        appleBox.printBox();
-
-        for (Orange orange: orangeBox.getBox()) {
-            System.out.println(orange);
-        }
-        for (Apple apple: appleBox.getBox()) {
-            System.out.println(apple);
-        }
+        System.out.println(bananaBox.pourOver((ArrayList<Banana>) bananaBox.getBox()));
     }
 }
