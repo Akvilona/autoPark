@@ -11,7 +11,6 @@ import java.util.Optional;
 
 public class VehicleRepositoryImpl implements VehicleRepository {
 
-    //TODO: refactor with ArrayList
     private static final int VEHICLECOUNT = 100;
     private static Vehicle[] vehicles = new Vehicle[VEHICLECOUNT]; // массив вместо таблицы базы данных
 

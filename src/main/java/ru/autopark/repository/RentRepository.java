@@ -7,11 +7,9 @@ import ru.autopark.model.Rent;
 
 import java.util.Optional;
 
-//TODO: extends CrudRepository
 public interface RentRepository {
     Optional<Rent> findByCustomerId(long customerId);
 
-    //TODO: remove
     Optional<Rent> save(Rent rent);
 
     Optional<Rent> findById(long rentId);

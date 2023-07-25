@@ -7,9 +7,7 @@ import ru.autopark.model.Vehicle;
 
 import java.util.Optional;
 
-//TODO: extends CrudRepository
 public interface VehicleRepository {
-    //TODO: remove
     Optional<Vehicle> save(Vehicle vehicle);
 
     Optional<Vehicle> findById(long vehicleId);

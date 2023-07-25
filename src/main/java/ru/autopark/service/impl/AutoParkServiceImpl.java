@@ -43,7 +43,7 @@ public class AutoParkServiceImpl implements AutoParkService {
 
     @Override
     public AutoPark[] findAll() {
-        AutoPark[] autoPark = autoParkRepository.findAll();
+        AutoPark[] autoPark = autoParkRepository.findAll().toArray(new AutoPark[0]);
         if (autoPark == null) {
             throw new AutoParkNotFoundException("Cant find List AutoPark[]");
         }

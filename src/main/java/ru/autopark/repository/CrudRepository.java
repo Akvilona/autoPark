@@ -1,6 +1,5 @@
 package ru.autopark.repository;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 public interface CrudRepository<T> {

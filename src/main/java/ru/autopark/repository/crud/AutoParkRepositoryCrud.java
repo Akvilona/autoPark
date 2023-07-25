@@ -5,48 +5,55 @@ package ru.autopark.repository.crud;
 
 import ru.autopark.model.AutoPark;
 import ru.autopark.repository.CrudRepository;
-import ru.autopark.util.Util;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-public class AutoParkRepositoryCrud<AutoPark> implements CrudRepository<AutoPark> {
-
-//    private static final int AUTO_PARK_COUNT = 60;
-//    private final AutoPark[] autoParks = new AutoPark[AUTO_PARK_COUNT];
-    private final ArrayList<AutoPark> autoParks =  new ArrayList<>();
+public class AutoParkRepositoryCrud implements CrudRepository<AutoPark> {
+    private final List<AutoPark> autoParks = new ArrayList<>();
 
     @Override
-    public Optional<AutoPark> save(AutoPark autoPark) {
-        int index = Util.findEmptyIndex(autoParks);
-        if (index == -1) {
-            return Optional.empty();
-        }
-        autoParks.set(index, autoPark);
-        return Optional.of(autoPark);    }
+    public Optional<AutoPark> save(final AutoPark autoPark) {
+        autoParks.add(autoPark);
+        return Optional.of(autoPark);
+    }
 
     @Override
-    public Optional<AutoPark> findById(Long tId) {
+    public Optional<AutoPark> findById(final Long tId) {
         for (AutoPark autoPark : autoParks) {
-//            if (autoPark != null && autoPark.getName().equals(name)) {
+            if (autoPark.getId().equals(tId)) {
                 return Optional.of(autoPark);
-//            }
+            }
         }
         return Optional.empty();
     }
 
     @Override
     public AutoPark[] findAll() {
-        return null;
+        AutoPark[] autoParks1 = new AutoPark[autoParks.size()];
+        int i = 0;
+        for (AutoPark autoPark : autoParks) {
+            autoParks1[i].setId(autoPark.getId());
+            autoParks1[i].setName(autoPark.getName());
+            i++;
+        }
+        return autoParks1;
     }
 
     @Override
-    public boolean deleteById(Long tId) {
-        return false;
+    public boolean deleteById(final Long tId) {
+        return autoParks.remove(tId);
     }
 
     @Override
-    public AutoPark update(AutoPark autoPark) {
-        return null;
+    public AutoPark update(final AutoPark autoPark) {
+        for (AutoPark autoPark1 : autoParks) {
+            if (autoPark1.getId().equals(autoPark.getId())) {
+                autoPark1.setName(autoPark.getName());
+                return autoPark1;
+            }
+        }
+        return new AutoPark();
     }
 }

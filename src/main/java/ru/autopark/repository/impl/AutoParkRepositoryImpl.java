@@ -5,21 +5,18 @@ package ru.autopark.repository.impl;
 
 import ru.autopark.model.AutoPark;
 import ru.autopark.repository.AutoParkRepository;
-import ru.autopark.util.Util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class AutoParkRepositoryImpl implements AutoParkRepository {
     private static final int AUTO_PARK_COUNT = 60;
-    private final AutoPark[] autoParks = new AutoPark[AUTO_PARK_COUNT];
+    private final List<AutoPark> autoParks = new ArrayList<>();
 
     @Override
     public Optional<AutoPark> save(final AutoPark autoPark) {
-        int index = Util.findEmptyIndex(autoParks);
-        if (index == -1) {
-            return Optional.empty();
-        }
-        autoParks[index] = autoPark;
+        autoParks.add(autoPark);
         return Optional.of(autoPark);
     }
 
@@ -45,12 +42,6 @@ public class AutoParkRepositoryImpl implements AutoParkRepository {
 
     @Override
     public boolean deleteById(final long autoParkId) {
-        for (int i = 0; i < autoParks.length; i++) {
-            if (autoParks[i] != null && autoParks[i].getId() == autoParkId) {
-                autoParks[i] = null;
-                return true;
-            }
-        }
         return false;
     }
 
@@ -63,7 +54,7 @@ public class AutoParkRepositoryImpl implements AutoParkRepository {
     }
 
     @Override
-    public AutoPark[] findAll() {
+    public List<AutoPark> findAll() {
         return this.autoParks;
     }
 }

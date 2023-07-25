@@ -5,6 +5,7 @@ package ru.autopark.repository;
 
 import ru.autopark.model.AutoPark;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AutoParkRepository {
@@ -17,7 +18,7 @@ public interface AutoParkRepository {
 
     Optional<AutoPark> findById(long autoParkId);
 
-    AutoPark[] findAll();
+    List<AutoPark> findAll();
 
     boolean deleteById(long customerId);
 

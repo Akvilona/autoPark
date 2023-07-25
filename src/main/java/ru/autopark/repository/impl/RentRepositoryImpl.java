@@ -11,7 +11,6 @@ import ru.autopark.util.Util;
 import java.util.Optional;
 
 public class RentRepositoryImpl implements RentRepository {
-    //TODO: refactor with ArrayList
     private static final int RENT_COUNT = 50;
     private final Rent[] rents = new Rent[RENT_COUNT];
 
