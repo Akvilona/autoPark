@@ -1,14 +1,11 @@
 /**
  * Создал Андрей Антонов 27.07.2023 11:11
  **/
-package generic.Shape;
+package generic.shape;
 
-public class Rectangle implements Shape {
-    private int width;
-    private int height;
-
-    public Rectangle() {
-    }
+public class Rectangle extends Shape {
+    private final int width;
+    private final int height;
 
     public Rectangle(final int width, final int height) {
         this.width = width;

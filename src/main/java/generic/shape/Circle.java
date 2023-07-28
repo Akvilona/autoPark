@@ -1,14 +1,13 @@
 /**
  * Создал Андрей Антонов 27.07.2023 11:22
  **/
-package generic.Shape;
+package generic.shape;
 
-public class Circle implements Shape {
-    private int radius;
+//abstract class -> extends. Только 1 наследник
+//interface -> implements. Много наследников
 
-    public Circle() {
-
-    }
+public class Circle extends Shape {
+    private final int radius;
 
     public Circle(final int radius) {
         this.radius = radius;
