@@ -4,9 +4,7 @@
  **/
 package generic.arrayList;
 
-import java.util.Iterator;
-
-public interface My<T> extends Iterable<T> {
+public interface MyArrayList<T> extends Iterable<T> {
 
     boolean add (T e);
 

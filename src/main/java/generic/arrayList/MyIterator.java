@@ -10,20 +10,6 @@ public class MyIterator<T> implements Iterator<T> {
     private int index = 0;
     private T[] objects;
 
-    public static void main(String[] args) {
-        Integer[] integers = new Integer[3];
-        integers[0] = 3;
-        integers[1] = 5;
-        integers[2] = 13;
-
-        MyIterator<Integer> myIterator = new MyIterator<>(integers);
-
-        while (myIterator.hasNext()) {
-            Integer i = myIterator.next();
-            System.out.println(i);
-        }
-    }
-
     public MyIterator(T[] objects) {
         this.objects = objects;
     }
