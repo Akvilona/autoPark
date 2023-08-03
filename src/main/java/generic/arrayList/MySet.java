@@ -14,12 +14,12 @@ public class MySet {
         //2) проверяется equals
         //3) если equals == true => то такой объект в коллекции
 
-//        Set<User> userSet = new HashSet<>();
-//
-//        User user = new User(1, "1");
-//        System.out.println(user.hashCode());
-//
-//        userSet.add(new User(2, "asd"));
+        Set<User> userSet = new HashSet<>();
+
+        User user = new User(1, "1");
+        System.out.println(user.hashCode());
+
+        userSet.add(new User(2, "asd"));
 //        userSet.add(new User(3, "ssss"));
 //        userSet.add(new User(4, "dsa"));
 //        userSet.add(new User(5, "fff"));
