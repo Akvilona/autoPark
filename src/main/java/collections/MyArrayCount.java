@@ -21,12 +21,8 @@ public class MyArrayCount {
 
     private static Map<String, Integer> calcUniqueWords(String[] words) {
         Map<String, Integer> result = new HashMap<>();
-        for (int i = 0; i < words.length; i++) {
-            if (result.get(words[i]) == null) {
-                result.put(words[i], 1);
-            } else {
-                result.put(words[i], result.get(words[i]) + 1);
-            }
+        for (String word : words) {
+            result.put(word, result.getOrDefault(word, 0) + 1);
         }
         return result;
     }
