@@ -61,16 +61,19 @@ public class MyLinkedList<E> implements MyList<E> {
         }
     }
 
+    //TODO:
     @Override
     public E get(int index) {
         return null;
     }
 
+    //TODO:
     @Override
     public int size() {
         return 0;
     }
 
+    //TODO:
     @Override
     public void update(int index, E e) {
 

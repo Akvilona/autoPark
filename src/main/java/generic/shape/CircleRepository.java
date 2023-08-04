@@ -2,12 +2,12 @@ package generic.shape;
 
 public class CircleRepository extends Shape implements CrudRepository, Printable {
     @Override
-    public Circle findById(int id) {
+    public Circle findById(final int id) {
         return null;
     }
 
     @Override
-    public boolean delete(Circle circle) {
+    public boolean delete(final Circle circle) {
         return false;
     }
 

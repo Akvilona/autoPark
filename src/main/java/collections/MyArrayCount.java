@@ -19,6 +19,7 @@ public class MyArrayCount {
         System.out.println(stringIntegerMap);
     }
 
+    //TODO:
     private static Map<String, Integer> calcUniqueWords(String[] words) {
         Map<String, Integer> result = new HashMap<>();
         for (String word : words) {

@@ -27,9 +27,6 @@ public class ShapeContainer<T extends Shape> {
         return totalPerimeter;
     }
 
-    /**
-     * метод, который возвращает общую площадь всех геометрических фигур в контейнере.
-     */
     double getTotalArea() {
         double totalArea = 0.0;
         for (T shape : this.shapeList) {
