@@ -1,4 +1,4 @@
-package generic.arrayList;
+package collections.set.example;
 
 import java.util.ArrayList;
 import java.util.Collection;
