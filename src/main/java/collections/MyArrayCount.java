@@ -3,6 +3,7 @@
  **/
 package collections;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -19,7 +20,15 @@ public class MyArrayCount {
     }
 
     private static Map<String, Integer> calcUniqueWords(String[] words) {
-        return null;
+        Map<String, Integer> result = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            if (result.get(words[i]) == null) {
+                result.put(words[i], 1);
+            } else {
+                result.put(words[i], result.get(words[i]) + 1);
+            }
+        }
+        return result;
     }
 
     private static String[] getWords() {
