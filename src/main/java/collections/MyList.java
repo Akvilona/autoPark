@@ -2,9 +2,9 @@
  * Создал Андрей Антонов 29.07.2023 16:56
  * https://youtu.be/R4AxRoCtTns
  **/
-package generic.arrayList;
+package collections;
 
-public interface MyArrayList<T> extends Iterable<T> {
+public interface MyList<T> {
 
     boolean add (T e);
 

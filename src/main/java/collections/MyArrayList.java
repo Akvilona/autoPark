@@ -1,33 +1,62 @@
+/**
+ * Создал Андрей Антонов 29.07.2023 16:55
+ * https://youtu.be/R4AxRoCtTns
+ **/
 package collections;
 
+/**
+ * Мой ArrayList
+ *
+ * @param <T>
+ */
+public class MyArrayList<T> implements MyList<T> {
 
-public class MyArrayList<E> {
     private static final int DEFAULT_CAPACITY = 10;
-    private final Object[] elements;
-    private final int size;
+    private T[] values;
 
     public MyArrayList() {
-        this.elements = new Object[DEFAULT_CAPACITY];
-        this.size = 0;
+        this.values = (T[]) new Object[DEFAULT_CAPACITY];
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean add(T e) {
+        try {
+            T[] temp = values;
+            values = (T[]) new Object[temp.length + 1];
+            System.arraycopy(temp, 0, values, 0, temp.length);
+            values[values.length - 1] = e;
+            return true;
+        } catch (ClassCastException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public void delete(int index) {
+        try {
+            T[] temp = values;
+            values = (T[]) new Object[temp.length - 1];
+            System.arraycopy(temp, 0, values, 0, index);
+            System.arraycopy(temp, index + 1, values, index, temp.length - index - 1);
+        } catch (ClassCastException exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public T get(int index) {
+        return values[index];
     }
 
     @Override
-    public String toString() {
-        return super.toString();
+    public int size() {
+        return values.length;
     }
+
+    @Override
+    public void update(int index, T e) {
+        values[index] = e;
+    }
+
 }

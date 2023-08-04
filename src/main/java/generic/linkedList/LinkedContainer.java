@@ -3,10 +3,15 @@
  **/
 package generic.linkedList;
 
-public class LinkedContainer<E> implements Linked<E>{
+public class LinkedContainer<E> implements Linked<E> {
     private Node<E> fstNode;
     private Node<E> lstNode;
     private int size = 0;
+
+    public LinkedContainer() {
+        lstNode = new Node<E>(null, fstNode, null);
+        fstNode = new Node<E>(null, null, lstNode);
+    }
 
     public static void main(String[] args) {
         Linked<String> stringLinked = new LinkedContainer<>();
@@ -17,12 +22,6 @@ public class LinkedContainer<E> implements Linked<E>{
         System.out.println(stringLinked.getElementByIndex(0));
     }
 
-
-    public LinkedContainer() {
-        lstNode = new Node<E>(null, fstNode, null);
-        fstNode = new Node<E>(null, null, lstNode);
-    }
-
     @Override
     public void addLast(E e) {
         Node<E> prev = lstNode;
@@ -30,7 +29,7 @@ public class LinkedContainer<E> implements Linked<E>{
         lstNode = new Node<E>(null, prev, null);
         prev.setNextElement(lstNode);
         size++;
-     }
+    }
 
     @Override
     public void addFirst(E e) {
@@ -48,7 +47,7 @@ public class LinkedContainer<E> implements Linked<E>{
         for (int i = 0; i < counter; i++) {
             target = getNextElement(target);
         }
-       return target.getCurrentElement();
+        return target.getCurrentElement();
     }
 
     private Node<E> getNextElement(Node<E> current) {
@@ -70,18 +69,23 @@ public class LinkedContainer<E> implements Linked<E>{
         public E getCurrentElement() {
             return currentElement;
         }
+
         public void setCurrentElement(E currentElement) {
             this.currentElement = currentElement;
         }
+
         public Node<E> getNextElement() {
             return nextElement;
         }
+
         public void setNextElement(Node<E> nextElement) {
             this.nextElement = nextElement;
         }
+
         public Node<E> getPrevElement() {
             return prevElement;
         }
+
         public void setPrevElement(Node<E> prevElement) {
             this.prevElement = prevElement;
         }
