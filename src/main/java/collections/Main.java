@@ -3,8 +3,48 @@
  **/
 package collections;
 
+import collections.algorithms.Algorithms;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
+
+        Algorithms algorithms = new Algorithms();
+        List<Integer> findDublicate = new ArrayList<>();
+        findDublicate.add(1);
+        findDublicate.add(2);
+        findDublicate.add(3);
+        findDublicate.add(1);
+        findDublicate.add(4);
+        findDublicate.add(5);
+        findDublicate.add(4);
+        findDublicate.add(6);
+        findDublicate.add(5);
+        findDublicate.add(9);
+//        Set<Integer> integerSet = algorithms.findDuplicate(findDublicate);
+        List<Integer> list = algorithms.mergeLists(findDublicate, findDublicate);
+        System.out.println(list);
+
+/*
+        List<String> words = new ArrayList<>();
+        Map<String, List<String>> result;
+        words.add("abcd");
+        words.add("dbca");
+        words.add("dbac");
+        words.add("dbca");
+        words.add("dbca");
+        words.add("dsaa");
+        words.add("asda");
+        words.add("acdb");
+        words.add("a22cdb");
+
+
+        result = algorithms.groupAnagrams(words);
+        System.out.println(result);
+*/
+/*
         MyPhoneBook phoneBook = new MyPhoneBook();
 
         java.util.LinkedList<String> javaLinked = new java.util.LinkedList<>();
@@ -32,6 +72,6 @@ public class Main {
         myLinkedList.add("3");
 
         myLinkedList.delete(2);
-
+*/
     }
 }
