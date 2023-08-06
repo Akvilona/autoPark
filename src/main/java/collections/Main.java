@@ -7,6 +7,7 @@ import collections.algorithms.Algorithms;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
@@ -73,5 +74,28 @@ public class Main {
 
         myLinkedList.delete(2);
 */
+
+        Stack stack = new Stack();
+
+        stack.push(1);      // вставляем 1 в stack
+        stack.push(2);      // вставляем 2 в stack
+
+        stack.pop();        // удаление верхнего элемента (2)
+        stack.pop();        // удаление верхнего элемента (1)
+
+        stack.push(3);      // вставляем 3 в stack
+
+        System.out.println("The top element is " + stack.peek());
+        System.out.println("The stack size is " + stack.size());
+
+        stack.pop();        // удаление верхнего элемента (3)
+
+        // проверяем, пуст ли stack
+        if (stack.isEmpty()) {
+            System.out.println("The stack is empty");
+        }
+        else {
+            System.out.println("The stack is not empty");
+        }
     }
 }
