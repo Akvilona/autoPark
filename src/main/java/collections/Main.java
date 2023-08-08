@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.Stack;
 
 public class Main {
+
     public static void main(String[] args) {
+
 
         Algorithms algorithms = new Algorithms();
         List<Integer> findDublicate = new ArrayList<>();
