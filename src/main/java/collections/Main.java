@@ -6,15 +6,15 @@ package collections;
 import collections.algorithms.Algorithms;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 public class Main {
 
     public static void main(String[] args) {
-
-
-        Algorithms algorithms = new Algorithms();
         List<Integer> findDublicate = new ArrayList<>();
         findDublicate.add(1);
         findDublicate.add(2);
@@ -27,14 +27,13 @@ public class Main {
         findDublicate.add(5);
         findDublicate.add(9);
 //        Set<Integer> integerSet = algorithms.findDuplicate(findDublicate);
-        List<Integer> list = algorithms.mergeLists(findDublicate, findDublicate);
-        System.out.println(list);
+//        List<Integer> list = algorithms.mergeListsWithHashSet(findDublicate, findDublicate);
+//        System.out.println(list);
 
-/*
         List<String> words = new ArrayList<>();
         Map<String, List<String>> result;
         words.add("abcd");
-        words.add("dbca");
+        words.add("abcd");
         words.add("dbac");
         words.add("dbca");
         words.add("dbca");
@@ -43,10 +42,11 @@ public class Main {
         words.add("acdb");
         words.add("a22cdb");
 
-
-        result = algorithms.groupAnagrams(words);
+        result = Algorithms.groupAnagrams(words);
         System.out.println(result);
-*/
+
+        LinkedList<String> linkedList = new LinkedList<>();
+
 /*
         MyPhoneBook phoneBook = new MyPhoneBook();
 

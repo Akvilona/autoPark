@@ -9,6 +9,7 @@
     <suppress files="." checks="MissingJavadocMethod"/>
     <suppress files="." checks="LineLength"/>
     <suppress files="." checks="HiddenField"/>
+    <suppress files="." checks="MagicNumber"/>
     <suppress files="Application.java" checks="HideUtilityClassConstructor"/>
     <suppress files="test[\\/]" checks="VisibilityModifier"/>
     <suppress files="test[\\/]" checks="HideUtilityClassConstructor"/>
