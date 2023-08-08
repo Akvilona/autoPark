@@ -26,9 +26,6 @@ public class Main {
         findDublicate.add(6);
         findDublicate.add(5);
         findDublicate.add(9);
-//        Set<Integer> integerSet = algorithms.findDuplicate(findDublicate);
-//        List<Integer> list = algorithms.mergeListsWithHashSet(findDublicate, findDublicate);
-//        System.out.println(list);
 
         List<String> words = new ArrayList<>();
         Map<String, List<String>> result;
