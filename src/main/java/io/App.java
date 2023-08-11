@@ -3,16 +3,15 @@ package io;
 
 import io.dz.FileCrudRepository;
 
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class App {
     public static void main(String[] args) throws IOException {
+        serializeUserExample();
 //        File file = new File("users.csv");
 //
 //        if (!file.exists()) {
@@ -83,4 +82,35 @@ public class App {
         fileCrudRepository.save(new User(1, "11", 11));
 
     }
+
+    public static void serializeUserExample() {
+        var user = User.builder()
+                .id(1)
+                .name("Igor")
+                .age(12)
+                .build();
+        var user2 = User.builder()
+                .id(2)
+                .name("Igor2")
+                .age(22)
+                .build();
+
+        try (var objectOutputStream = new ObjectOutputStream(new FileOutputStream("users.ser"))) {
+            objectOutputStream.writeObject(user);
+            objectOutputStream.writeObject(user2);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try (var objectInputStream = new ObjectInputStream(new FileInputStream("users.ser"))) {
+            var readUser1 = (User) objectInputStream.readObject();
+            var readUser2 = (User) objectInputStream.readObject();
+            System.out.println(readUser1);
+            System.out.println(readUser2);
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }

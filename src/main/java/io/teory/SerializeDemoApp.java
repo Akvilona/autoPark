@@ -7,7 +7,7 @@ import java.io.*;
 
 public class SerializeDemoApp {
     private static class Book implements Serializable {
-        private String title;
+        private final String title;
 
         public Book(String title) {
             this.title = title;
@@ -15,9 +15,9 @@ public class SerializeDemoApp {
     }
 
     private static class Student implements Serializable {
-        private int id;
-        private String name;
-        private int score;
+        private final int id;
+        private final String name;
+        private final int score;
         private Book book;
 
         public Student(int id, String name, int score) {
