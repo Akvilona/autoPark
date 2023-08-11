@@ -1,37 +1,56 @@
 package io;
 
+
 import io.dz.FileCrudRepository;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.List;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        File file = new File("users.csv");
+//        File file = new File("users.csv");
+//
+//        if (!file.exists()) {
+//            System.out.println(file.createNewFile());
+//        }
+//
+//        /* Получение полного пути к файлу */
+//        String srt1 = file.getAbsolutePath();
+//        System.out.println(srt1);
+//
+//        String srt = String.valueOf(Path.of(file.toURI()));
+//        System.out.println(srt);
+//
+//        String srt2 = String.valueOf(Paths.get(file.toURI()));
+//        System.out.println(srt2);
+//
+//        URI uri = file.toURI();
+//
+//        Path path = Paths.get(uri);
+//        Files.writeString(path,"2;Igor;26", StandardOpenOption.APPEND );
+//
+//        String strings = Files.readString(path);
+//        System.out.println(strings);
 
-        if (!file.exists()) {
-            System.out.println(file.createNewFile());
-        }
+/*        Path path = Path.get(file.toURI());
 
         URI uri = file.toURI();
         System.out.println("URI: " + uri);
 
-//        String lineSeparator = System.lineSeparator();
-//        Files.writeString(path, "2;Masha;30" + lineSeparator, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+        String lineSeparator = System.lineSeparator();
+        Files.writeString(path, "2;Masha;30" + lineSeparator, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
 
         Path path = Paths.get(uri);
         List<String> stringList = Files.readAllLines(path, Charset.forName(String.valueOf(StandardCharsets.UTF_8)));
         System.out.println(stringList);
 
+ */
+/*
         List<User> userList = new ArrayList<>();
 
         for (String str : stringList) {
@@ -47,7 +66,6 @@ public class App {
 
         System.out.println(userList);
 
-
         User user1 = new User(1, "Example1", 11);
         User user2 = new User(2, "Example2", 22);
         List<User> list = List.of(user1, user2);
@@ -59,10 +77,10 @@ public class App {
 
         String string = Files.readString(path);
         System.out.println(string);
+*/
+//        File file = new File("users.csv");
+        FileCrudRepository fileCrudRepository = new FileCrudRepository();
+        fileCrudRepository.save(new User(1, "11", 11));
 
-
-        File file1 = new File("users.csv");
-        FileCrudRepository fileCrudRepository = new FileCrudRepository(file1);
-        fileCrudRepository.save(new User(1, "11", 1));
     }
 }
