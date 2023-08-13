@@ -8,10 +8,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Optional;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        serializeUserExample();
+//        serializeUserExample();
 //        File file = new File("users.csv");
 //
 //        if (!file.exists()) {
@@ -79,7 +80,9 @@ public class App {
 */
 //        File file = new File("users.csv");
         FileCrudRepository fileCrudRepository = new FileCrudRepository();
-        fileCrudRepository.save(new User(1, "11", 11));
+//        fileCrudRepository.save(new User(1, "Ivanov", 11));
+        Optional<User> user = fileCrudRepository.findById(2);
+        System.out.println(user);
 
     }
 
