@@ -12,7 +12,7 @@ public interface CrudRepository<T> {
 
     void save(T t) throws IOException;
 
-    void delete(long id);
+    void delete(long id) throws IOException;
 
     List<T> findAll() throws IOException;
 }

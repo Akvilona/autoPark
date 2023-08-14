@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 import java.util.Optional;
 
 public class App {
@@ -80,9 +81,10 @@ public class App {
 */
 //        File file = new File("users.csv");
         FileCrudRepository fileCrudRepository = new FileCrudRepository();
-//        fileCrudRepository.save(new User(1, "Ivanov", 11));
-        Optional<User> user = fileCrudRepository.findById(2);
-        System.out.println(user);
+//        fileCrudRepository.save(new User(7, "Ivanov", 71));
+//        Optional<User> user = fileCrudRepository.findById(2);
+//        List<User> user = fileCrudRepository.findAll();
+       fileCrudRepository.delete(3);
 
     }
 

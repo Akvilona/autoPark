@@ -7,7 +7,6 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
 @Builder
 public class User implements Serializable {
     public User() {

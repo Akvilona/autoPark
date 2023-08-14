@@ -71,7 +71,7 @@ public class FileCrudRepository implements CrudRepository<User> {
         Files.writeString(path, String.valueOf(user.getId())        + poleSeparator
                                     + String.valueOf(user.getName())    + poleSeparator
                                     + user.getAge()                     + lineSeparator,
-                StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+                StandardOpenOption.APPEND);
 
     }
 
@@ -86,10 +86,29 @@ public class FileCrudRepository implements CrudRepository<User> {
         Path path = Paths.get(file.toURI());
         return path;
     }
+    private Void deleteFile(Path path) {
+
+        File file = path.toFile();
+
+        file.deleteOnExit();
+        return null;
+    }
+
 
     @Override
-    public void delete(long id) {
+    public void delete(long id) throws IOException {
+        Path path = getPath();
+        List<String> string = Files.readAllLines(path, Charset.forName(String.valueOf(StandardCharsets.UTF_8)));
+        deleteFile(path);
 
+        for (String str : string) {
+            List<String> myList = new ArrayList<>(Arrays.asList(str.split(poleSeparator)));
+
+            if (!(Long.valueOf(myList.get(0)) == id)) {
+                User user = new User(Integer.valueOf(myList.get(0)), myList.get(1), Integer.valueOf(myList.get(2)));
+                save(user);
+            }
+        }
     }
 
     @Override
@@ -97,13 +116,12 @@ public class FileCrudRepository implements CrudRepository<User> {
         Path path = getPath();
         List<String> string = Files.readAllLines(path, Charset.forName(String.valueOf(StandardCharsets.UTF_8)));
 
-        List<User> list = null;
+        List<User> list = new ArrayList<>();
         for (String str : string) {
-            List<String> myList = new ArrayList<String>(Arrays.asList(str.split(poleSeparator)));
-                User user2 = new User( Integer.valueOf(myList.get(0)), myList.get(1), Integer.valueOf(myList.get(2)));
-                list = List.of(user2);
+            List<String> myList = new ArrayList<>(Arrays.asList(str.split(poleSeparator)));
+            User user = new User( Integer.valueOf(myList.get(0)), myList.get(1), Integer.valueOf(myList.get(2)));
+            list.add(user);
         }
-
         return list;
     }
 }
