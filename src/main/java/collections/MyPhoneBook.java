@@ -23,41 +23,16 @@ public class MyPhoneBook {
 
     private final HashMap<String, Set<String>> addressBook = new HashMap<>();
 
-    //TODO:
-    public void add(String surname, String phoneNumber) {
+    public void add(final String surname, final String phoneNumber) {
         //addressBook.computeIfAbsent(surname, k -> new HashSet<>()).add(phoneNumber);
         Set<String> surnamePhoneNumbers = addressBook.getOrDefault(surname, new HashSet<>());
         surnamePhoneNumbers.add(phoneNumber);
         addressBook.put(surname, surnamePhoneNumbers);
     }
 
-    public Set<String> get(String surname) {
+    public Set<String> get(final String surname) {
 
         return addressBook.get(surname);
     }
 
 }
-
-/*
-public class PhoneBook {
-    private final HashMap<String, ArrayList<String>> items = new HashMap<>();
-
-    public void add(String surname, String phoneNumber) {
-        // Новый контакт создается в том случае если номер который введен не существует
-        if (items.get(surname) != null) {
-            if (!items.get(surname).contains(phoneNumber)) {
-                items.get(surname).add(phoneNumber);
-            }
-        } else {
-            ArrayList<String> arr = new ArrayList<>();
-            arr.add(phoneNumber);
-            items.put(surname, arr);
-        }
-    }
-
-    public void get(String surname) {
-        String format = "|%1$-20.18s| контактный телефон(ы): ";
-        System.out.format(format, surname);
-        System.out.println(items.get(surname));
-    }
-}*/

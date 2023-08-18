@@ -10,9 +10,6 @@ public class ShapeContainer<T extends Shape> {
 
     private final List<T> shapeList = new ArrayList<>();
 
-    /**
-     * метод, который добавляет геометрическую фигуру в контейнер.
-     */
     void addShape(final T shape) {
         shapeList.add(shape);
     }

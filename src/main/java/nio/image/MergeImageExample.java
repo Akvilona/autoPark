@@ -1,9 +1,10 @@
-package io.image;
+package nio.image;
 
 import lombok.SneakyThrows;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class MergeImageExample {
     @SneakyThrows
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         List<String> filePaths = new ArrayList<>();
         filePaths.add("4-5.jpg");
         filePaths.add("6-7.jpg");

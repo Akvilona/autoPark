@@ -1,14 +1,5 @@
-/**
- * Создал Андрей Антонов 29.07.2023 16:55
- * https://youtu.be/R4AxRoCtTns
- **/
 package collections;
 
-/**
- * Мой ArrayList
- *
- * @param <T>
- */
 public class MyArrayList<T> implements MyList<T> {
 
     private static final int DEFAULT_CAPACITY = 10;
@@ -19,7 +10,7 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     @Override
-    public boolean add(T e) {
+    public boolean add(final T e) {
         try {
             T[] temp = values;
             values = (T[]) new Object[temp.length + 1];
@@ -33,7 +24,7 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     @Override
-    public void delete(int index) {
+    public void delete(final int index) {
         try {
             T[] temp = values;
             values = (T[]) new Object[temp.length - 1];
@@ -45,7 +36,7 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     @Override
-    public T get(int index) {
+    public T get(final int index) {
         return values[index];
     }
 
@@ -55,7 +46,7 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     @Override
-    public void update(int index, T e) {
+    public void update(final int index, final T e) {
         values[index] = e;
     }
 

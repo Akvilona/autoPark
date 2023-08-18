@@ -1,4 +1,4 @@
-package http.model;
+package http.example.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -29,32 +29,34 @@ public class CurrentConditionRoot {
     private String mobileLink;
     @JsonProperty("Link")
     private String link;
+
+    @Data
+    public static class Imperial {
+        @JsonProperty("Value")
+        private int value;
+        @JsonProperty("Unit")
+        private String unit;
+        @JsonProperty("UnitType")
+        private int unitType;
+    }
+
+    @Data
+    public static class Metric {
+        @JsonProperty("Value")
+        private double value;
+        @JsonProperty("Unit")
+        private String unit;
+        @JsonProperty("UnitType")
+        private int unitType;
+    }
+
+    @Data
+    public static class Temperature {
+        @JsonProperty("Metric")
+        private Metric metric;
+        @JsonProperty("Imperial")
+        private Imperial imperial;
+    }
 }
 
-@Data
-class Imperial {
-    @JsonProperty("Value")
-    private int value;
-    @JsonProperty("Unit")
-    private String unit;
-    @JsonProperty("UnitType")
-    private int unitType;
-}
 
-@Data
-class Metric {
-    @JsonProperty("Value")
-    private double value;
-    @JsonProperty("Unit")
-    private String unit;
-    @JsonProperty("UnitType")
-    private int unitType;
-}
-
-@Data
-class Temperature {
-    @JsonProperty("Metric")
-    private Metric metric;
-    @JsonProperty("Imperial")
-    private Imperial imperial;
-}

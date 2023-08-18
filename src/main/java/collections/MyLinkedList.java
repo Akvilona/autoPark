@@ -11,19 +11,8 @@ import lombok.NoArgsConstructor;
 public class MyLinkedList<E> implements MyList<E> {
     private Node head;
 
-    @Data
-    @AllArgsConstructor
-    private class Node {
-        private E data;
-        private Node next;
-
-        public Node(E data) {
-            this.data = data;
-        }
-    }
-
     @Override
-    public boolean add(E e) {
+    public boolean add(final E e) {
         Node newNode = new Node(e);
         if (head == null) {
             head = newNode;
@@ -40,7 +29,7 @@ public class MyLinkedList<E> implements MyList<E> {
     }
 
     @Override
-    public void delete(int index) {
+    public void delete(final int index) {
         if (head == null) {
             return;
         }
@@ -63,7 +52,7 @@ public class MyLinkedList<E> implements MyList<E> {
 
     //TODO:
     @Override
-    public E get(int index) {
+    public E get(final int index) {
         return null;
     }
 
@@ -75,8 +64,19 @@ public class MyLinkedList<E> implements MyList<E> {
 
     //TODO:
     @Override
-    public void update(int index, E e) {
+    public void update(final int index, final E e) {
 
+    }
+
+    @Data
+    @AllArgsConstructor
+    private class Node {
+        private E data;
+        private Node next;
+
+        Node(final E data) {
+            this.data = data;
+        }
     }
 
 

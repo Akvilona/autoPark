@@ -10,7 +10,7 @@ public abstract class Shape {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 

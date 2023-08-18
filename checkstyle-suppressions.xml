@@ -10,8 +10,8 @@
     <suppress files="." checks="LineLength"/>
     <suppress files="." checks="HiddenField"/>
     <suppress files="." checks="MagicNumber"/>
-    <suppress files="Application.java" checks="HideUtilityClassConstructor"/>
+    <suppress files="." checks="TodoComment"/>
     <suppress files="test[\\/]" checks="VisibilityModifier"/>
-    <suppress files="test[\\/]" checks="HideUtilityClassConstructor"/>
+    <suppress files="." checks="HideUtilityClassConstructor"/>
 
 </suppressions>

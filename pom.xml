@@ -18,6 +18,8 @@
         <lombok.version>1.18.28</lombok.version>
         <okhttp.version>4.9.3</okhttp.version>
         <jackson-databind.version>2.15.0</jackson-databind.version>
+        <jai-imageio-core.version>1.4.0</jai-imageio-core.version>
+        <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
     </properties>
 
     <dependencies>
@@ -39,7 +41,7 @@
         <dependency>
             <groupId>com.github.jai-imageio</groupId>
             <artifactId>jai-imageio-core</artifactId>
-            <version>1.4.0</version>
+            <version>${jai-imageio-core.version}</version>
         </dependency>
     </dependencies>
 
@@ -120,6 +122,28 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- ... -->
+                    <archive>
+                        <manifest>
+                            <mainClass>http.example.HttpExample</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
             </plugin>
         </plugins>
     </build>
