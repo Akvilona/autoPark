@@ -1,47 +1,21 @@
 package http.com.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.Date;
 
+
 @Data
-@Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationRoot {
-    @JsonProperty("Version")
-    private int version;
     @JsonProperty("Key")
     private String key;
-    @JsonProperty("Type")
-    private String type;
-    @JsonProperty("Rank")
-    private int rank;
-    @JsonProperty("LocalizedName")
-    private String localizedName;
     @JsonProperty("EnglishName")
     private String englishName;
-    @JsonProperty("PrimaryPostalCode")
-    private String primaryPostalCode;
-    @JsonProperty("Region")
-    private Region region;
-    @JsonProperty("Country")
-    private Country country;
-    @JsonProperty("AdministrativeArea")
-    private AdministrativeArea administrativeArea;
-    @JsonProperty("TimeZone")
-    private TimeZone timeZone;
-    @JsonProperty("GeoPosition")
-    private GeoPosition geoPosition;
-    @JsonProperty("IsAlias")
-    private boolean isAlias;
-    @JsonProperty("SupplementalAdminAreas")
-    private ArrayList<SupplementalAdminArea> supplementalAdminAreas;
-    @JsonProperty("DataSets")
-    private ArrayList<String> dataSets;
 }
-
+@Data
 class AdministrativeArea {
     @JsonProperty("ID")
     private String iD;
@@ -58,7 +32,7 @@ class AdministrativeArea {
     @JsonProperty("CountryID")
     private String countryID;
 }
-
+@Data
 class Country {
     @JsonProperty("ID")
     private String iD;
@@ -67,14 +41,14 @@ class Country {
     @JsonProperty("EnglishName")
     private String englishName;
 }
-
+@Data
 class Elevation {
     @JsonProperty("Metric")
     private Metric metric;
     @JsonProperty("Imperial")
     private Imperial imperial;
 }
-
+@Data
 class GeoPosition {
     @JsonProperty("Latitude")
     private double latitude;
@@ -83,7 +57,7 @@ class GeoPosition {
     @JsonProperty("Elevation")
     private Elevation elevation;
 }
-
+@Data
 class Imperial {
     @JsonProperty("Value")
     private int value;
@@ -93,6 +67,15 @@ class Imperial {
     private int unitType;
 }
 
+@Data
+class Temperature {
+    @JsonProperty("Metric")
+    private CurrentCondition.Metric metric;
+    @JsonProperty("Imperial")
+    private Imperial imperial;
+}
+
+@Data
 class Metric {
     @JsonProperty("Value")
     private int value;
@@ -101,7 +84,7 @@ class Metric {
     @JsonProperty("UnitType")
     private int unitType;
 }
-
+@Data
 class Region {
     @JsonProperty("ID")
     private String iD;
@@ -110,7 +93,7 @@ class Region {
     @JsonProperty("EnglishName")
     private String englishName;
 }
-
+@Data
 class SupplementalAdminArea {
     @JsonProperty("Level")
     private int level;
@@ -119,7 +102,7 @@ class SupplementalAdminArea {
     @JsonProperty("EnglishName")
     private String englishName;
 }
-
+@Data
 class TimeZone {
     @JsonProperty("Code")
     private String code;
