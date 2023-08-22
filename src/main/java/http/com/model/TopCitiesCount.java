@@ -11,10 +11,18 @@ public enum TopCitiesCount {
     HUNDRED(100),
     HUNDRED_FIFTY(150);
 
+    private final int value;
+
     TopCitiesCount(final int value) {
         this.value = value;
     }
 
-    private final int value;
-
+    public static TopCitiesCount findByValue(final int value) {
+        for (TopCitiesCount topCitiesCount : values()) {
+            if (topCitiesCount.getValue() == value) {
+                return topCitiesCount;
+            }
+        }
+        throw new IllegalStateException("Unknown value" + value);
+    }
 }
