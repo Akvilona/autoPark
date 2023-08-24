@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class AccuweatherService {
     private final AccuweatherClient accuweatherClient;
 
-    private static LocationRoot getCityLocationByName(LocationRoot[] cityLocations, String choosenCity) {
+    private static LocationRoot getCityLocationByName(final LocationRoot[] cityLocations, final String choosenCity) {
         return Stream.of(cityLocations)
                 .filter(locationRoot -> locationRoot.getEnglishName().equals(choosenCity))
                 .findFirst()
