@@ -4,11 +4,11 @@
  **/
 package http.example.client;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import http.com.model.CurrentCondition;
 import http.com.model.TopCitiesCount;
 import http.example.model.LocationRoot;
-import kotlin.jvm.internal.TypeReference;
 import lombok.RequiredArgsConstructor;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -62,8 +62,7 @@ public class AccuweatherClient {
                 .build();
 
         TypeReference<CurrentCondition[]> currentConditionsTypeReference = new TypeReference<>() {
-        }
-        //TypeReference<CurrentCondition[]> currentConditionTypeReference = new TypeReference<>(){};
+        };
 
         return sendRequestAndRequestResponse(request, currentConditionsTypeReference);
     }
