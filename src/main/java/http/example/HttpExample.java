@@ -5,7 +5,6 @@ package http.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import http.com.model.CurrentCondition;
-import http.com.model.LocationRoot;
 import http.com.model.TopCitiesCount;
 import http.example.client.AccuweatherClient;
 import http.example.utils.PropertiesReaderUtils;
