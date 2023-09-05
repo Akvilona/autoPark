@@ -13,10 +13,6 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Integer getBookId(final Book book) {
-        return bookRepository.getBookId(book);
-    }
-
     public void bookAdd(final Book book) {
         bookRepository.addBook(book);
     }

@@ -7,17 +7,13 @@ import java.util.Date;
 
 public class Book {
 
-    private Integer id;
+    private Long id;
     private String name;
     private Date dateOfIssue;
 
-    public Book(final Integer id, final String name, final Date dateOfIssue) {
+    public Book(final Long id, final String name, final Date dateOfIssue) {
         this.id = id;
         this.name = name;
-        this.dateOfIssue = dateOfIssue;
-    }
-
-    public void setDateOfIssue(final Date dateOfIssue) {
         this.dateOfIssue = dateOfIssue;
     }
 
@@ -25,11 +21,15 @@ public class Book {
         return dateOfIssue;
     }
 
-    public Integer getId() {
+    public void setDateOfIssue(final Date dateOfIssue) {
+        this.dateOfIssue = dateOfIssue;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(final Integer id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 

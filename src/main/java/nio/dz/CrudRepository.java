@@ -4,15 +4,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudRepository<T> {
+public interface CrudRepository<T, K> {
 
-    Optional<T> findById(int id) throws IOException;
+    Optional<T> findById(K id);
 
-    Optional<T> findByObject(T t) throws IOException;
+    void save(T t);
 
-    void save(T t) throws IOException;
+    void delete(K id);
 
-    void delete(int id) throws IOException;
-
-    List<T> findAll() throws IOException;
+    List<T> findAll();
 }

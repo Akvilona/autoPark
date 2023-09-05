@@ -9,8 +9,6 @@ import library.repository.UserBookRepository;
 public class UserBookService {
     private final UserBookRepository userBookRepository;
 
-
-
     public UserBookService(final UserBookRepository userBookRepository) {
         this.userBookRepository = userBookRepository;
     }

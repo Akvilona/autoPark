@@ -1,6 +1,7 @@
 package nio.dz;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import nio.User;
 
 import java.io.File;
@@ -14,26 +15,20 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
-public class FileUserCrudRepository implements CrudRepository<User> {
+public class FileUserCrudRepository implements CrudRepository<User, Integer> {
 
     private final File file;
 
     @Override
-    public Optional<User> findById(final int id) throws IOException {
+    public Optional<User> findById(final Integer id) {
         return findAll().stream()
                 .filter(user -> user.getId() == id)
                 .findFirst();
     }
 
+    @SneakyThrows
     @Override
-    public Optional<User> findByObject(final User user) throws IOException {
-        return findAll().stream()
-                .filter(usr -> usr.equals(user))
-                .findFirst();
-    }
-
-    @Override
-    public void save(final User user) throws IOException {
+    public void save(final User user) {
         List<User> userList = findAll();
 
         int userIndex = userList.indexOf(user);
@@ -47,15 +42,16 @@ public class FileUserCrudRepository implements CrudRepository<User> {
     }
 
     @Override
-    public void delete(final int id) throws IOException {
+    public void delete(final Integer id) {
         List<User> userList = findAll().stream()
                 .filter(user -> user.getId() != id)
                 .toList();
         saveAll(userList);
     }
 
+    @SneakyThrows
     @Override
-    public List<User> findAll() throws IOException {
+    public List<User> findAll() {
         try (Stream<String> fileLines = Files.lines(getPath())) {
             return fileLines
                     .skip(1)
@@ -68,7 +64,8 @@ public class FileUserCrudRepository implements CrudRepository<User> {
         return Paths.get(file.toURI());
     }
 
-    private void saveAll(final List<User> userList) throws IOException {
+    @SneakyThrows
+    private void saveAll(final List<User> userList) {
         Files.writeString(getPath(), "id;name;age;salary" + System.lineSeparator(),
                 StandardOpenOption.TRUNCATE_EXISTING);
         Files.writeString(getPath(), UserMapper.formatUserLine(userList), StandardOpenOption.APPEND);

@@ -15,6 +15,7 @@ public class HttpExample {
     public static void main(final String[] args) {
         OkHttpClient okHttpClient = new OkHttpClient();
         ObjectMapper objectMapper = new ObjectMapper();
+
         String apiKey = PropertiesReaderUtils.getProperty("apiKey");
 
         AccuweatherClient accuweatherClient = new AccuweatherClient(okHttpClient, objectMapper, apiKey);

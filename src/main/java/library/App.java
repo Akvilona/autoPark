@@ -23,7 +23,7 @@ public class App {
     public static void main(final String[] args) {
         final UserRepository userRepository = new UserRepository();
         final BookRepository bookRepository = new BookRepository();
-        final UserBookService userBookService = new UserBookService();
+        final UserBookService userBookService = new UserBookService(userRepository);
 
         User user1 = new User(1, "Name1");
         User user2 = new User(2, "Name2");
