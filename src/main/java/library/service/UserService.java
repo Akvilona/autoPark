@@ -12,25 +12,18 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserService(final UserRepository userRepository) {
-
         this.userRepository = userRepository;
     }
 
-    public void addUser(final User user) {
-
-        userRepository.addUser(user);
+    public void save(final User user) {
+        userRepository.save(user);
     }
 
-    public User getUserById(final Integer id) {
-        Optional<User> user = userRepository.getUserById(id);
+    public User findById(final Long id) {
+        Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             return user.get();
         }
         throw new RuntimeException("user not found exception");
     }
-
-    public Integer getUserByName(final String name) {
-        return userRepository.getUserByName(name);
-    }
-
 }

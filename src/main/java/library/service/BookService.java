@@ -6,6 +6,8 @@ package library.service;
 import library.model.Book;
 import library.repository.BookRepository;
 
+import java.util.List;
+
 public class BookService {
     private final BookRepository bookRepository;
 
@@ -13,8 +15,15 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public void bookAdd(final Book book) {
-        bookRepository.addBook(book);
+    public void save(final Book book) {
+        bookRepository.save(book);
     }
 
+    public List<Book> findAll () {
+        return bookRepository.findAll();
+    }
+
+    public Book findById (Long bookId) {
+        return bookRepository.findById(bookId).orElseThrow();
+    }
 }
