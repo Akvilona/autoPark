@@ -30,7 +30,7 @@ public class BookRepository implements CrudRepository<Book, Long> {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(final Long id) {
         bookList.removeIf(book -> book.getId().equals(id));
     }
 
@@ -38,5 +38,14 @@ public class BookRepository implements CrudRepository<Book, Long> {
     public List<Book> findAll() {
         return bookList;
     }
+
+    public void deleteUser(final Long id) {
+        for (Book book: bookList) {
+            if (book.getId().equals(id)) {
+                book.setUserId(null);
+            }
+        }
+    }
+
 }
 

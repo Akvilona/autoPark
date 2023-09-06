@@ -3,25 +3,28 @@
  **/
 package library.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Book {
 
     private Long id;
     private String name;
-    private Date dateOfIssue;
+    private LocalDate dateOfIssue;
 
-    public Book(final Long id, final String name, final Date dateOfIssue) {
+    private Long userId;
+
+    public Book(final Long id, final String name, final LocalDate dateOfIssue) {
         this.id = id;
         this.name = name;
         this.dateOfIssue = dateOfIssue;
     }
 
-    public Date getDateOfIssue() {
+    public LocalDate getDateOfIssue() {
         return dateOfIssue;
     }
 
-    public void setDateOfIssue(final Date dateOfIssue) {
+    public void setDateOfIssue(final LocalDate dateOfIssue) {
         this.dateOfIssue = dateOfIssue;
     }
 
@@ -41,12 +44,21 @@ public class Book {
         this.name = name;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
-        return "Book{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", dateOfIssue=" + dateOfIssue
-                + '}';
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", dateOfIssue=" + dateOfIssue +
+                ", userId=" + userId +
+                '}';
     }
 }
