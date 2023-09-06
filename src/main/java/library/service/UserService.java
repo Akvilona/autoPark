@@ -26,4 +26,5 @@ public class UserService {
         }
         throw new RuntimeException("user not found exception");
     }
+
 }

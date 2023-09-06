@@ -23,7 +23,19 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Book findById (Long bookId) {
+    public Book findById (final Long bookId) {
         return bookRepository.findById(bookId).orElseThrow();
+    }
+
+    public void deleteById (final Long id) {
+        bookRepository.delete(id);
+    }
+
+    public BookRepository getBookRepository() {
+        return bookRepository;
+    }
+
+    public void deleteUserById (final Long id) {
+        bookRepository.deleteUser(id);
     }
 }
