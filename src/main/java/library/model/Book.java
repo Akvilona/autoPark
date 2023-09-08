@@ -1,18 +1,12 @@
-/**
- * Создал Андрей Антонов 29.08.2023 6:39
- **/
 package library.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Book {
 
     private Long id;
     private String name;
     private LocalDate dateOfIssue;
-
-    private Long userId;
 
     public Book(final Long id, final String name, final LocalDate dateOfIssue) {
         this.id = id;
@@ -44,21 +38,12 @@ public class Book {
         this.name = name;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", dateOfIssue=" + dateOfIssue +
-                ", userId=" + userId +
                 '}';
     }
 }

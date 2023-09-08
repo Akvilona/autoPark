@@ -35,7 +35,4 @@ public class BookService {
         return bookRepository;
     }
 
-    public void deleteUserById (final Long id) {
-        bookRepository.deleteUser(id);
-    }
 }

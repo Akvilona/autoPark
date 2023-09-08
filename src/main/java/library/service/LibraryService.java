@@ -3,41 +3,43 @@
  **/
 package library.service;
 
+import library.exception.ErrorCode;
+import library.exception.ServiceException;
 import library.model.Book;
-import library.model.User;
-import library.repository.BookRepository;
-import library.repository.UserRepository;
+import library.model.BookUser;
+import library.repository.BookUserRepository;
+
+import java.time.LocalDateTime;
 
 public class LibraryService {
 
     private final BookService bookService;
     private final UserService userService;
+    private final BookUserRepository bookUserRepository;
 
-    public LibraryService(final BookService bookService, final UserService userService) {
+    public LibraryService(final BookService bookService,
+                          final UserService userService,
+                          final BookUserRepository bookUserRepository) {
         this.bookService = bookService;
         this.userService = userService;
+        this.bookUserRepository = bookUserRepository;
     }
 
-    public void bookIssue (Long userId, Long bookId) {
-        // 1 - проверить что пользователь существует
-        // 2 - проверить что книга существует
-        // получить книгу по Id
-        // 3 - привязать книгу к пользователю
-        // 4 - удалить книгу из библиотеки
-
-        if (userService.findById(userId).getId().equals(userId) &&
-            bookService.findById(bookId).getId().equals(bookId)) {
-
-            Book book = bookService.findById(bookId);
-            book.setUserId(userId); // добавляем идентификатор пользователя
+    public BookUser bookIssue(final Long userId, final Long bookId) {
+        if (!userService.exist(userId)) {
+            throw new ServiceException(ErrorCode.ERR_CODE_02, userId);
         }
-    }
 
-    public void bookDelete (Long userId, Long bookId) {
-        if (userService.findById(userId).getId().equals(userId) &&
-                bookService.findById(bookId).getId().equals(bookId)) {
+        Book book = bookService.findById(bookId);
 
-                bookService.deleteUserById(bookId); // удаляем идентификатор пользователя
+        if (bookUserRepository.findByBookIdAndReturnDateTimeIsNull(bookId).isPresent()) {
+            throw new ServiceException(ErrorCode.ERR_CODE_01, bookId);
         }
+
+        BookUser bookUser = new BookUser(bookId, userId, LocalDateTime.now(), LocalDateTime.now().plusMonths(1));
+        bookUserRepository.save(bookUser);
+
+        return bookUser;
     }
+
 }

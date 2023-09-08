@@ -39,13 +39,5 @@ public class BookRepository implements CrudRepository<Book, Long> {
         return bookList;
     }
 
-    public void deleteUser(final Long id) {
-        for (Book book: bookList) {
-            if (book.getId().equals(id)) {
-                book.setUserId(null);
-            }
-        }
-    }
-
 }
 
