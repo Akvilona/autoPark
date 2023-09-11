@@ -11,7 +11,7 @@ public class BookUser {
     private LocalDateTime to;
     private LocalDateTime returnDateTime;
 
-    public BookUser(Long bookId, Long userId, LocalDateTime from, LocalDateTime to) {
+    public BookUser(final Long bookId, final Long userId, final LocalDateTime from, final LocalDateTime to) {
         this.id = new Random().nextLong();
         this.bookId = bookId;
         this.userId = userId;
@@ -23,7 +23,7 @@ public class BookUser {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -31,7 +31,7 @@ public class BookUser {
         return bookId;
     }
 
-    public void setBookId(Long bookId) {
+    public void setBookId(final Long bookId) {
         this.bookId = bookId;
     }
 
@@ -39,7 +39,7 @@ public class BookUser {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(final Long userId) {
         this.userId = userId;
     }
 
@@ -47,7 +47,7 @@ public class BookUser {
         return from;
     }
 
-    public void setFrom(LocalDateTime from) {
+    public void setFrom(final LocalDateTime from) {
         this.from = from;
     }
 
@@ -55,7 +55,7 @@ public class BookUser {
         return to;
     }
 
-    public void setTo(LocalDateTime to) {
+    public void setTo(final LocalDateTime to) {
         this.to = to;
     }
 
@@ -63,19 +63,19 @@ public class BookUser {
         return returnDateTime;
     }
 
-    public void setReturnDateTime(LocalDateTime returnDateTime) {
+    public void setReturnDateTime(final LocalDateTime returnDateTime) {
         this.returnDateTime = returnDateTime;
     }
 
     @Override
     public String toString() {
-        return "BookUser{" +
-                "id=" + id +
-                ", bookId=" + bookId +
-                ", userId=" + userId +
-                ", from=" + from +
-                ", to=" + to +
-                ", returnDateTime=" + returnDateTime +
-                '}';
+        return "BookUser{"
+                + "id=" + id
+                + ", bookId=" + bookId
+                + ", userId=" + userId
+                + ", from=" + from
+                + ", to=" + to
+                + ", returnDateTime=" + returnDateTime
+                + '}';
     }
 }

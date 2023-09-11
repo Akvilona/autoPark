@@ -5,7 +5,6 @@ package library.service;
 
 import library.exception.ErrorCode;
 import library.exception.ServiceException;
-import library.model.Book;
 import library.model.BookUser;
 import library.repository.BookUserRepository;
 
@@ -30,7 +29,9 @@ public class LibraryService {
             throw new ServiceException(ErrorCode.ERR_CODE_02, userId);
         }
 
-        Book book = bookService.findById(bookId);
+        if (!bookService.exist(bookId)) {
+            throw new ServiceException(ErrorCode.ERR_CODE_03, bookId);
+        }
 
         if (bookUserRepository.findByBookIdAndReturnDateTimeIsNull(bookId).isPresent()) {
             throw new ServiceException(ErrorCode.ERR_CODE_01, bookId);
@@ -42,4 +43,17 @@ public class LibraryService {
         return bookUser;
     }
 
+    public BookUser returnBook(final Long bookId) {
+
+        if (!bookService.exist(bookId)) {
+            throw new ServiceException(ErrorCode.ERR_CODE_03, bookId);
+        }
+
+        BookUser bookUser = bookUserRepository.findByBookId(bookId).orElseThrow();
+
+        bookUser.setReturnDateTime(LocalDateTime.now());
+
+        return bookUser;
+
+    }
 }

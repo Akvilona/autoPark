@@ -14,7 +14,7 @@ public class UserRepository implements CrudRepository<User, Long> {
     private final List<User> userList = new ArrayList<>();
 
     @Override
-    public Optional<User> findById(Long id) {
+    public Optional<User> findById(final Long id) {
         for (User user : userList) {
             if (user.getId().equals(id)) {
                 return Optional.of(user);
@@ -24,12 +24,12 @@ public class UserRepository implements CrudRepository<User, Long> {
     }
 
     @Override
-    public void save(User user) {
+    public void save(final User user) {
         userList.add(user);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(final Long id) {
         userList.removeIf(user -> user.getId().equals(id));
     }
 

@@ -6,7 +6,6 @@ package library.repository;
 import library.model.Book;
 import nio.dz.CrudRepository;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +14,7 @@ public class BookRepository implements CrudRepository<Book, Long> {
     private final List<Book> bookList = new ArrayList<>();
 
     @Override
-    public Optional<Book> findById(Long id) {
+    public Optional<Book> findById(final Long id) {
         for (Book book : bookList) {
             if (book.getId().equals(id)) {
                 return Optional.of(book);
@@ -25,7 +24,7 @@ public class BookRepository implements CrudRepository<Book, Long> {
     }
 
     @Override
-    public void save(Book book) {
+    public void save(final Book book) {
         bookList.add(book);
     }
 
@@ -40,4 +39,3 @@ public class BookRepository implements CrudRepository<Book, Long> {
     }
 
 }
-

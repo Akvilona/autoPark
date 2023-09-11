@@ -19,15 +19,19 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    public List<Book> findAll () {
+    public List<Book> findAll() {
         return bookRepository.findAll();
     }
 
-    public Book findById (final Long bookId) {
+    public boolean exist(final Long bookId) {
+        return bookRepository.findById(bookId).isPresent();
+    }
+
+    public Book findById(final Long bookId) {
         return bookRepository.findById(bookId).orElseThrow();
     }
 
-    public void deleteById (final Long id) {
+    public void deleteById(final Long id) {
         bookRepository.delete(id);
     }
 
