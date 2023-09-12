@@ -10,15 +10,15 @@ import library.repository.BookUserRepository;
 
 import java.time.LocalDateTime;
 
-public class LibraryService {
+public class BookUserService {
 
     private final BookService bookService;
     private final UserService userService;
     private final BookUserRepository bookUserRepository;
 
-    public LibraryService(final BookService bookService,
-                          final UserService userService,
-                          final BookUserRepository bookUserRepository) {
+    public BookUserService(final BookService bookService,
+                           final UserService userService,
+                           final BookUserRepository bookUserRepository) {
         this.bookService = bookService;
         this.userService = userService;
         this.bookUserRepository = bookUserRepository;
@@ -44,16 +44,18 @@ public class LibraryService {
     }
 
     public BookUser returnBook(final Long bookId) {
-
         if (!bookService.exist(bookId)) {
             throw new ServiceException(ErrorCode.ERR_CODE_03, bookId);
         }
 
         BookUser bookUser = bookUserRepository.findByBookId(bookId).orElseThrow();
-
         bookUser.setReturnDateTime(LocalDateTime.now());
-
         return bookUser;
-
     }
+
+    public boolean exist(final Long bookId, final Long userId) {
+        return bookUserRepository.findByBookIdAndUserId(bookId, userId)
+                .isPresent();
+    }
+
 }

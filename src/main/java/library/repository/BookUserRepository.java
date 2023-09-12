@@ -50,4 +50,12 @@ public class BookUserRepository implements CrudRepository<BookUser, Long> {
                 .filter(bookUser -> bookUser.getReturnDateTime() == null)
                 .findFirst();
     }
+
+    public Optional<BookUser> findByBookIdAndUserId(final Long bookId, final Long userId) {
+        return bookUserList.stream()
+                .filter(bookUser -> bookUser.getBookId().equals(bookId)
+                    && bookUser.getUserId().equals(userId))
+                .findFirst();
+    }
+
 }

@@ -1,6 +1,3 @@
-/**
- * Создал Андрей Антонов 29.08.2023 7:52
- **/
 package library.service;
 
 import library.model.Book;
@@ -33,10 +30,6 @@ public class BookService {
 
     public void deleteById(final Long id) {
         bookRepository.delete(id);
-    }
-
-    public BookRepository getBookRepository() {
-        return bookRepository;
     }
 
 }
