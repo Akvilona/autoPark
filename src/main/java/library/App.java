@@ -55,7 +55,7 @@ public class App {
         BookUser bookUser1 = bookUserService.returnBook(book3.getId()); // возвращает
         System.out.println(bookUser1);
 
-        reviewService.commentUserAdd(1L, 3L, "Read good");
-        System.out.println(reviewRepository);
+        reviewService.addReview(1L, 3L, "Read good");
+        System.out.println(reviewRepository.findAll());
     }
 }
