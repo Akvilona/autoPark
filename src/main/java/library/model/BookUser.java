@@ -12,7 +12,6 @@ public class BookUser {
     private LocalDateTime returnDateTime;
 
     public BookUser(final Long bookId, final Long userId, final LocalDateTime from, final LocalDateTime to) {
-        this.id = new Random().nextLong();
         this.bookId = bookId;
         this.userId = userId;
         this.from = from;

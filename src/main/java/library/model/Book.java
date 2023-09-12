@@ -8,8 +8,7 @@ public class Book {
     private String name;
     private LocalDate dateOfIssue;
 
-    public Book(final Long id, final String name, final LocalDate dateOfIssue) {
-        this.id = id;
+    public Book(final String name, final LocalDate dateOfIssue) {
         this.name = name;
         this.dateOfIssue = dateOfIssue;
     }

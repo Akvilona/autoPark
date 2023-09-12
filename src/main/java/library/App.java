@@ -5,57 +5,90 @@ package library;
 //TODO: Была возможность взять книгу для зарегистрированного пользователя
 //TODO: Возможность регистрации пользователя
 
-import library.model.Book;
-import library.model.BookUser;
 import library.model.User;
 import library.repository.BookRepository;
 import library.repository.BookUserRepository;
 import library.repository.ReviewRepository;
-import library.repository.UserRepository;
+import library.repository.UserDBRepository;
 import library.service.BookService;
-import library.service.ReviewService;
 import library.service.BookUserService;
+import library.service.ReviewService;
 import library.service.UserService;
+import library.utils.DbUtils;
 
-import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class App {
     public static void main(final String[] args) {
-        UserRepository userRepository = new UserRepository();
+        UserDBRepository userDBRepository = new UserDBRepository();
         BookRepository bookRepository = new BookRepository();
 
         BookUserRepository bookUserRepository = new BookUserRepository();
-        UserService userService = new UserService(userRepository);
+        UserService userService = new UserService(userDBRepository);
         BookService bookService = new BookService(bookRepository);
         ReviewRepository reviewRepository = new ReviewRepository();
         BookUserService bookUserService = new BookUserService(bookService, userService, bookUserRepository);
         ReviewService reviewService = new ReviewService(userService, bookUserService, reviewRepository);
+        //======//======//======//======//======//======//======//======//======
 
-        User user1 = new User(1L, "Name1");
-        User user2 = new User(2L, "Name2");
+        userService.save(new User("igor"));
 
-        userService.save(user1);
-        userService.save(user2);
+        initDataBase();
 
-        Book book1 = new Book(1L, "Lev Tolstoy", LocalDate.of(1991, 1, 1));
-        Book book2 = new Book(2L, "Lev Tolstoy", LocalDate.of(1992, 2, 2));
-        Book book3 = new Book(3L, "Lev Tolstoy", LocalDate.of(1993, 3, 3));
-        System.out.println(bookService.findAll());
+    }
 
-        bookService.save(book1);
-        bookService.save(book2);
-        bookService.save(book3);
+    private static void initDataBase() {
+        try (Connection connection = DbUtils.getConnection();
+             Statement statement = connection.createStatement()) {
 
-        BookUser bookUser = bookUserService.bookIssue(user1.getId(), book3.getId());
-        System.out.println(bookUser);
+            String createCommentsTable = """
+                    create table if not exists book
+                         (
+                             id      serial primary key,
+                             name varchar(255) default null,
+                             dateOfIssue timestamp default null
+                         );
+                    """;
+            statement.execute(createCommentsTable);
 
-//        BookUser bookUser1 = libraryService.bookIssue(user1.getId(), book3.getId());
-//        System.out.println(bookUser1);
+            String createUsersTable = """
+                    create table if not exists users
+                         (
+                             id      serial primary key,
+                             name varchar(50)
+                         );
+                    """;
+            statement.execute(createUsersTable);
 
-        BookUser bookUser1 = bookUserService.returnBook(book3.getId()); // возвращает
-        System.out.println(bookUser1);
+            String createReviewTable = """
+                    create table if not exists review
+                         (
+                             id      serial primary key,
+                             book_id      bigint not null,
+                             user_id bigint not null,
+                             comment varchar(255)
+                         );
+                    """;
+            statement.execute(createReviewTable);
 
-        reviewService.addReview(1L, 3L, "Read good");
-        System.out.println(reviewRepository.findAll());
+            String createBookUserTable = """
+                    create table if not exists bookUser
+                         (
+                             id      serial primary key,
+                             book_id      bigint not null,
+                             user_id bigint not null,
+                             from_date_time timestamp not null,
+                             to_date_time timestamp not null,
+                             return_date_time timestamp
+                         );
+                    """;
+            statement.execute(createBookUserTable);
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
