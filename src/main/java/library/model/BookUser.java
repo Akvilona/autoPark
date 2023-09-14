@@ -1,7 +1,6 @@
 package library.model;
 
 import java.time.LocalDateTime;
-import java.util.Random;
 
 public class BookUser {
     private Long id;

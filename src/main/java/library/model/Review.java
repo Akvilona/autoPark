@@ -9,7 +9,7 @@ public class Review {
     private Long userId;
     private String comment;
 
-    public Review(Long bookId, Long userId, String comment) {
+    public Review(final Long bookId, final Long userId, final String comment) {
         this.bookId = bookId;
         this.userId = userId;
         this.comment = comment;
@@ -19,7 +19,7 @@ public class Review {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -27,7 +27,7 @@ public class Review {
         return bookId;
     }
 
-    public void setBookId(Long bookId) {
+    public void setBookId(final Long bookId) {
         this.bookId = bookId;
     }
 
@@ -35,7 +35,7 @@ public class Review {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(final Long userId) {
         this.userId = userId;
     }
 
@@ -43,17 +43,17 @@ public class Review {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment(final String comment) {
         this.comment = comment;
     }
 
     @Override
     public String toString() {
-        return "Review{" +
-                "id=" + id +
-                ", bookId=" + bookId +
-                ", userId=" + userId +
-                ", comment='" + comment + '\'' +
-                '}';
+        return "Review{"
+                + "id=" + id
+                + ", bookId=" + bookId
+                + ", userId=" + userId
+                + ", comment='" + comment + '\''
+                + '}';
     }
 }

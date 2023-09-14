@@ -7,7 +7,6 @@ import library.exception.ErrorCode;
 import library.exception.ServiceException;
 import library.model.User;
 import library.repository.UserDBRepository;
-import library.repository.UserRepository;
 
 public class UserService {
     private final UserDBRepository userDBRepository;

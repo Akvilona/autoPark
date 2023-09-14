@@ -33,7 +33,7 @@ public class App {
         ReviewService reviewService = new ReviewService(userService, bookUserService, reviewRepository);
         //======//======//======//======//======//======//======//======//======
 
-        userService.save(new User("igor"));
+        userService.save(new User("postgres"));
 
         initDataBase();
 
