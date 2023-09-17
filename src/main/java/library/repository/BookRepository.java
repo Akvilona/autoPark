@@ -24,8 +24,9 @@ public class BookRepository implements CrudRepository<Book, Long> {
     }
 
     @Override
-    public void save(final Book book) {
+    public Book save(final Book book) {
         bookList.add(book);
+        return book;
     }
 
     @Override

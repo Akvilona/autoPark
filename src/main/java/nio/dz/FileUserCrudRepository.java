@@ -27,17 +27,20 @@ public class FileUserCrudRepository implements CrudRepository<User, Integer> {
 
     @SneakyThrows
     @Override
-    public void save(final User user) {
+    public User save(final User user) {
         List<User> userList = findAll();
 
         int userIndex = userList.indexOf(user);
         if (userIndex != -1) {
             userList.set(userIndex, user);
             saveAll(userList);
+            return user;
         } else {
             String userString = UserMapper.formatUserLine(user);
             Files.writeString(getPath(), userString, StandardOpenOption.APPEND);
+
         }
+        throw new RuntimeException();
     }
 
     @Override

@@ -21,8 +21,9 @@ public class BookUserRepository implements CrudRepository<BookUser, Long> {
     }
 
     @Override
-    public void save(final BookUser bookUser) {
+    public BookUser save(final BookUser bookUser)  {
         bookUserList.add(bookUser);
+        return bookUser;
     }
 
     @Override

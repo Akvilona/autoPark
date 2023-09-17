@@ -25,8 +25,9 @@ public class ReviewRepository implements CrudRepository<Review, Long> {
     }
 
     @Override
-    public void save(final Review review) {
+    public Review save(final Review review) {
         reviews.add(review);
+        return review;
     }
 
     @Override

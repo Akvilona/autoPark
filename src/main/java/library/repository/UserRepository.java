@@ -24,8 +24,9 @@ public class UserRepository implements CrudRepository<User, Long> {
     }
 
     @Override
-    public void save(final User user) {
+    public User save(final User user) {
         userList.add(user);
+        return user;
     }
 
     @Override

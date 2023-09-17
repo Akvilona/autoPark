@@ -19,6 +19,7 @@ import library.utils.DbUtils;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class App {
     public static void main(final String[] args) {
@@ -33,9 +34,16 @@ public class App {
         ReviewService reviewService = new ReviewService(userService, bookUserService, reviewRepository);
         //======//======//======//======//======//======//======//======//======
 
-        userService.save(new User("postgres"));
 
         initDataBase();
+
+        userService.save(new User("postgres1"));
+
+        User user = userService.findById(2L);
+        System.out.println(user);
+        userService.delete(2L);
+        List<User> allUsers = userService.findAll();
+        System.out.println(allUsers);
 
     }
 
@@ -46,9 +54,9 @@ public class App {
             String createCommentsTable = """
                     create table if not exists book
                          (
-                             id      serial primary key,
-                             name varchar(255) default null,
-                             dateOfIssue timestamp default null
+                             id             serial primary key,
+                             name           varchar(255) default null,
+                             dateOfIssue    timestamp default null
                          );
                     """;
             statement.execute(createCommentsTable);
@@ -56,8 +64,8 @@ public class App {
             String createUsersTable = """
                     create table if not exists users
                          (
-                             id      serial primary key,
-                             name varchar(50)
+                             id             serial primary key,
+                             name           varchar(50)
                          );
                     """;
             statement.execute(createUsersTable);
@@ -65,10 +73,10 @@ public class App {
             String createReviewTable = """
                     create table if not exists review
                          (
-                             id      serial primary key,
-                             book_id      bigint not null,
-                             user_id bigint not null,
-                             comment varchar(255)
+                             id             serial primary key,
+                             book_id        bigint not null,
+                             user_id        bigint not null,
+                             comment        varchar(255)
                          );
                     """;
             statement.execute(createReviewTable);
@@ -76,11 +84,11 @@ public class App {
             String createBookUserTable = """
                     create table if not exists bookUser
                          (
-                             id      serial primary key,
-                             book_id      bigint not null,
-                             user_id bigint not null,
+                             id             serial primary key,
+                             book_id        bigint not null,
+                             user_id        bigint not null,
                              from_date_time timestamp not null,
-                             to_date_time timestamp not null,
+                             to_date_time   timestamp not null,
                              return_date_time timestamp
                          );
                     """;
