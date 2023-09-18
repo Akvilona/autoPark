@@ -13,6 +13,12 @@ public class Book {
         this.dateOfIssue = dateOfIssue;
     }
 
+    public Book(Long id, String name, LocalDate dateOfIssue) {
+        this.id = id;
+        this.name = name;
+        this.dateOfIssue = dateOfIssue;
+    }
+
     public LocalDate getDateOfIssue() {
         return dateOfIssue;
     }

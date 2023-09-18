@@ -5,30 +5,32 @@ package library;
 //TODO: Была возможность взять книгу для зарегистрированного пользователя
 //TODO: Возможность регистрации пользователя
 
+import library.model.Book;
 import library.model.User;
-import library.repository.BookRepository;
-import library.repository.BookUserRepository;
-import library.repository.ReviewRepository;
-import library.repository.UserDBRepository;
+import library.repository.*;
 import library.service.BookService;
 import library.service.BookUserService;
 import library.service.ReviewService;
 import library.service.UserService;
 import library.utils.DbUtils;
+import lombok.Data;
+
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class App {
     public static void main(final String[] args) {
         UserDBRepository userDBRepository = new UserDBRepository();
-        BookRepository bookRepository = new BookRepository();
+        BookDBRepository bookDBRepository = new BookDBRepository();
 
         BookUserRepository bookUserRepository = new BookUserRepository();
         UserService userService = new UserService(userDBRepository);
-        BookService bookService = new BookService(bookRepository);
+        BookService bookService = new BookService(bookDBRepository);
         ReviewRepository reviewRepository = new ReviewRepository();
         BookUserService bookUserService = new BookUserService(bookService, userService, bookUserRepository);
         ReviewService reviewService = new ReviewService(userService, bookUserService, reviewRepository);
@@ -37,13 +39,18 @@ public class App {
 
         initDataBase();
 
-        userService.save(new User("postgres1"));
+//        userService.save(new User("postgres1"));
+        LocalDate date = LocalDate.now();
+        bookService.save(new Book("book_name", date));
+//        List<Book> book = bookService.findAll();
+        Book book = bookService.findById(1L);
+        System.out.println(book);
 
-        User user = userService.findById(2L);
-        System.out.println(user);
-        userService.delete(2L);
-        List<User> allUsers = userService.findAll();
-        System.out.println(allUsers);
+//        User user = userService.findById(4L);
+//        System.out.println(user);
+//        userService.delete(2L);
+//      List<User> allUsers = userService.findAll();
+//        System.out.println(allUsers);
 
     }
 

@@ -1,35 +1,36 @@
 package library.service;
 
 import library.model.Book;
+import library.repository.BookDBRepository;
 import library.repository.BookRepository;
 
 import java.util.List;
 
 public class BookService {
-    private final BookRepository bookRepository;
+    private final BookDBRepository  bookDBRepository;
 
-    public BookService(final BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public BookService(final BookDBRepository bookDBRepository) {
+        this.bookDBRepository = bookDBRepository;
     }
 
     public void save(final Book book) {
-        bookRepository.save(book);
+        bookDBRepository.save(book);
     }
 
     public List<Book> findAll() {
-        return bookRepository.findAll();
+        return bookDBRepository.findAll();
     }
 
     public boolean exist(final Long bookId) {
-        return bookRepository.findById(bookId).isPresent();
+        return bookDBRepository.findById(bookId).isPresent();
     }
 
     public Book findById(final Long bookId) {
-        return bookRepository.findById(bookId).orElseThrow();
+        return bookDBRepository.findById(bookId).orElseThrow();
     }
 
     public void deleteById(final Long id) {
-        bookRepository.delete(id);
+        bookDBRepository.delete(id);
     }
 
 }
