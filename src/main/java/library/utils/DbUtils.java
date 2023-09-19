@@ -16,11 +16,10 @@ public class DbUtils {
             String user = PropertiesReaderUtils.getProperty("user");
             String pass = PropertiesReaderUtils.getProperty("pass");
 
-            Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(url, user, pass);
             connection.setAutoCommit(false);
             return connection;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

@@ -6,7 +6,7 @@ package library.service;
 import library.exception.ErrorCode;
 import library.exception.ServiceException;
 import library.model.BookUser;
-import library.repository.BookUserRepository;
+import library.repository.db.BookUserDBRepository;
 
 import java.time.LocalDateTime;
 
@@ -14,14 +14,14 @@ public class BookUserService {
 
     private final BookService bookService;
     private final UserService userService;
-    private final BookUserRepository bookUserRepository;
+    private final BookUserDBRepository bookUserDBRepository;
 
     public BookUserService(final BookService bookService,
                            final UserService userService,
-                           final BookUserRepository bookUserRepository) {
+                           final BookUserDBRepository bookUserDBRepository) {
         this.bookService = bookService;
         this.userService = userService;
-        this.bookUserRepository = bookUserRepository;
+        this.bookUserDBRepository = bookUserDBRepository;
     }
 
     public BookUser bookIssue(final Long userId, final Long bookId) {
@@ -33,15 +33,12 @@ public class BookUserService {
             throw new ServiceException(ErrorCode.ERR_CODE_03, bookId);
         }
 
-        //TODO: refactor with sql findByBookIdAndReturnDateTimeIsNull (BookUserDBRepository.class)
-        if (bookUserRepository.findByBookIdAndReturnDateTimeIsNull(bookId).isPresent()) {
+        if (bookUserDBRepository.findByBookIdAndReturnDateTimeIsNull(bookId).isPresent()) {
             throw new ServiceException(ErrorCode.ERR_CODE_01, bookId);
         }
 
-        //TODO: refactor with sql insertBookUser (BookUserDBRepository.class)
         BookUser bookUser = new BookUser(bookId, userId, LocalDateTime.now(), LocalDateTime.now().plusMonths(1));
-        bookUserRepository.save(bookUser);
-
+        bookUserDBRepository.save(bookUser);
         return bookUser;
     }
 
@@ -50,13 +47,14 @@ public class BookUserService {
             throw new ServiceException(ErrorCode.ERR_CODE_03, bookId);
         }
 
-        BookUser bookUser = bookUserRepository.findByBookId(bookId).orElseThrow();
+        //TODO: При возврате обновлять колонку ReturnDateTime текущим временем
+        BookUser bookUser = bookUserDBRepository.findById(bookId).orElseThrow();
         bookUser.setReturnDateTime(LocalDateTime.now());
         return bookUser;
     }
 
     public boolean exist(final Long bookId, final Long userId) {
-        return bookUserRepository.findByBookIdAndUserId(bookId, userId)
+        return BookUserDBRepository.findByBookIdAndUserId(bookId, userId)
                 .isPresent();
     }
 

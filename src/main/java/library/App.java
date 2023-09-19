@@ -7,7 +7,8 @@ package library;
 
 import library.model.Book;
 import library.model.BookUser;
-import library.repository.*;
+import library.repository.BookUserRepository;
+import library.repository.ReviewRepository;
 import library.repository.db.BookDBRepository;
 import library.repository.db.BookUserDBRepository;
 import library.repository.db.UserDBRepository;
@@ -18,7 +19,6 @@ import library.service.UserService;
 import library.utils.DbUtils;
 import lombok.SneakyThrows;
 
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,16 +28,17 @@ import java.time.LocalDateTime;
 public class App {
     @SneakyThrows
     public static void main(final String[] args) {
+        Class.forName("org.postgresql.Driver");
+
         UserDBRepository userDBRepository = new UserDBRepository();
         BookDBRepository bookDBRepository = new BookDBRepository();
         BookUserDBRepository bookUserDBRepository = new BookUserDBRepository();
 
-        BookUserRepository bookUserRepository = new BookUserRepository();
         UserService userService = new UserService(userDBRepository);
         BookService bookService = new BookService(bookDBRepository);
 
         ReviewRepository reviewRepository = new ReviewRepository();
-        BookUserService bookUserService = new BookUserService(bookService, userService, bookUserRepository);
+        BookUserService bookUserService = new BookUserService(bookService, userService, bookUserDBRepository);
         ReviewService reviewService = new ReviewService(userService, bookUserService, reviewRepository);
         //======//======//======//======//======//======//======//======//======
 
@@ -46,11 +47,13 @@ public class App {
 
 //        userService.save(new User("postgres1"));
         LocalDate date = LocalDate.now();
-        bookService.save(new Book("book_name", date));
+        bookService.save(new Book("book_name123", date));
 //        List<Book> book = bookService.findAll();
 //        Book book = bookService.findById(-3L);
 //        System.out.println(book);
-        bookUserDBRepository.save(new BookUser(1L, 1L, LocalDateTime.now(), LocalDateTime.now()));
+
+        BookUser bookUser = bookUserService.bookIssue(1L, 1L);
+        System.out.println(bookUser);
 
 //        User user = userService.findById(4L);
 //        System.out.println(user);
@@ -94,6 +97,7 @@ public class App {
                     """;
             statement.execute(createReviewTable);
 
+            //TODO: create unique index (book_id, user_id)
             String createBookUserTable = """
                     create table if not exists bookUser
                          (
