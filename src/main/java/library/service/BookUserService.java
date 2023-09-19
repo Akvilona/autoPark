@@ -33,10 +33,12 @@ public class BookUserService {
             throw new ServiceException(ErrorCode.ERR_CODE_03, bookId);
         }
 
+        //TODO: refactor with sql findByBookIdAndReturnDateTimeIsNull (BookUserDBRepository.class)
         if (bookUserRepository.findByBookIdAndReturnDateTimeIsNull(bookId).isPresent()) {
             throw new ServiceException(ErrorCode.ERR_CODE_01, bookId);
         }
 
+        //TODO: refactor with sql insertBookUser (BookUserDBRepository.class)
         BookUser bookUser = new BookUser(bookId, userId, LocalDateTime.now(), LocalDateTime.now().plusMonths(1));
         bookUserRepository.save(bookUser);
 
