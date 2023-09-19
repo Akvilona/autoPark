@@ -6,8 +6,10 @@ package library;
 //TODO: Возможность регистрации пользователя
 
 import library.model.Book;
+import library.model.BookUser;
 import library.repository.*;
 import library.repository.db.BookDBRepository;
+import library.repository.db.BookUserDBRepository;
 import library.repository.db.UserDBRepository;
 import library.service.BookService;
 import library.service.BookUserService;
@@ -21,16 +23,19 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class App {
     @SneakyThrows
     public static void main(final String[] args) {
         UserDBRepository userDBRepository = new UserDBRepository();
         BookDBRepository bookDBRepository = new BookDBRepository();
+        BookUserDBRepository bookUserDBRepository = new BookUserDBRepository();
 
         BookUserRepository bookUserRepository = new BookUserRepository();
         UserService userService = new UserService(userDBRepository);
         BookService bookService = new BookService(bookDBRepository);
+
         ReviewRepository reviewRepository = new ReviewRepository();
         BookUserService bookUserService = new BookUserService(bookService, userService, bookUserRepository);
         ReviewService reviewService = new ReviewService(userService, bookUserService, reviewRepository);
@@ -43,8 +48,9 @@ public class App {
         LocalDate date = LocalDate.now();
         bookService.save(new Book("book_name", date));
 //        List<Book> book = bookService.findAll();
-        Book book = bookService.findById(3L);
-        System.out.println(book);
+//        Book book = bookService.findById(-3L);
+//        System.out.println(book);
+        bookUserDBRepository.save(new BookUser(1L, 1L, LocalDateTime.now(), LocalDateTime.now()));
 
 //        User user = userService.findById(4L);
 //        System.out.println(user);

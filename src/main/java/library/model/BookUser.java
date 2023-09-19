@@ -17,6 +17,15 @@ public class BookUser {
         this.to = to;
     }
 
+    public BookUser(Long id, Long bookId, Long userId, LocalDateTime from, LocalDateTime to, LocalDateTime returnDateTime) {
+        this.id = id;
+        this.bookId = bookId;
+        this.userId = userId;
+        this.from = from;
+        this.to = to;
+        this.returnDateTime = returnDateTime;
+    }
+
     public Long getId() {
         return id;
     }
