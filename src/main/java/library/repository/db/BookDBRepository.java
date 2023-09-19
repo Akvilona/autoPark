@@ -1,15 +1,18 @@
 /**
  * Создал Андрей Антонов 18.09.2023 9:47
  **/
-package library.repository;
+package library.repository.db;
 
 import library.model.Book;
-import library.model.User;
 import library.utils.DbUtils;
 import nio.dz.CrudRepository;
-import org.jetbrains.annotations.NotNull;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -18,12 +21,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class BookDBRepository implements CrudRepository<Book, Long> {
+
+    private static final String SELECT_FROM_BOOK_WHERE_ID = "SELECT * FROM book WHERE id = ?";
+    private static final String SELECT_FROM_BOOK = "SELECT * FROM book";
+    private static final String INSERT_INTO_BOOK = "INSERT INTO book (name, dateOfIssue) VALUES (?, ?)";
+    private static final String DELETE_FROM_BOOK_WHERE_ID = "DELETE FROM book WHERE id = ?";
+
     @Override
     public Optional<Book> findById(Long id) {
-        String selectByIdSQL = getSelectByIdSQL();
         try (Connection connection = DbUtils.getConnection();
              PreparedStatement preparedStatement
-                     = connection.prepareStatement(selectByIdSQL)) {
+                     = connection.prepareStatement(SELECT_FROM_BOOK_WHERE_ID)) {
             ResultSet resultSet = getResultSetSQL(id, preparedStatement);
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
@@ -42,7 +50,7 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
     public Book save(Book book) {
         try (Connection connection = DbUtils.getConnection();
              PreparedStatement preparedStatement =
-                     connection.prepareStatement(insertUser(), Statement.RETURN_GENERATED_KEYS)) {
+                     connection.prepareStatement(INSERT_INTO_BOOK, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, book.getName());
             preparedStatement.setDate(2, Date.valueOf(book.getDateOfIssue()));
             preparedStatement.executeUpdate();
@@ -57,7 +65,7 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
     @Override
     public void delete(final Long id) {
         try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(deleteByIdSQL())) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_BOOK_WHERE_ID)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             connection.commit();
@@ -68,10 +76,9 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
 
     @Override
     public List<Book> findAll() {
-        String selectAllBookSQL = getSelectAllBookSQL();
         try (Connection connection = DbUtils.getConnection();
              Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(selectAllBookSQL);
+            ResultSet resultSet = statement.executeQuery(SELECT_FROM_BOOK);
             List<Book> result = new ArrayList<>();
 
             while (resultSet.next()) {
@@ -88,29 +95,10 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
         }
     }
 
-    public LocalDate convertToLocalDateViaMilisecond(Date dateToConvert) {
+    private LocalDate convertToLocalDateViaMilisecond(Date dateToConvert) {
         return Instant.ofEpochMilli(dateToConvert.getTime())
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
-    }
-
-    @NotNull
-    private String getSelectByIdSQL() {
-        return "SELECT * FROM book WHERE id = ?";
-    }
-
-    @NotNull
-    private String getSelectAllBookSQL() {
-        return "select * from book";
-    }
-
-    @NotNull
-    private String insertUser() {
-        return "insert into book (name, dateOfIssue) VALUES (?, ?)";
-    }
-
-    private String deleteByIdSQL() {
-        return "DELETE FROM book WHERE id = ?";
     }
 
     private ResultSet getResultSetSQL(Long id, PreparedStatement preparedStatement) throws SQLException {

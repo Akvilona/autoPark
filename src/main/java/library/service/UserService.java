@@ -6,7 +6,7 @@ package library.service;
 import library.exception.ErrorCode;
 import library.exception.ServiceException;
 import library.model.User;
-import library.repository.UserDBRepository;
+import library.repository.db.UserDBRepository;
 
 import java.util.List;
 
@@ -31,7 +31,8 @@ public class UserService {
     }
 
     public boolean exist(final Long id) {
-        return userDBRepository.findById(id).isPresent();
+        return userDBRepository.findById(id)
+                .isPresent();
     }
 
     public List<User> findAll() {

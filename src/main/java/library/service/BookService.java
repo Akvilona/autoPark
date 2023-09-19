@@ -1,8 +1,9 @@
 package library.service;
 
+import library.exception.ErrorCode;
+import library.exception.ServiceException;
 import library.model.Book;
-import library.repository.BookDBRepository;
-import library.repository.BookRepository;
+import library.repository.db.BookDBRepository;
 
 import java.util.List;
 
@@ -26,7 +27,8 @@ public class BookService {
     }
 
     public Book findById(final Long bookId) {
-        return bookDBRepository.findById(bookId).orElseThrow();
+        return bookDBRepository.findById(bookId)
+                .orElseThrow(() -> new ServiceException(ErrorCode.ERR_CODE_03));
     }
 
     public void deleteById(final Long id) {

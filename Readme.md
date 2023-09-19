@@ -25,5 +25,4 @@
  * Username: postgres
  * Password: postgres
 
-
-![img](image.png)
+![image.png](src%2Fmain%2Fresources%2Freadme%2Fimage.png)

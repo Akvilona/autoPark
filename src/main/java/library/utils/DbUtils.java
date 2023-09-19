@@ -1,5 +1,6 @@
 package library.utils;
 
+import http.com.utils.PropertiesReaderUtils;
 import lombok.experimental.UtilityClass;
 
 import java.sql.Connection;
@@ -8,15 +9,18 @@ import java.sql.SQLException;
 
 @UtilityClass
 public class DbUtils {
-    public static Connection getConnection()  {
-        String url = "jdbc:postgresql://localhost:5433/postgres";
-        String user = "postgres";
-        String pass = "postgres";
+    public static Connection getConnection() {
+
         try {
+            String url = PropertiesReaderUtils.getProperty("url");
+            String user = PropertiesReaderUtils.getProperty("user");
+            String pass = PropertiesReaderUtils.getProperty("pass");
+
+            Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(url, user, pass);
             connection.setAutoCommit(false);
             return connection;
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

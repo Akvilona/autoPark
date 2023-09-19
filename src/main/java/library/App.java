@@ -6,24 +6,24 @@ package library;
 //TODO: Возможность регистрации пользователя
 
 import library.model.Book;
-import library.model.User;
 import library.repository.*;
+import library.repository.db.BookDBRepository;
+import library.repository.db.UserDBRepository;
 import library.service.BookService;
 import library.service.BookUserService;
 import library.service.ReviewService;
 import library.service.UserService;
 import library.utils.DbUtils;
-import lombok.Data;
+import lombok.SneakyThrows;
 
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 public class App {
+    @SneakyThrows
     public static void main(final String[] args) {
         UserDBRepository userDBRepository = new UserDBRepository();
         BookDBRepository bookDBRepository = new BookDBRepository();
@@ -43,7 +43,7 @@ public class App {
         LocalDate date = LocalDate.now();
         bookService.save(new Book("book_name", date));
 //        List<Book> book = bookService.findAll();
-        Book book = bookService.findById(1L);
+        Book book = bookService.findById(3L);
         System.out.println(book);
 
 //        User user = userService.findById(4L);

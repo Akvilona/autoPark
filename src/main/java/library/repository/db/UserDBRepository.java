@@ -1,25 +1,32 @@
-package library.repository;
+package library.repository.db;
 
 import library.model.User;
 import library.utils.DbUtils;
 import nio.dz.CrudRepository;
-import org.jetbrains.annotations.NotNull;
 
-import java.sql.Statement;
-import java.sql.PreparedStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class UserDBRepository implements CrudRepository<User, Long> {
 
+    private static final String selectByIdSQL = "SELECT * FROM users WHERE id = ?";
+
+    private static final String selectAllUsersSQL = "select * from users";
+
+    private static final String insertUserSQL = "insert into users (name) VALUES (?)";
+
+    private static final String deleteByIdSQL = "DELETE FROM users WHERE id = ?";
+
     @Override
     public void delete(final Long id) {
         try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(deleteByIdSQL())) {
+             PreparedStatement preparedStatement = connection.prepareStatement(deleteByIdSQL)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             connection.commit();
@@ -30,7 +37,6 @@ public class UserDBRepository implements CrudRepository<User, Long> {
 
     @Override
     public Optional<User> findById(final Long id) {
-        String selectByIdSQL = getSelectByIdSQL();
         try (Connection connection = DbUtils.getConnection();
              PreparedStatement preparedStatement
                      = connection.prepareStatement(selectByIdSQL)) {
@@ -48,11 +54,11 @@ public class UserDBRepository implements CrudRepository<User, Long> {
         }
     }
 
-     @Override
+    @Override
     public User save(final User user) {
         try (Connection connection = DbUtils.getConnection();
              PreparedStatement preparedStatement =
-                     connection.prepareStatement(insertUser(), Statement.RETURN_GENERATED_KEYS)) {
+                     connection.prepareStatement(insertUserSQL, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.executeUpdate();
             user.setId(getGeneratedKeys(preparedStatement));
@@ -65,7 +71,6 @@ public class UserDBRepository implements CrudRepository<User, Long> {
 
     @Override
     public List<User> findAll() {
-        String selectAllUsersSQL = getSelectAllUsersSQL();
         try (Connection connection = DbUtils.getConnection();
              Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(selectAllUsersSQL);
@@ -82,25 +87,6 @@ public class UserDBRepository implements CrudRepository<User, Long> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @NotNull
-    private String getSelectByIdSQL() {
-        return "SELECT * FROM users WHERE id = ?";
-    }
-
-    @NotNull
-    private String getSelectAllUsersSQL() {
-        return "select * from users";
-    }
-
-    @NotNull
-    private String insertUser() {
-        return "insert into users (name) VALUES (?)";
-    }
-
-    private String deleteByIdSQL() {
-        return  "DELETE FROM users WHERE id = ?";
     }
 
     private ResultSet getResultSetSQL(Long id, PreparedStatement preparedStatement) throws SQLException {
