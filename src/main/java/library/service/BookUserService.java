@@ -33,7 +33,7 @@ public class BookUserService {
             throw new ServiceException(ErrorCode.ERR_CODE_03, bookId);
         }
 
-        if (bookUserDBRepository.findByBookIdAndReturnDateTimeIsNull(bookId).isPresent()) {
+        if (bookUserDBRepository.findByBookIdAndReturnDateTimeIsNull(bookId).isEmpty()) {
             throw new ServiceException(ErrorCode.ERR_CODE_01, bookId);
         }
 

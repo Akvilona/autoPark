@@ -17,7 +17,7 @@ public class BookUser {
         this.to = to;
     }
 
-    public BookUser(Long id, Long bookId, Long userId, LocalDateTime from, LocalDateTime to, LocalDateTime returnDateTime) {
+    public BookUser(final Long id, final Long bookId, final Long userId, final LocalDateTime from, final LocalDateTime to, final LocalDateTime returnDateTime) {
         this.id = id;
         this.bookId = bookId;
         this.userId = userId;

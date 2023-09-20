@@ -15,6 +15,13 @@ public class Review {
         this.comment = comment;
     }
 
+    public Review(Long id, Long bookId, Long userId, String comment) {
+        this.id = id;
+        this.bookId = bookId;
+        this.userId = userId;
+        this.comment = comment;
+    }
+
     public Long getId() {
         return id;
     }

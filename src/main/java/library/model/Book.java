@@ -13,7 +13,7 @@ public class Book {
         this.dateOfIssue = dateOfIssue;
     }
 
-    public Book(Long id, String name, LocalDate dateOfIssue) {
+    public Book(final Long id, final String name, final LocalDate dateOfIssue) {
         this.id = id;
         this.name = name;
         this.dateOfIssue = dateOfIssue;

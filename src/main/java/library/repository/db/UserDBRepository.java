@@ -15,18 +15,18 @@ import java.util.Optional;
 
 public class UserDBRepository implements CrudRepository<User, Long> {
 
-    private static final String selectByIdSQL = "SELECT * FROM users WHERE id = ?";
+    private static final String SELECT_BY_ID_SQL = "SELECT * FROM users WHERE id = ?";
 
-    private static final String selectAllUsersSQL = "select * from users";
+    private static final String SELECT_ALL_USER_SQL = "select * from users";
 
-    private static final String insertUserSQL = "insert into users (name) VALUES (?)";
+    private static final String INSERT_USER_SQL = "insert into users (name) VALUES (?)";
 
-    private static final String deleteByIdSQL = "DELETE FROM users WHERE id = ?";
+    private static final String DELETE_BY_ID_SQL = "DELETE FROM users WHERE id = ?";
 
     @Override
     public void delete(final Long id) {
         try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(deleteByIdSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID_SQL)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             connection.commit();
@@ -39,7 +39,7 @@ public class UserDBRepository implements CrudRepository<User, Long> {
     public Optional<User> findById(final Long id) {
         try (Connection connection = DbUtils.getConnection();
              PreparedStatement preparedStatement
-                     = connection.prepareStatement(selectByIdSQL)) {
+                     = connection.prepareStatement(SELECT_BY_ID_SQL)) {
             ResultSet resultSet = getResultSetSQL(id, preparedStatement);
             if (resultSet.next()) {
                 long idUser = resultSet.getLong("id");
@@ -58,7 +58,7 @@ public class UserDBRepository implements CrudRepository<User, Long> {
     public User save(final User user) {
         try (Connection connection = DbUtils.getConnection();
              PreparedStatement preparedStatement =
-                     connection.prepareStatement(insertUserSQL, Statement.RETURN_GENERATED_KEYS)) {
+                     connection.prepareStatement(INSERT_USER_SQL, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.executeUpdate();
             user.setId(getGeneratedKeys(preparedStatement));
@@ -73,7 +73,7 @@ public class UserDBRepository implements CrudRepository<User, Long> {
     public List<User> findAll() {
         try (Connection connection = DbUtils.getConnection();
              Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(selectAllUsersSQL);
+            ResultSet resultSet = statement.executeQuery(SELECT_ALL_USER_SQL);
             List<User> result = new ArrayList<>();
 
             while (resultSet.next()) {
@@ -89,7 +89,7 @@ public class UserDBRepository implements CrudRepository<User, Long> {
         }
     }
 
-    private ResultSet getResultSetSQL(Long id, PreparedStatement preparedStatement) throws SQLException {
+    private ResultSet getResultSetSQL(final Long id, final PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setLong(1, id);
         return preparedStatement.executeQuery();
     }

@@ -28,7 +28,7 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
     private static final String DELETE_FROM_BOOK_WHERE_ID = "DELETE FROM book WHERE id = ?";
 
     @Override
-    public Optional<Book> findById(Long id) {
+    public Optional<Book> findById(final Long id) {
         try (Connection connection = DbUtils.getConnection();
              PreparedStatement preparedStatement
                      = connection.prepareStatement(SELECT_FROM_BOOK_WHERE_ID)) {
@@ -47,7 +47,7 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
     }
 
     @Override
-    public Book save(Book book) {
+    public Book save(final Book book) {
         try (Connection connection = DbUtils.getConnection();
              PreparedStatement preparedStatement =
                      connection.prepareStatement(INSERT_INTO_BOOK, Statement.RETURN_GENERATED_KEYS)) {
@@ -95,13 +95,13 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
         }
     }
 
-    private LocalDate convertToLocalDateViaMilisecond(Date dateToConvert) {
+    private LocalDate convertToLocalDateViaMilisecond(final Date dateToConvert) {
         return Instant.ofEpochMilli(dateToConvert.getTime())
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
     }
 
-    private ResultSet getResultSetSQL(Long id, PreparedStatement preparedStatement) throws SQLException {
+    private ResultSet getResultSetSQL(final Long id, final PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setLong(1, id);
         return preparedStatement.executeQuery();
     }

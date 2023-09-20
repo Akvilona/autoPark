@@ -7,10 +7,12 @@ package library;
 
 import library.model.Book;
 import library.model.BookUser;
-import library.repository.BookUserRepository;
+import library.model.Review;
+import library.model.User;
 import library.repository.ReviewRepository;
 import library.repository.db.BookDBRepository;
 import library.repository.db.BookUserDBRepository;
+import library.repository.db.ReviewDBRepository;
 import library.repository.db.UserDBRepository;
 import library.service.BookService;
 import library.service.BookUserService;
@@ -23,7 +25,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 public class App {
     @SneakyThrows
@@ -33,27 +35,36 @@ public class App {
         UserDBRepository userDBRepository = new UserDBRepository();
         BookDBRepository bookDBRepository = new BookDBRepository();
         BookUserDBRepository bookUserDBRepository = new BookUserDBRepository();
+        ReviewDBRepository reviewDBRepository = new ReviewDBRepository();
 
         UserService userService = new UserService(userDBRepository);
         BookService bookService = new BookService(bookDBRepository);
+        ReviewService reviewService = new ReviewService(reviewDBRepository);
 
         ReviewRepository reviewRepository = new ReviewRepository();
         BookUserService bookUserService = new BookUserService(bookService, userService, bookUserDBRepository);
-        ReviewService reviewService = new ReviewService(userService, bookUserService, reviewRepository);
+//        ReviewService reviewService = new ReviewService(userService, bookUserService, reviewRepository);
         //======//======//======//======//======//======//======//======//======
 
 
         initDataBase();
 
 //        userService.save(new User("postgres1"));
-        LocalDate date = LocalDate.now();
-        bookService.save(new Book("book_name123", date));
+//        LocalDate date = LocalDate.now();
+//        bookService.save(new Book("book_name123", date));
+//        BookUser bookUser = bookUserService.returnBook(1L);
+//        System.out.println(bookUser);
+
+        Review review = new Review(1L, 1L, "Отличная книжка");
+        reviewService.save(review);
+        List byId = reviewService.findAll();
+        System.out.println(byId);
 //        List<Book> book = bookService.findAll();
 //        Book book = bookService.findById(-3L);
 //        System.out.println(book);
 
-        BookUser bookUser = bookUserService.bookIssue(1L, 1L);
-        System.out.println(bookUser);
+//        BookUser bookUser1 = bookUserService.bookIssue(1L, 1L);
+//        System.out.println(bookUser1);
 
 //        User user = userService.findById(4L);
 //        System.out.println(user);
