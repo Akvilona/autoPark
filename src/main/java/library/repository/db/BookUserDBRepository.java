@@ -1,6 +1,7 @@
 package library.repository.db;
 
 import library.model.BookUser;
+import library.service.BookService;
 import library.utils.DateTimeUtils;
 import library.utils.DbUtils;
 import nio.dz.CrudRepository;
@@ -22,6 +23,8 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
     private static final String FIND_BOOK_USER_ID_SQL = "select * from bookuser where book_id = ? and user_id = ?";
     private static final String INSERT_BOOK_USER_SQL =
             "insert into bookuser (book_id, user_id, from_date_time, to_date_time) values (?, ?, ?, ?)";
+    private static final String UPDATE_BOOK_USER_SQL =
+            "update bookuser set return_date_time = ? where id = ?";
     private static final String DELETE_BY_ID_SQL = "delete from bookuser where id = ?";
     private static final String FIND_BY_ID = "select * from bookuser where id = ?";
     private static final String FIND_ALL = "select id, book_id, user_id, from_date_time, to_date_time, return_date_time from bookuser";
@@ -72,21 +75,39 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
 
     @Override
     public BookUser save(final BookUser bookUser) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement =
-                     connection.prepareStatement(INSERT_BOOK_USER_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setLong(1, bookUser.getBookId());
-            preparedStatement.setLong(2, bookUser.getUserId());
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(bookUser.getFrom()));
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(bookUser.getTo()));
+        if (findById(bookUser.getId()).isEmpty()){      // INSERT
+            try (Connection connection = DbUtils.getConnection();
 
-            preparedStatement.executeUpdate();
-            bookUser.setId(getGeneratedKeys(preparedStatement));
-            connection.commit();
-            return bookUser;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                 PreparedStatement preparedStatement =
+                         connection.prepareStatement(INSERT_BOOK_USER_SQL, Statement.RETURN_GENERATED_KEYS)){
+
+                preparedStatement.setLong(1, bookUser.getBookId());
+                preparedStatement.setLong(2, bookUser.getUserId());
+                preparedStatement.setTimestamp(3, Timestamp.valueOf(bookUser.getFrom()));
+                preparedStatement.setTimestamp(4, Timestamp.valueOf(bookUser.getTo()));
+
+                preparedStatement.executeUpdate();
+                bookUser.setId(getGeneratedKeys(preparedStatement));
+                connection.commit();
+                return bookUser;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {                                        // UPDATE
+            try (Connection connection = DbUtils.getConnection();
+
+                 PreparedStatement preparedStatement =
+                         connection.prepareStatement(UPDATE_BOOK_USER_SQL)){
+
+                preparedStatement.setTimestamp(1, Timestamp.valueOf(bookUser.getTo()));
+                preparedStatement.setLong(2, bookUser.getId());
+                preparedStatement.executeUpdate();
+                connection.commit();
+                return bookUser;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

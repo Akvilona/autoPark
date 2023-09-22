@@ -25,7 +25,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
 
 public class App {
     @SneakyThrows
@@ -49,14 +48,18 @@ public class App {
 
         Instant start = Instant.now();
 
-        User userSaved = userService.save(new User("1"));
-        Book bookSaved = bookService.save(new Book("1", LocalDate.now()));
+//        User userSaved = userService.save(new User("1"));
+//        Book bookSaved = bookService.save(new Book("1", LocalDate.now()));
+
+        User userSaved = userService.findById(16L);
+        Book bookSaved = bookService.findById(16L);
 
         BookUser bookUser = bookUserService.bookIssue(userSaved.getId(), bookSaved.getId());
         BookUser bookUser1 = bookUserService.returnBook(bookUser.getBookId());
 
         Instant end = Instant.now();
         //PT0.324122S с получения
+        //PT0.3241853S у меня
         System.out.println(Duration.between(start, end));
 
     }

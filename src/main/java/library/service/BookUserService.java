@@ -24,11 +24,12 @@ public class BookUserService {
             throw new ServiceException(ErrorCode.ERR_CODE_03, bookId);
         }
 
-        if (bookUserDBRepository.findByBookIdAndReturnDateTimeIsNull(bookId).isPresent()) {
+/*        if (bookUserDBRepository.findByBookIdAndReturnDateTimeIsNull(bookId).isPresent()) {
             throw new ServiceException(ErrorCode.ERR_CODE_01, bookId);
         }
-
-        BookUser bookUser = new BookUser(bookId, userId, LocalDateTime.now(), LocalDateTime.now().plusMonths(1));
+*/
+        BookUser bookUser = bookUserDBRepository.findByBookIdAndUserId(bookId, userId).orElse(
+                new BookUser(bookId, userId, LocalDateTime.now(), LocalDateTime.now().plusMonths(1)));
         bookUserDBRepository.save(bookUser);
         return bookUser;
     }
@@ -40,6 +41,7 @@ public class BookUserService {
 
         //TODO: Реализрвать update с помощью метода save, если запись есть, то обновляем, если нет, то создаем
         BookUser bookUser = bookUserDBRepository.findByBookIdAndReturnDateTimeIsNull(bookId).orElseThrow();
+
         bookUser.setReturnDateTime(LocalDateTime.now());
         bookUserDBRepository.save(bookUser);
         return bookUser;
