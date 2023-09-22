@@ -14,7 +14,7 @@ public class DbUtils {
 
     public static Connection getConnection() {
 
-//      if (connectionOld == null) {
+//      if (getConnection == null) {
 
             try {
                 final String url = PropertiesReaderUtils.getProperty("url");
