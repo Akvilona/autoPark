@@ -1,4 +1,4 @@
-package library.repository;
+package library.repository.list;
 
 import library.model.BookUser;
 import nio.dz.CrudRepository;

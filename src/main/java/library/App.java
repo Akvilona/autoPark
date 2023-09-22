@@ -8,7 +8,7 @@ package library;
 import library.model.Book;
 import library.model.BookUser;
 import library.model.User;
-import library.repository.ReviewRepository;
+import library.repository.list.ReviewRepository;
 import library.repository.db.BookDBRepository;
 import library.repository.db.BookUserDBRepository;
 import library.repository.db.ReviewDBRepository;

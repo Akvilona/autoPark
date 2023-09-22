@@ -1,7 +1,7 @@
 /**
  * Создал Андрей Антонов 29.08.2023 6:49
  **/
-package library.repository;
+package library.repository.list;
 
 import library.model.User;
 import nio.dz.CrudRepository;

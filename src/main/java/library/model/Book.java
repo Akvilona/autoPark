@@ -8,6 +8,8 @@ import java.time.LocalDate;
 
 @Data //Getter, Setter, RequiredArgsConstructor, ToString, EqualsAndHashCode, Value
 @AllArgsConstructor
+//@Table("book")
+//@Entity
 public class Book {
 
     private Long id;
