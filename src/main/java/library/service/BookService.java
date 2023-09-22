@@ -4,18 +4,16 @@ import library.exception.ErrorCode;
 import library.exception.ServiceException;
 import library.model.Book;
 import library.repository.db.BookDBRepository;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class BookService {
     private final BookDBRepository  bookDBRepository;
 
-    public BookService(final BookDBRepository bookDBRepository) {
-        this.bookDBRepository = bookDBRepository;
-    }
-
-    public void save(final Book book) {
-        bookDBRepository.save(book);
+    public Book save(final Book book) {
+        return bookDBRepository.save(book);
     }
 
     public List<Book> findAll() {

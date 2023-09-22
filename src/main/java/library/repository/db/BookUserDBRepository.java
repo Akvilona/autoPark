@@ -1,13 +1,17 @@
 package library.repository.db;
 
 import library.model.BookUser;
+import library.utils.DateTimeUtils;
 import library.utils.DbUtils;
 import nio.dz.CrudRepository;
 
-import java.sql.*;
-import java.time.Instant;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,28 +26,31 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
     private static final String FIND_BY_ID = "select * from bookuser where id = ?";
     private static final String FIND_ALL = "select id, book_id, user_id, from_date_time, to_date_time, return_date_time from bookuser";
 
+    public Optional<BookUser> findByBookIdAndUserId(final Long bookId, final Long userId) {
+        try (Connection connection = DbUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BOOK_USER_ID_SQL)) {
+            preparedStatement.setLong(1, bookId);
+            preparedStatement.setLong(2, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(getUser(resultSet));
+            }
+            return Optional.empty();
+        } catch (SQLException a) {
+            throw new RuntimeException(a);
+        }
+    }
+
     @Override
     public Optional<BookUser> findById(final Long id) {
         try (Connection connection = DbUtils.getConnection();
              PreparedStatement preparedStatement
                      = connection.prepareStatement(FIND_BY_ID)) {
             ResultSet resultSet = getResultSetSQL(id, preparedStatement);
-            return getBookUser(resultSet);
-
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
-        }
-    }
-
-    //TODO: реализовать findByBookIdAndUserId
-    public static Optional<BookUser> findByBookIdAndUserId(final Long bookId, final Long userId) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement
-                     = connection.prepareStatement(FIND_BOOK_USER_ID_SQL)) {
-            preparedStatement.setLong(1, bookId);
-            preparedStatement.setLong(2, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return getBookUser(resultSet);
+            if (resultSet.next()) {
+                return Optional.of(getUser(resultSet));
+            }
+            return Optional.empty();
         } catch (SQLException a) {
             throw new RuntimeException(a);
         }
@@ -54,40 +61,13 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
              PreparedStatement preparedStatement
                      = connection.prepareStatement(FIND_BOOK_USER_SQL)) {
             ResultSet resultSet = getResultSetSQL(bookId, preparedStatement);
-            return getBookUser(resultSet);
+            if (resultSet.next()) {
+                return Optional.of(getUser(resultSet));
+            }
+            return Optional.empty();
         } catch (SQLException a) {
             throw new RuntimeException(a);
         }
-    }
-
-    private static Optional<BookUser> getBookUser(final ResultSet resultSet) throws SQLException {
-        if (resultSet.next()) {
-            long id = resultSet.getLong("id");
-            long returnBookId = resultSet.getLong("book_id");
-            long returnUserId = resultSet.getLong("user_id");
-            LocalDateTime fromDateTime = convertToLocalDateTime(resultSet.getTimestamp("from_date_time"));
-            LocalDateTime toDateTime = convertToLocalDateTime(resultSet.getTimestamp("to_date_time"));
-            LocalDateTime returnDateTime = convertToLocalDateTime(resultSet.getTimestamp("return_date_time"));
-
-            BookUser bookUser = new BookUser(id, returnBookId, returnUserId, fromDateTime, toDateTime, returnDateTime);
-
-            return Optional.of(bookUser);
-        }
-        return Optional.empty();
-    }
-
-    private static LocalDateTime convertToLocalDateTime(final Timestamp timestamp) {
-        if (timestamp == null) {
-            return null;
-        }
-        return Instant.ofEpochMilli(timestamp.getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-    }
-
-    private ResultSet getResultSetSQL(final Long id, final PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setLong(1, id);
-        return preparedStatement.executeQuery();
     }
 
     @Override
@@ -105,18 +85,6 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
             bookUser.setId(getGeneratedKeys(preparedStatement));
             connection.commit();
             return bookUser;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private Long getGeneratedKeys(final PreparedStatement preparedStatement) {
-        try {
-            ResultSet rs = preparedStatement.getGeneratedKeys();
-            if (rs.next()) {
-                return rs.getLong(1);
-            }
-            return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -142,14 +110,7 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
             List<BookUser> result = new ArrayList<>();
 
             while (resultSet.next()) {
-                long id = resultSet.getLong("id");
-                long book_id = resultSet.getLong("book_id");
-                long user_id = resultSet.getLong("user_id");
-                LocalDateTime from_date_time = convertToLocalDateViaMilisecond(resultSet.getDate("from_date_time"));
-                LocalDateTime to_date_time = convertToLocalDateViaMilisecond(resultSet.getDate("to_date_time"));
-                LocalDateTime return_date_time = convertToLocalDateViaMilisecond(resultSet.getDate("return_date_time"));
-                BookUser bookUser = new BookUser(id, book_id, user_id, from_date_time, to_date_time, return_date_time);
-                result.add(bookUser);
+                result.add(getUser(resultSet));
             }
             return result;
         } catch (SQLException e) {
@@ -157,10 +118,14 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
         }
     }
 
-    private LocalDateTime convertToLocalDateViaMilisecond(final Date dateToConvert) {
-        return Instant.ofEpochMilli(dateToConvert.getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+    private BookUser getUser(final ResultSet resultSet) throws SQLException {
+        long id = resultSet.getLong("id");
+        long bookId = resultSet.getLong("book_id");
+        long userId = resultSet.getLong("user_id");
+        LocalDateTime fromDateTime = DateTimeUtils.convertToLocalDateTime(resultSet.getDate("from_date_time"));
+        LocalDateTime toDateTime = DateTimeUtils.convertToLocalDateTime(resultSet.getDate("to_date_time"));
+        LocalDateTime returnDateTime = DateTimeUtils.convertToLocalDateTime(resultSet.getDate("return_date_time"));
+        return new BookUser(id, bookId, userId, fromDateTime, toDateTime, returnDateTime);
     }
 
 }

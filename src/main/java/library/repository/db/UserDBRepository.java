@@ -89,20 +89,4 @@ public class UserDBRepository implements CrudRepository<User, Long> {
         }
     }
 
-    private ResultSet getResultSetSQL(final Long id, final PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setLong(1, id);
-        return preparedStatement.executeQuery();
-    }
-
-    private Long getGeneratedKeys(final PreparedStatement preparedStatement) {
-        try {
-            ResultSet rs = preparedStatement.getGeneratedKeys();
-            if (rs.next()) {
-                return rs.getLong(1);
-            }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

@@ -16,6 +16,8 @@ public class DbUtils {
             String user = PropertiesReaderUtils.getProperty("user");
             String pass = PropertiesReaderUtils.getProperty("pass");
 
+            //TODO: Переделать получение connection, вместо получени коннекта каждый раз, создать его один раз и
+            //использовать
             Connection connection = DriverManager.getConnection(url, user, pass);
             connection.setAutoCommit(false);
             return connection;

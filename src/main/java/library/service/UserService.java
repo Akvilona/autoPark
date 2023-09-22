@@ -7,18 +7,16 @@ import library.exception.ErrorCode;
 import library.exception.ServiceException;
 import library.model.User;
 import library.repository.db.UserDBRepository;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class UserService {
     private final UserDBRepository userDBRepository;
 
-    public UserService(final UserDBRepository userDBRepository) {
-        this.userDBRepository = userDBRepository;
-    }
-
-    public void save(final User user) {
-        userDBRepository.save(user);
+    public User save(final User user) {
+        return userDBRepository.save(user);
     }
 
     public void delete(final Long id) {

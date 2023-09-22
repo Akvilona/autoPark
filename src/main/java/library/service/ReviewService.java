@@ -7,16 +7,14 @@ import library.exception.ErrorCode;
 import library.exception.ServiceException;
 import library.model.Review;
 import library.repository.db.ReviewDBRepository;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class ReviewService {
 
     private final ReviewDBRepository reviewDBRepository;
-
-    public ReviewService(ReviewDBRepository reviewDBRepository) {
-        this.reviewDBRepository = reviewDBRepository;
-    }
 
     public Review save(Review review){
         if (reviewDBRepository.findByBookId(review.getBookId()).isEmpty()) {

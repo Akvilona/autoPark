@@ -4,6 +4,7 @@
 package library.repository.db;
 
 import library.model.Book;
+import library.utils.DateTimeUtils;
 import library.utils.DbUtils;
 import nio.dz.CrudRepository;
 
@@ -13,9 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +35,7 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
                 Date date = resultSet.getDate("dateofissue");
-                LocalDate dateOfIssue = convertToLocalDateViaMilisecond(date);
+                LocalDate dateOfIssue = DateTimeUtils.convertToLocalDate(date);
                 Book book = new Book(id, name, dateOfIssue);
                 return Optional.of(book);
             }
@@ -85,7 +84,7 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
                 long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
                 Date date = resultSet.getDate("dateofissue");
-                LocalDate dateOfIssue = convertToLocalDateViaMilisecond(date);
+                LocalDate dateOfIssue = DateTimeUtils.convertToLocalDate(date);
                 Book book = new Book(id, name, dateOfIssue);
                 result.add(book);
             }
@@ -95,26 +94,4 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
         }
     }
 
-    private LocalDate convertToLocalDateViaMilisecond(final Date dateToConvert) {
-        return Instant.ofEpochMilli(dateToConvert.getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-    }
-
-    private ResultSet getResultSetSQL(final Long id, final PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setLong(1, id);
-        return preparedStatement.executeQuery();
-    }
-
-    private Long getGeneratedKeys(final PreparedStatement preparedStatement) {
-        try {
-            ResultSet rs = preparedStatement.getGeneratedKeys();
-            if (rs.next()) {
-                return rs.getLong(1);
-            }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

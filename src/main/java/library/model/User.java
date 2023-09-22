@@ -1,9 +1,6 @@
-/**
- * Создал Андрей Антонов 29.08.2023 6:16
- **/
 package library.model;
 
-
+//TODO: lombok
 public class User {
     private Long id;
     private String name;

@@ -7,7 +7,6 @@ package library;
 
 import library.model.Book;
 import library.model.BookUser;
-import library.model.Review;
 import library.model.User;
 import library.repository.ReviewRepository;
 import library.repository.db.BookDBRepository;
@@ -24,8 +23,9 @@ import lombok.SneakyThrows;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.util.List;
 
 public class App {
     @SneakyThrows
@@ -43,34 +43,21 @@ public class App {
 
         ReviewRepository reviewRepository = new ReviewRepository();
         BookUserService bookUserService = new BookUserService(bookService, userService, bookUserDBRepository);
-//        ReviewService reviewService = new ReviewService(userService, bookUserService, reviewRepository);
         //======//======//======//======//======//======//======//======//======
-
 
         initDataBase();
 
-//        userService.save(new User("postgres1"));
-//        LocalDate date = LocalDate.now();
-//        bookService.save(new Book("book_name123", date));
-//        BookUser bookUser = bookUserService.returnBook(1L);
-//        System.out.println(bookUser);
+        Instant start = Instant.now();
 
-        Review review = new Review(1L, 1L, "Отличная книжка");
-        reviewService.save(review);
-        List byId = reviewService.findAll();
-        System.out.println(byId);
-//        List<Book> book = bookService.findAll();
-//        Book book = bookService.findById(-3L);
-//        System.out.println(book);
+        User userSaved = userService.save(new User("1"));
+        Book bookSaved = bookService.save(new Book("1", LocalDate.now()));
 
-//        BookUser bookUser1 = bookUserService.bookIssue(1L, 1L);
-//        System.out.println(bookUser1);
+        BookUser bookUser = bookUserService.bookIssue(userSaved.getId(), bookSaved.getId());
+        BookUser bookUser1 = bookUserService.returnBook(bookUser.getBookId());
 
-//        User user = userService.findById(4L);
-//        System.out.println(user);
-//        userService.delete(2L);
-//      List<User> allUsers = userService.findAll();
-//        System.out.println(allUsers);
+        Instant end = Instant.now();
+        //PT0.324122S с получения
+        System.out.println(Duration.between(start, end));
 
     }
 

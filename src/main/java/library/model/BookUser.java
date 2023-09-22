@@ -2,6 +2,7 @@ package library.model;
 
 import java.time.LocalDateTime;
 
+//TODO: lombok
 public class BookUser {
     private Long id;
     private Long bookId;

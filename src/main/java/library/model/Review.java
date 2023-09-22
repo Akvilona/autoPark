@@ -1,8 +1,6 @@
-/**
- * Создал Андрей Антонов 08.09.2023 15:04
- **/
 package library.model;
 
+//TODO: lombok
 public class Review {
     private Long id;
     private Long bookId;
