@@ -14,7 +14,7 @@ public class DbUtils {
 
     public static Connection getConnection() {
 
-//      if (getConnection == null) {
+      if (connectionOld == null) {
 
             try {
                 final String url = PropertiesReaderUtils.getProperty("url");
@@ -25,13 +25,14 @@ public class DbUtils {
                 //использовать
                 connectionOld = DriverManager.getConnection(url, user, pass);
                 connectionOld.setAutoCommit(false);
+
 //                return connection;
                 return connectionOld;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-//      } else {
-//            return connectionOld;
-//        }
+      } else {
+            return connectionOld;
+        }
     }
 }
