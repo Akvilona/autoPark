@@ -1,6 +1,7 @@
 package library.utils;
 
 import http.com.utils.PropertiesReaderUtils;
+import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 import java.sql.Connection;
@@ -8,31 +9,28 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 @UtilityClass
+@Getter
 public class DbUtils {
 
-    Connection connectionOld = null;
+    private static Connection connection = null;
 
     public static Connection getConnection() {
-
-      if (connectionOld == null) {
-
+        if (connection == null) {
             try {
                 final String url = PropertiesReaderUtils.getProperty("url");
                 final String user = PropertiesReaderUtils.getProperty("user");
                 final String pass = PropertiesReaderUtils.getProperty("pass");
 
-                //TODO: Переделать получение connection, вместо получени коннекта каждый раз, создать его один раз и
                 //использовать
-                connectionOld = DriverManager.getConnection(url, user, pass);
-                connectionOld.setAutoCommit(false);
+                connection = DriverManager.getConnection(url, user, pass);
+                connection.setAutoCommit(false);
 
-//                return connection;
-                return connectionOld;
+                return connection;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-      } else {
-            return connectionOld;
+        } else {
+            return connection;
         }
     }
 }

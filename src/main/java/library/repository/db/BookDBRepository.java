@@ -3,7 +3,7 @@
  **/
 package library.repository.db;
 
-import library.model.Book;
+import library.entity.Book;
 import library.utils.DateTimeUtils;
 import library.utils.DbUtils;
 import nio.dz.CrudRepository;
@@ -21,6 +21,20 @@ import java.util.Optional;
 
 public class BookDBRepository implements CrudRepository<Book, Long> {
 
+    //TODO: вынести в енам
+    //TODO сделать реализацию интерфейса CrudRepository во всех репозиториях (реализовать методы интерфейса)
+    //TODO: cделать delete общим методом как findById
+
+    @Override
+    public Book convert(ResultSet resultSet) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getTableName() {
+        return null;
+    }
+
     private static final String SELECT_FROM_BOOK_WHERE_ID = "SELECT * FROM book WHERE id = ?";
     private static final String SELECT_FROM_BOOK = "SELECT * FROM book";
     private static final String INSERT_INTO_BOOK = "INSERT INTO book (name, dateOfIssue) VALUES (?, ?)";
@@ -28,9 +42,8 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
 
     @Override
     public Optional<Book> findById(final Long id) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement
-                     = connection.prepareStatement(SELECT_FROM_BOOK_WHERE_ID)) {
+        Connection connection = DbUtils.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_BOOK_WHERE_ID)) {
             ResultSet resultSet = getResultSetSQL(id, preparedStatement);
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
@@ -47,8 +60,8 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
 
     @Override
     public Book save(final Book book) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement =
+        Connection connection = DbUtils.getConnection();
+        try (PreparedStatement preparedStatement =
                      connection.prepareStatement(INSERT_INTO_BOOK, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, book.getName());
             preparedStatement.setDate(2, Date.valueOf(book.getDateOfIssue()));
@@ -63,8 +76,8 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
 
     @Override
     public void delete(final Long id) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_BOOK_WHERE_ID)) {
+        Connection connection = DbUtils.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_BOOK_WHERE_ID)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             connection.commit();
@@ -75,8 +88,8 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
 
     @Override
     public List<Book> findAll() {
-        try (Connection connection = DbUtils.getConnection();
-             Statement statement = connection.createStatement()) {
+        Connection connection = DbUtils.getConnection();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(SELECT_FROM_BOOK);
             List<Book> result = new ArrayList<>();
 

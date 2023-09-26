@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -16,10 +18,20 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class FileUserCrudRepository implements CrudRepository<User, Integer> {
 
+    @Override
+    public User convert(ResultSet resultSet) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getTableName() {
+        return null;
+    }
+
     private final File file;
 
     @Override
-    public Optional<User> findById(final Integer id) {
+    public Optional<User> findById(final Long id) {
         return findAll().stream()
                 .filter(user -> user.getId() == id)
                 .findFirst();

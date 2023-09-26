@@ -1,4 +1,4 @@
-package library.model;
+package library.entity;
 
 //TODO: lombok
 public class Review {

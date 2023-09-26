@@ -3,12 +3,11 @@
  **/
 package library.repository.db;
 
-import library.model.Review;
+import library.entity.Review;
 import library.utils.DbUtils;
 import nio.dz.CrudRepository;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,6 +16,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class ReviewDBRepository implements CrudRepository<Review, Long> {
+    @Override
+    public Review convert(ResultSet resultSet) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getTableName() {
+        return null;
+    }
+
     private static final String INSERT_BOOK_USER_SQL = "insert into review (book_id, user_id, comment) values (?, ?, ?)";
     private static final String FIND_BOOK_USER_SQL = "select * from review where book_id = ?";
     private static final String FIND_BOOK_USER_ID_SQL = "select * from review where book_id = ? and user_id = ?";
@@ -27,9 +36,8 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
 
     @Override
     public Optional<Review> findById(Long id) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement
-                     = connection.prepareStatement(FIND_BY_ID)) {
+        Connection connection = DbUtils.getConnection();
+        try (var preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
             ResultSet resultSet = getResultSetSQL(id, preparedStatement);
             if (resultSet.next()) {
                 return Optional.of(getReview(resultSet));
@@ -41,9 +49,8 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
     }
 
     public Optional<Review> findByBookId(Long bookId) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement
-                     = connection.prepareStatement(FIND_BY_BOOK_ID)) {
+        Connection connection = DbUtils.getConnection();
+        try (var preparedStatement = connection.prepareStatement(FIND_BY_BOOK_ID)) {
             ResultSet resultSet = getResultSetSQL(bookId, preparedStatement);
             if (resultSet.next()) {
                 return Optional.of(getReview(resultSet));
@@ -57,9 +64,8 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
 
     @Override
     public Review save(Review review) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement =
-                     connection.prepareStatement(INSERT_BOOK_USER_SQL, Statement.RETURN_GENERATED_KEYS)) {
+        Connection connection = DbUtils.getConnection();
+        try (var preparedStatement = connection.prepareStatement(INSERT_BOOK_USER_SQL, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setLong(1, review.getBookId());
             preparedStatement.setLong(2, review.getUserId());
@@ -77,8 +83,8 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
 
     @Override
     public void delete(Long id) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID_SQL)) {
+        Connection connection = DbUtils.getConnection();
+        try (var preparedStatement = connection.prepareStatement(DELETE_BY_ID_SQL)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             connection.commit();
@@ -89,8 +95,8 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
 
     @Override
     public List<Review> findAll() {
-        try (Connection connection = DbUtils.getConnection();
-             Statement statement = connection.createStatement()) {
+        Connection connection = DbUtils.getConnection();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
             List<Review> result = new ArrayList<>();
 

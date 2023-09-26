@@ -3,14 +3,25 @@
  **/
 package library.repository.list;
 
-import library.model.Review;
+import library.entity.Review;
 import nio.dz.CrudRepository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class ReviewRepository implements CrudRepository<Review, Long> {
+    @Override
+    public Review convert(ResultSet resultSet) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getTableName() {
+        return null;
+    }
 
     private final List<Review> reviews = new ArrayList<>();
 

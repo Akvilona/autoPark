@@ -1,7 +1,6 @@
 package library.repository.db;
 
-import library.model.BookUser;
-import library.service.BookService;
+import library.entity.BookUser;
 import library.utils.DateTimeUtils;
 import library.utils.DbUtils;
 import nio.dz.CrudRepository;
@@ -17,26 +16,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static library.constant.SqlQuery.BOOK_USER_DELETE_BY_ID_SQL;
+import static library.constant.SqlQuery.BOOK_USER_FIND_ALL;
+import static library.constant.SqlQuery.BOOK_USER_FIND_BOOK_USER_ID_SQL;
+import static library.constant.SqlQuery.BOOK_USER_FIND_BOOK_USER_SQL;
+import static library.constant.SqlQuery.BOOK_USER_INSERT_BOOK_USER_SQL;
+import static library.constant.SqlQuery.BOOK_USER_UPDATE_BOOK_USER_SQL;
+
+
 public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
 
-    private static final String FIND_BOOK_USER_SQL = "select * from bookuser where book_id = ? and return_date_time IS NULL";
-    private static final String FIND_BOOK_USER_ID_SQL = "select * from bookuser where book_id = ? and user_id = ?";
-    private static final String INSERT_BOOK_USER_SQL =
-            "insert into bookuser (book_id, user_id, from_date_time, to_date_time) values (?, ?, ?, ?)";
-    private static final String UPDATE_BOOK_USER_SQL =
-            "update bookuser set return_date_time = ? where id = ?";
-    private static final String DELETE_BY_ID_SQL = "delete from bookuser where id = ?";
-    private static final String FIND_BY_ID = "select * from bookuser where id = ?";
-    private static final String FIND_ALL = "select id, book_id, user_id, from_date_time, to_date_time, return_date_time from bookuser";
+    @Override
+    public String getTableName() {
+        return "bookuser";
+    }
 
     public Optional<BookUser> findByBookIdAndUserId(final Long bookId, final Long userId) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BOOK_USER_ID_SQL)) {
+        Connection connection = DbUtils.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(BOOK_USER_FIND_BOOK_USER_ID_SQL.getValue())) {
             preparedStatement.setLong(1, bookId);
             preparedStatement.setLong(2, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(getUser(resultSet));
+                return Optional.of(convert(resultSet));
             }
             return Optional.empty();
         } catch (SQLException a) {
@@ -44,28 +46,27 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
         }
     }
 
-    @Override
-    public Optional<BookUser> findById(final Long id) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement
-                     = connection.prepareStatement(FIND_BY_ID)) {
-            ResultSet resultSet = getResultSetSQL(id, preparedStatement);
-            if (resultSet.next()) {
-                return Optional.of(getUser(resultSet));
-            }
-            return Optional.empty();
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
-        }
-    }
+//    @Override
+//    public Optional<BookUser> findById(final Long id) {
+//        Connection connection = DbUtils.getConnection();
+//        try (var preparedStatement = connection.prepareStatement(BOOK_USER_FIND_BY_ID.getValue())) {
+//            ResultSet resultSet = getResultSetSQL(id, preparedStatement);
+//            if (resultSet.next()) {
+//                return Optional.of(convert(resultSet));
+//            }
+//            return Optional.empty();
+//        } catch (SQLException a) {
+//            throw new RuntimeException(a);
+//        }
+//    }
 
     public Optional<BookUser> findByBookIdAndReturnDateTimeIsNull(final Long bookId) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement
-                     = connection.prepareStatement(FIND_BOOK_USER_SQL)) {
+        Connection connection = DbUtils.getConnection();
+        try (PreparedStatement preparedStatement
+                     = connection.prepareStatement(BOOK_USER_FIND_BOOK_USER_SQL.getValue())) {
             ResultSet resultSet = getResultSetSQL(bookId, preparedStatement);
             if (resultSet.next()) {
-                return Optional.of(getUser(resultSet));
+                return Optional.of(convert(resultSet));
             }
             return Optional.empty();
         } catch (SQLException a) {
@@ -75,12 +76,11 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
 
     @Override
     public BookUser save(final BookUser bookUser) {
+        Connection connection = DbUtils.getConnection();
 
-        if (findById(bookUser.getId()).isEmpty()){      // INSERT
-            try (Connection connection = DbUtils.getConnection();
-
-                 PreparedStatement preparedStatement =
-                         connection.prepareStatement(INSERT_BOOK_USER_SQL, Statement.RETURN_GENERATED_KEYS)){
+        if (bookUser.getId() == null || findById(bookUser.getId()).isEmpty()) {
+            try (var preparedStatement = connection.prepareStatement(BOOK_USER_INSERT_BOOK_USER_SQL.getValue(),
+                    Statement.RETURN_GENERATED_KEYS)) {
 
                 preparedStatement.setLong(1, bookUser.getBookId());
                 preparedStatement.setLong(2, bookUser.getUserId());
@@ -94,11 +94,9 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        } else {                                        // UPDATE
-            try (Connection connection = DbUtils.getConnection();
-
-                 PreparedStatement preparedStatement =
-                         connection.prepareStatement(UPDATE_BOOK_USER_SQL)){
+        } else {
+            try (PreparedStatement preparedStatement =
+                         connection.prepareStatement(BOOK_USER_UPDATE_BOOK_USER_SQL.getValue())) {
 
                 preparedStatement.setTimestamp(1, Timestamp.valueOf(bookUser.getTo()));
                 preparedStatement.setLong(2, bookUser.getId());
@@ -113,8 +111,8 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
 
     @Override
     public void delete(final Long id) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID_SQL)) {
+        Connection connection = DbUtils.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(BOOK_USER_DELETE_BY_ID_SQL.getValue())) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             connection.commit();
@@ -125,13 +123,13 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
 
     @Override
     public List<BookUser> findAll() {
-        try (Connection connection = DbUtils.getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(FIND_ALL);
+        Connection connection = DbUtils.getConnection();
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(BOOK_USER_FIND_ALL.getValue());
             List<BookUser> result = new ArrayList<>();
 
             while (resultSet.next()) {
-                result.add(getUser(resultSet));
+                result.add(convert(resultSet));
             }
             return result;
         } catch (SQLException e) {
@@ -139,7 +137,8 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
         }
     }
 
-    private BookUser getUser(final ResultSet resultSet) throws SQLException {
+    @Override
+    public BookUser convert(final ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong("id");
         long bookId = resultSet.getLong("book_id");
         long userId = resultSet.getLong("user_id");
@@ -148,5 +147,4 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
         LocalDateTime returnDateTime = DateTimeUtils.convertToLocalDateTime(resultSet.getDate("return_date_time"));
         return new BookUser(id, bookId, userId, fromDateTime, toDateTime, returnDateTime);
     }
-
 }

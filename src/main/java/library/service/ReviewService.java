@@ -5,7 +5,7 @@ package library.service;
 
 import library.exception.ErrorCode;
 import library.exception.ServiceException;
-import library.model.Review;
+import library.entity.Review;
 import library.repository.db.ReviewDBRepository;
 import lombok.RequiredArgsConstructor;
 

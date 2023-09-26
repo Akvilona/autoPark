@@ -5,7 +5,7 @@ package library.service;
 
 import library.exception.ErrorCode;
 import library.exception.ServiceException;
-import library.model.User;
+import library.entity.User;
 import library.repository.db.UserDBRepository;
 import lombok.RequiredArgsConstructor;
 

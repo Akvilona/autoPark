@@ -1,6 +1,6 @@
 package library.repository.db;
 
-import library.model.User;
+import library.entity.User;
 import library.utils.DbUtils;
 import nio.dz.CrudRepository;
 
@@ -14,6 +14,18 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDBRepository implements CrudRepository<User, Long> {
+    //TODO: вынести в енам
+    //TODO сделать реализацию интерфейса CrudRepository во всех репозиториях (реализовать методы интерфейса)
+    //TODO: cделать delete общим методом как findById
+    @Override
+    public User convert(ResultSet resultSet) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getTableName() {
+        return null;
+    }
 
     private static final String SELECT_BY_ID_SQL = "SELECT * FROM users WHERE id = ?";
 
@@ -25,8 +37,8 @@ public class UserDBRepository implements CrudRepository<User, Long> {
 
     @Override
     public void delete(final Long id) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID_SQL)) {
+        Connection connection = DbUtils.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID_SQL)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             connection.commit();
@@ -37,8 +49,8 @@ public class UserDBRepository implements CrudRepository<User, Long> {
 
     @Override
     public Optional<User> findById(final Long id) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement
+        Connection connection = DbUtils.getConnection();
+        try (PreparedStatement preparedStatement
                      = connection.prepareStatement(SELECT_BY_ID_SQL)) {
             ResultSet resultSet = getResultSetSQL(id, preparedStatement);
             if (resultSet.next()) {
@@ -56,9 +68,8 @@ public class UserDBRepository implements CrudRepository<User, Long> {
 
     @Override
     public User save(final User user) {
-        try (Connection connection = DbUtils.getConnection();
-             PreparedStatement preparedStatement =
-                     connection.prepareStatement(INSERT_USER_SQL, Statement.RETURN_GENERATED_KEYS)) {
+        Connection connection = DbUtils.getConnection();
+        try (var preparedStatement = connection.prepareStatement(INSERT_USER_SQL, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.executeUpdate();
             user.setId(getGeneratedKeys(preparedStatement));

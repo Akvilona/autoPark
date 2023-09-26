@@ -3,14 +3,27 @@
  **/
 package library.repository.list;
 
-import library.model.Book;
+import library.entity.Book;
 import nio.dz.CrudRepository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class BookRepository implements CrudRepository<Book, Long> {
+
+    @Override
+    public Book convert(ResultSet resultSet) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getTableName() {
+        return null;
+    }
+
     private final List<Book> bookList = new ArrayList<>();
 
     @Override

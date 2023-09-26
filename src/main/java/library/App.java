@@ -1,14 +1,8 @@
 package library;
 
-//TODO: Библиотека
-//TODO: Была возможность добавления, удаления книги из библиотеки
-//TODO: Была возможность взять книгу для зарегистрированного пользователя
-//TODO: Возможность регистрации пользователя
-
-import library.model.Book;
-import library.model.BookUser;
-import library.model.User;
-import library.repository.list.ReviewRepository;
+import library.entity.Book;
+import library.entity.BookUser;
+import library.entity.User;
 import library.repository.db.BookDBRepository;
 import library.repository.db.BookUserDBRepository;
 import library.repository.db.ReviewDBRepository;
@@ -25,6 +19,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
 
 public class App {
     @SneakyThrows
@@ -40,7 +35,6 @@ public class App {
         BookService bookService = new BookService(bookDBRepository);
         ReviewService reviewService = new ReviewService(reviewDBRepository);
 
-        ReviewRepository reviewRepository = new ReviewRepository();
         BookUserService bookUserService = new BookUserService(bookService, userService, bookUserDBRepository);
         //======//======//======//======//======//======//======//======//======
 
@@ -48,14 +42,12 @@ public class App {
 
         Instant start = Instant.now();
 
-//        User userSaved = userService.save(new User("1"));
-//        Book bookSaved = bookService.save(new Book("1", LocalDate.now()));
-
-        User userSaved = userService.findById(16L);
-        Book bookSaved = bookService.findById(16L);
+        User userSaved = userService.save(new User("1"));
+        Book bookSaved = bookService.save(new Book("1", LocalDate.now()));
 
         BookUser bookUser = bookUserService.bookIssue(userSaved.getId(), bookSaved.getId());
         BookUser bookUser1 = bookUserService.returnBook(bookUser.getBookId());
+        System.out.println(bookUser1);
 
         Instant end = Instant.now();
         //PT0.324122S с получения
@@ -65,8 +57,8 @@ public class App {
     }
 
     private static void initDataBase() {
-        try (Connection connection = DbUtils.getConnection();
-             Statement statement = connection.createStatement()) {
+        Connection connection = DbUtils.getConnection();
+        try (Statement statement = connection.createStatement()) {
 
             String createCommentsTable = """
                     create table if not exists book

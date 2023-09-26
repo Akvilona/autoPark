@@ -2,7 +2,7 @@ package library.service;
 
 import library.exception.ErrorCode;
 import library.exception.ServiceException;
-import library.model.BookUser;
+import library.entity.BookUser;
 import library.repository.db.BookUserDBRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -39,9 +39,7 @@ public class BookUserService {
             throw new ServiceException(ErrorCode.ERR_CODE_03, bookId);
         }
 
-        //TODO: Реализрвать update с помощью метода save, если запись есть, то обновляем, если нет, то создаем
         BookUser bookUser = bookUserDBRepository.findByBookIdAndReturnDateTimeIsNull(bookId).orElseThrow();
-
         bookUser.setReturnDateTime(LocalDateTime.now());
         bookUserDBRepository.save(bookUser);
         return bookUser;

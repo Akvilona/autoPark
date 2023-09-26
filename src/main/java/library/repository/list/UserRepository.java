@@ -3,14 +3,26 @@
  **/
 package library.repository.list;
 
-import library.model.User;
+import library.entity.User;
 import nio.dz.CrudRepository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class UserRepository implements CrudRepository<User, Long> {
+    @Override
+    public User convert(ResultSet resultSet) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getTableName() {
+        return null;
+    }
+
     private final List<User> userList = new ArrayList<>();
 
     @Override

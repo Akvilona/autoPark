@@ -2,7 +2,7 @@ package library.service;
 
 import library.exception.ErrorCode;
 import library.exception.ServiceException;
-import library.model.Book;
+import library.entity.Book;
 import library.repository.db.BookDBRepository;
 import lombok.RequiredArgsConstructor;
 
