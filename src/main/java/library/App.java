@@ -42,6 +42,8 @@ public class App {
 
         Instant start = Instant.now();
 
+        reviewService.delete(7L);
+/*
         User userSaved = userService.save(new User("1"));
         Book bookSaved = bookService.save(new Book("1", LocalDate.now()));
 
@@ -50,9 +52,11 @@ public class App {
         System.out.println(bookUser1);
 
         Instant end = Instant.now();
+
+ */
         //PT0.324122S с получения
         //PT0.3241853S у меня
-        System.out.println(Duration.between(start, end));
+//        System.out.println(Duration.between(start, end));
 
     }
 

@@ -1,7 +1,5 @@
 package nio.dz;
-
 import library.utils.DbUtils;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,13 +7,23 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import static library.constant.SqlQuery.DELETE_BY_ID_SQL;
 import static library.constant.SqlQuery.FIND_BY_ID;
 
 public interface CrudRepository<T, K> {
 
     T save(T t);
-
-    void delete(K id);
+    default void delete(Long id) {
+        Connection connection = DbUtils.getConnection();
+        var findBySqlQuery = DELETE_BY_ID_SQL.getValue().formatted(getTableName());
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findBySqlQuery)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+            connection.commit();
+        } catch (SQLException a) {
+            throw new RuntimeException(a);
+        }
+    };
 
     List<T> findAll();
 
@@ -24,6 +32,10 @@ public interface CrudRepository<T, K> {
     String getTableName();
 
     default Optional<T> findById(final Long id) {
+        if (id == null) {
+            return Optional.empty();
+        }
+
         Connection connection = DbUtils.getConnection();
         var findBySqlQuery = FIND_BY_ID.getValue().formatted(getTableName());
         try (var preparedStatement = connection.prepareStatement(findBySqlQuery)) {
@@ -54,5 +66,4 @@ public interface CrudRepository<T, K> {
         preparedStatement.setLong(1, id);
         return preparedStatement.executeQuery();
     }
-
 }

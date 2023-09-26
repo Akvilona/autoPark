@@ -15,32 +15,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static library.constant.SqlQuery.REVIEW_FIND_BY_ID;
+import static library.constant.SqlQuery.REVIEW_INSERT_BOOK_USER_SQL;
+import static library.constant.SqlQuery.REVIEW_FIND_ALL;
+import static library.constant.SqlQuery.REVIEW_FIND_BY_BOOK_ID;
+import static library.constant.SqlTable.REVIEW;
+
 public class ReviewDBRepository implements CrudRepository<Review, Long> {
     @Override
-    public Review convert(ResultSet resultSet) throws SQLException {
-        return null;
+    public Review convert(final ResultSet resultSet) throws SQLException {
+        long id = resultSet.getLong("id");
+        long returnBookId = resultSet.getLong("book_id");
+        long returnUserId = resultSet.getLong("user_id");
+        String comment = resultSet.getString("comment");
+        return new Review(id, returnBookId, returnUserId, comment);
     }
 
     @Override
     public String getTableName() {
-        return null;
+       return REVIEW.getTableName();
     }
 
-    private static final String INSERT_BOOK_USER_SQL = "insert into review (book_id, user_id, comment) values (?, ?, ?)";
-    private static final String FIND_BOOK_USER_SQL = "select * from review where book_id = ?";
-    private static final String FIND_BOOK_USER_ID_SQL = "select * from review where book_id = ? and user_id = ?";
-    private static final String DELETE_BY_ID_SQL = "delete from review where id = ?";
-    private static final String FIND_BY_ID = "select * from review where id = ?";
-    private static final String FIND_BY_BOOK_ID = "select * from review where book_id = ?";
-    private static final String FIND_ALL = "select * from review";
-
     @Override
-    public Optional<Review> findById(Long id) {
+    public Optional<Review> findById(final Long id) {
         Connection connection = DbUtils.getConnection();
-        try (var preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
+        try (var preparedStatement = connection.prepareStatement(REVIEW_FIND_BY_ID.getValue())) {
             ResultSet resultSet = getResultSetSQL(id, preparedStatement);
             if (resultSet.next()) {
-                return Optional.of(getReview(resultSet));
+                return Optional.of(convert(resultSet));
             }
             return Optional.empty();
         } catch (SQLException a) {
@@ -48,12 +50,12 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
         }
     }
 
-    public Optional<Review> findByBookId(Long bookId) {
+    public Optional<Review> findByBookId(final Long bookId) {
         Connection connection = DbUtils.getConnection();
-        try (var preparedStatement = connection.prepareStatement(FIND_BY_BOOK_ID)) {
+        try (var preparedStatement = connection.prepareStatement(REVIEW_FIND_BY_BOOK_ID.getValue())) {
             ResultSet resultSet = getResultSetSQL(bookId, preparedStatement);
             if (resultSet.next()) {
-                return Optional.of(getReview(resultSet));
+                return Optional.of(convert(resultSet));
             }
             return Optional.empty();
 
@@ -63,9 +65,9 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
     }
 
     @Override
-    public Review save(Review review) {
+    public Review save(final Review review) {
         Connection connection = DbUtils.getConnection();
-        try (var preparedStatement = connection.prepareStatement(INSERT_BOOK_USER_SQL, Statement.RETURN_GENERATED_KEYS)) {
+        try (var preparedStatement = connection.prepareStatement(REVIEW_INSERT_BOOK_USER_SQL.getValue(), Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setLong(1, review.getBookId());
             preparedStatement.setLong(2, review.getUserId());
@@ -82,26 +84,14 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
     }
 
     @Override
-    public void delete(Long id) {
-        Connection connection = DbUtils.getConnection();
-        try (var preparedStatement = connection.prepareStatement(DELETE_BY_ID_SQL)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-            connection.commit();
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
-        }
-    }
-
-    @Override
     public List<Review> findAll() {
         Connection connection = DbUtils.getConnection();
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(FIND_ALL);
+            ResultSet resultSet = statement.executeQuery(REVIEW_FIND_ALL.getValue());
             List<Review> result = new ArrayList<>();
 
             while (resultSet.next()) {
-                result.add(getReview(resultSet));
+                result.add(convert(resultSet));
             }
             return result;
         } catch (SQLException e) {
@@ -109,12 +99,15 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
         }
     }
 
-    private Review getReview(ResultSet resultSet) throws SQLException {
-        long id = resultSet.getLong("id");
-        long returnBookId = resultSet.getLong("book_id");
-        long returnUserId = resultSet.getLong("user_id");
-        String comment = resultSet.getString("comment");
-        return new Review(id, returnBookId, returnUserId, comment);
-    }
-
+/*    @Override
+    public void delete(final Long id) {
+        Connection connection = DbUtils.getConnection();
+        try (var preparedStatement = connection.prepareStatement(REVIEW_DELETE_BY_ID_SQL.getValue())) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+            connection.commit();
+        } catch (SQLException a) {
+            throw new RuntimeException(a);
+        }
+    }*/
 }

@@ -16,7 +16,7 @@ public class ReviewService {
 
     private final ReviewDBRepository reviewDBRepository;
 
-    public Review save(Review review){
+    public Review save(final Review review) {
         if (reviewDBRepository.findByBookId(review.getBookId()).isEmpty()) {
             throw new ServiceException(ErrorCode.ERR_CODE_03, review.getBookId());
         }

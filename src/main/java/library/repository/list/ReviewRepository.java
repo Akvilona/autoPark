@@ -12,15 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static library.constant.SqlTable.REVIEW;
+
 public class ReviewRepository implements CrudRepository<Review, Long> {
     @Override
-    public Review convert(ResultSet resultSet) throws SQLException {
+    public Review convert(final ResultSet resultSet) throws SQLException {
         return null;
     }
 
     @Override
     public String getTableName() {
-        return null;
+        return REVIEW.getTableName();
     }
 
     private final List<Review> reviews = new ArrayList<>();

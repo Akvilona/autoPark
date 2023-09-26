@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 public class FileUserCrudRepository implements CrudRepository<User, Integer> {
 
     @Override
-    public User convert(ResultSet resultSet) throws SQLException {
+    public User convert(final ResultSet resultSet) throws SQLException {
         return null;
     }
 
@@ -55,6 +55,7 @@ public class FileUserCrudRepository implements CrudRepository<User, Integer> {
         throw new RuntimeException();
     }
 
+/*
     @Override
     public void delete(final Integer id) {
         List<User> userList = findAll().stream()
@@ -62,6 +63,7 @@ public class FileUserCrudRepository implements CrudRepository<User, Integer> {
                 .toList();
         saveAll(userList);
     }
+*/
 
     @SneakyThrows
     @Override

@@ -19,31 +19,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static library.constant.SqlQuery.BOOK_SELECT_FROM_BOOK_WHERE_ID;
+import static library.constant.SqlQuery.BOOK_INSERT_INTO_BOOK;
+import static library.constant.SqlQuery.BOOK_SELECT_FROM_BOOK;
+import static library.constant.SqlTable.BOOK;
+
 public class BookDBRepository implements CrudRepository<Book, Long> {
 
-    //TODO: вынести в енам
+    //сделано TODO: вынести в енам
     //TODO сделать реализацию интерфейса CrudRepository во всех репозиториях (реализовать методы интерфейса)
     //TODO: cделать delete общим методом как findById
 
     @Override
-    public Book convert(ResultSet resultSet) throws SQLException {
-        return null;
+    public Book convert(final ResultSet resultSet) throws SQLException {
+        Long id = resultSet.getLong("id");
+        String name = resultSet.getString("name");
+        Date date = resultSet.getDate("dateofissue");
+        LocalDate dateOfIssue = DateTimeUtils.convertToLocalDate(date);
+        Book book = new Book(id, name, dateOfIssue);
+        return book;
     }
 
     @Override
     public String getTableName() {
-        return null;
+        return BOOK.getTableName();
     }
-
-    private static final String SELECT_FROM_BOOK_WHERE_ID = "SELECT * FROM book WHERE id = ?";
-    private static final String SELECT_FROM_BOOK = "SELECT * FROM book";
-    private static final String INSERT_INTO_BOOK = "INSERT INTO book (name, dateOfIssue) VALUES (?, ?)";
-    private static final String DELETE_FROM_BOOK_WHERE_ID = "DELETE FROM book WHERE id = ?";
 
     @Override
     public Optional<Book> findById(final Long id) {
         Connection connection = DbUtils.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_BOOK_WHERE_ID)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(BOOK_SELECT_FROM_BOOK_WHERE_ID.getValue())) {
             ResultSet resultSet = getResultSetSQL(id, preparedStatement);
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
@@ -62,7 +67,7 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
     public Book save(final Book book) {
         Connection connection = DbUtils.getConnection();
         try (PreparedStatement preparedStatement =
-                     connection.prepareStatement(INSERT_INTO_BOOK, Statement.RETURN_GENERATED_KEYS)) {
+                     connection.prepareStatement(BOOK_INSERT_INTO_BOOK.getValue(), Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, book.getName());
             preparedStatement.setDate(2, Date.valueOf(book.getDateOfIssue()));
             preparedStatement.executeUpdate();
@@ -74,10 +79,11 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
         }
     }
 
+/*
     @Override
     public void delete(final Long id) {
         Connection connection = DbUtils.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_BOOK_WHERE_ID)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(BOOK_DELETE_FROM_BOOK_WHERE_ID.getValue())) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             connection.commit();
@@ -85,21 +91,17 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
             throw new RuntimeException(a);
         }
     }
+*/
 
     @Override
     public List<Book> findAll() {
         Connection connection = DbUtils.getConnection();
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(SELECT_FROM_BOOK);
+            ResultSet resultSet = statement.executeQuery(BOOK_SELECT_FROM_BOOK.getValue());
             List<Book> result = new ArrayList<>();
 
             while (resultSet.next()) {
-                long id = resultSet.getLong("id");
-                String name = resultSet.getString("name");
-                Date date = resultSet.getDate("dateofissue");
-                LocalDate dateOfIssue = DateTimeUtils.convertToLocalDate(date);
-                Book book = new Book(id, name, dateOfIssue);
-                result.add(book);
+                result.add(convert(resultSet));
             }
             return result;
         } catch (SQLException e) {

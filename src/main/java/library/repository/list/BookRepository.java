@@ -8,20 +8,23 @@ import nio.dz.CrudRepository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static library.constant.SqlTable.BOOK;
+
 public class BookRepository implements CrudRepository<Book, Long> {
 
     @Override
-    public Book convert(ResultSet resultSet) throws SQLException {
-        return null;
+    public Book convert(final ResultSet resultSet) throws SQLException {
+        return new Book("new book", LocalDate.now());
     }
 
     @Override
     public String getTableName() {
-        return null;
+        return BOOK.getTableName();
     }
 
     private final List<Book> bookList = new ArrayList<>();

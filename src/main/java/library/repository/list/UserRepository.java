@@ -12,15 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static library.constant.SqlTable.USER;
+
 public class UserRepository implements CrudRepository<User, Long> {
     @Override
-    public User convert(ResultSet resultSet) throws SQLException {
+    public User convert(final ResultSet resultSet) throws SQLException {
         return null;
     }
 
     @Override
     public String getTableName() {
-        return null;
+        return USER.getTableName();
     }
 
     private final List<User> userList = new ArrayList<>();

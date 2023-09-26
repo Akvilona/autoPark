@@ -16,19 +16,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static library.constant.SqlQuery.BOOK_USER_DELETE_BY_ID_SQL;
 import static library.constant.SqlQuery.BOOK_USER_FIND_ALL;
 import static library.constant.SqlQuery.BOOK_USER_FIND_BOOK_USER_ID_SQL;
 import static library.constant.SqlQuery.BOOK_USER_FIND_BOOK_USER_SQL;
 import static library.constant.SqlQuery.BOOK_USER_INSERT_BOOK_USER_SQL;
 import static library.constant.SqlQuery.BOOK_USER_UPDATE_BOOK_USER_SQL;
+import static library.constant.SqlTable.BOOK_USER;
 
 
 public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
 
     @Override
     public String getTableName() {
-        return "bookuser";
+        return BOOK_USER.getTableName();
+    }
+
+    @Override
+    public Optional<BookUser> findById(final Long id) {
+        return CrudRepository.super.findById(id);
+    }
+
+    @Override
+    public Long getGeneratedKeys(final PreparedStatement preparedStatement) {
+        return CrudRepository.super.getGeneratedKeys(preparedStatement);
     }
 
     public Optional<BookUser> findByBookIdAndUserId(final Long bookId, final Long userId) {
@@ -45,20 +55,6 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
             throw new RuntimeException(a);
         }
     }
-
-//    @Override
-//    public Optional<BookUser> findById(final Long id) {
-//        Connection connection = DbUtils.getConnection();
-//        try (var preparedStatement = connection.prepareStatement(BOOK_USER_FIND_BY_ID.getValue())) {
-//            ResultSet resultSet = getResultSetSQL(id, preparedStatement);
-//            if (resultSet.next()) {
-//                return Optional.of(convert(resultSet));
-//            }
-//            return Optional.empty();
-//        } catch (SQLException a) {
-//            throw new RuntimeException(a);
-//        }
-//    }
 
     public Optional<BookUser> findByBookIdAndReturnDateTimeIsNull(final Long bookId) {
         Connection connection = DbUtils.getConnection();
@@ -109,6 +105,7 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
         }
     }
 
+/*
     @Override
     public void delete(final Long id) {
         Connection connection = DbUtils.getConnection();
@@ -120,6 +117,7 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
             throw new RuntimeException(a);
         }
     }
+*/
 
     @Override
     public List<BookUser> findAll() {

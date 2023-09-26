@@ -9,15 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static library.constant.SqlTable.BOOK_USER;
+
 public class BookUserRepository implements CrudRepository<BookUser, Long> {
     @Override
-    public BookUser convert(ResultSet resultSet) throws SQLException {
+    public BookUser convert(final ResultSet resultSet) throws SQLException {
         return null;
     }
 
     @Override
     public String getTableName() {
-        return null;
+        return BOOK_USER.getTableName();
     }
 
     private final List<BookUser> bookUserList = new ArrayList<>();

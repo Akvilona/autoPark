@@ -13,7 +13,7 @@ public class Review {
         this.comment = comment;
     }
 
-    public Review(Long id, Long bookId, Long userId, String comment) {
+    public Review(final Long id, final Long bookId, final Long userId, final String comment) {
         this.id = id;
         this.bookId = bookId;
         this.userId = userId;

@@ -14,7 +14,7 @@ public class App {
             System.out.println(newFile);
         }
         FileUserCrudRepository fileUserCrudRepository = new FileUserCrudRepository(file);
-        fileUserCrudRepository.delete(2);
+        fileUserCrudRepository.delete(2L);
     }
 
 }
