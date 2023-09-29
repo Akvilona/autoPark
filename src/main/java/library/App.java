@@ -1,8 +1,5 @@
 package library;
 
-import library.entity.Book;
-import library.entity.BookUser;
-import library.entity.User;
 import library.repository.db.BookDBRepository;
 import library.repository.db.BookUserDBRepository;
 import library.repository.db.ReviewDBRepository;
@@ -17,9 +14,6 @@ import lombok.SneakyThrows;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
 
 public class App {
     @SneakyThrows
@@ -40,24 +34,7 @@ public class App {
 
         initDataBase();
 
-        Instant start = Instant.now();
-
         reviewService.delete(7L);
-/*
-        User userSaved = userService.save(new User("1"));
-        Book bookSaved = bookService.save(new Book("1", LocalDate.now()));
-
-        BookUser bookUser = bookUserService.bookIssue(userSaved.getId(), bookSaved.getId());
-        BookUser bookUser1 = bookUserService.returnBook(bookUser.getBookId());
-        System.out.println(bookUser1);
-
-        Instant end = Instant.now();
-
- */
-        //PT0.324122S с получения
-        //PT0.3241853S у меня
-//        System.out.println(Duration.between(start, end));
-
     }
 
     private static void initDataBase() {
@@ -94,7 +71,6 @@ public class App {
                     """;
             statement.execute(createReviewTable);
 
-            //TODO: create unique index (book_id, user_id)
             String createBookUserTable = """
                     create table if not exists bookUser
                          (

@@ -19,16 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static library.constant.SqlQuery.BOOK_SELECT_FROM_BOOK_WHERE_ID;
 import static library.constant.SqlQuery.BOOK_INSERT_INTO_BOOK;
 import static library.constant.SqlQuery.BOOK_SELECT_FROM_BOOK;
+import static library.constant.SqlQuery.BOOK_SELECT_FROM_BOOK_WHERE_ID;
 import static library.constant.SqlTable.BOOK;
 
 public class BookDBRepository implements CrudRepository<Book, Long> {
-
-    //сделано TODO: вынести в енам
-    //TODO сделать реализацию интерфейса CrudRepository во всех репозиториях (реализовать методы интерфейса)
-    //TODO: cделать delete общим методом как findById
 
     @Override
     public Book convert(final ResultSet resultSet) throws SQLException {

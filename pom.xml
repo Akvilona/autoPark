@@ -25,6 +25,8 @@
         <jai-imageio-core.version>1.4.0</jai-imageio-core.version>
         <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
         <postgresql.version>42.5.4</postgresql.version>
+        <hibernate-core.version>6.3.0.Final</hibernate-core.version>
+        <hibernate-types.version>2.21.1</hibernate-types.version>
     </properties>
 
     <dependencies>
@@ -52,6 +54,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-core.version}</version>
         </dependency>
     </dependencies>
 
