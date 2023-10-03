@@ -1,8 +1,17 @@
 package library.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 //TODO: lombok
+@Data //Getter, Setter, RequiredArgsConstructor, ToString, EqualsAndHashCode, Value
+@NoArgsConstructor
 public class BookUser {
     private Long id;
     private Long bookId;

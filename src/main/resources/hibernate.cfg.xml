@@ -17,5 +17,9 @@
         <property name="format_sql">true</property>
 
         <mapping class="hibernate.entity.Book"/>
+        <mapping class="hibernate.entity.User"/>
+        <mapping class="hibernate.entity.BookUser"/>
+        <mapping class="hibernate.entity.Review"/>
+
     </session-factory>
 </hibernate-configuration>

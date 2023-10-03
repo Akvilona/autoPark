@@ -1,5 +1,10 @@
 package library.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data //Getter, Setter, RequiredArgsConstructor, ToString, EqualsAndHashCode, Value
+@NoArgsConstructor
 //TODO: lombok
 public class User {
     private Long id;

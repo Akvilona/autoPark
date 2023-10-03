@@ -1,6 +1,11 @@
 package library.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 //TODO: lombok
+@Data //Getter, Setter, RequiredArgsConstructor, ToString, EqualsAndHashCode, Value
+@NoArgsConstructor
 public class Review {
     private Long id;
     private Long bookId;
