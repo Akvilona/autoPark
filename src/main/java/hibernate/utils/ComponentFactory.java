@@ -1,20 +1,28 @@
 package hibernate.utils;
 
 import hibernate.repository.BookRepository;
+import hibernate.repository.BookUserRepository;
 import hibernate.repository.UserRepository;
+import library.entity.Review;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class ComponentFactory {
 
-    @SuppressWarnings("unchecked")
-    public static <T> T createRepository(Class<T> clazz) {
+    public static <T> T createRepository(final Class<T> clazz) {
         if (clazz.equals(BookRepository.class)) {
             return (T) new BookRepository();
+
         } else if (clazz.equals(UserRepository.class)) {
             return (T) new UserRepository();
-        }
-        throw new IllegalArgumentException("Unknown repository type: " + clazz.getName());
 
+        } else if (clazz.equals(BookUserRepository.class)) {
+            return (T) new BookUserRepository();
+
+        } else if (clazz.equals(Review.class)) {
+            return (T) new Review();
+        }
+
+        throw new IllegalArgumentException("Unknown repository type: " + clazz.getName());
     }
 }

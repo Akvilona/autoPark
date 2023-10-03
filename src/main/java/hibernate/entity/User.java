@@ -23,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

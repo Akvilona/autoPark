@@ -4,28 +4,24 @@ import hibernate.entity.Book;
 import hibernate.entity.BookUser;
 import hibernate.entity.User;
 import hibernate.repository.BookRepository;
+import hibernate.repository.BookUserRepository;
+import hibernate.repository.UserRepository;
 import hibernate.utils.ComponentFactory;
-import hibernate.utils.HibernateUtils;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 public class App {
-    public static void main(String[] args) {
-//        BookRepository bookRepository = ComponentFactory.createRepository(BookRepository.class);
-
+    public static void main(final String[] args) {
         Book book = Book.builder()
                 .name(String.valueOf(new Random().nextInt()))
                 .dateOfIssue(LocalDate.now())
                 .build();
+
         User user = User.builder()
-                .age(20)
+                .age(21)
                 .name(String.valueOf(new Random().nextInt()))
                 .build();
 
@@ -36,18 +32,16 @@ public class App {
                 .dateTo(LocalDateTime.now())
                 .build();
 
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+        BookRepository bookRepository = ComponentFactory.createRepository(BookRepository.class);
+        UserRepository userRepository = ComponentFactory.createRepository(UserRepository.class);
+        BookUserRepository bookUserRepository = ComponentFactory.createRepository(BookUserRepository.class);
+        bookRepository.save(book);
+        userRepository.save(user);
+        bookUserRepository.save(bookUser);
 
-            session.persist(bookUser);
+        List<Book> bookAll = bookRepository.findAll();
+        System.out.println(bookAll);
 
-            transaction.commit();
-        }
 
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            Query<Book> query = session.createQuery("from Book b JOIN FETCH b.bookUsers bUsers", Book.class);
-            List<Book> list = query.list();
-            System.out.println(list);
-        }
     }
 }

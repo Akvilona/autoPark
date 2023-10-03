@@ -5,6 +5,7 @@ package hibernate.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,11 +31,15 @@ public class Review {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
+    @JoinColumn(name = "book_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_review_book"))
     private Book book;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_review_user"))
     private User user;
 
     @Column(nullable = false)

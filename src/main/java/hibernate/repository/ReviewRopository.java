@@ -1,43 +1,49 @@
+/**
+ * Создал Андрей Антонов 03.10.2023 11:45
+ **/
 package hibernate.repository;
 
-import hibernate.entity.Book;
 import hibernate.utils.HibernateUtils;
+import library.entity.Review;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 import java.util.Optional;
 
-public class BookRepository implements CrudRepository<Book, Long> {
+public class ReviewRopository implements CrudRepository<Review, Long> {
     @Override
-    public Book save(final Book book) {
+    public Review save(final Review review) {
+
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.persist(book);
+            session.persist(review);
             transaction.commit();
-            return book;
         }
+        return review;
     }
+
 
     @Override
     public void delete(final Long id) {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            session.remove(session.get(Book.class, id));
+            session.remove(session.get(Review.class, id));
+        }
+
+    }
+
+    @Override
+    public List<Review> findAll() {
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            return session.createQuery("from Review r JOIN FETCH r.review bReview",
+                    Review.class).list();
         }
     }
 
     @Override
-    public List<Book> findAll() {
+    public Optional<Review> findById(final Long id) {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            return session.createQuery("from Book b JOIN FETCH b.bookUsers bUsers",
-                                          Book.class).list();
-        }
-    }
-
-    @Override
-    public Optional<Book> findById(final Long id) {
-        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(Book.class, id));
+            return Optional.ofNullable(session.get(Review.class, id));
         }
     }
 }
