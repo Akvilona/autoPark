@@ -3,40 +3,44 @@ package hibernate.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
 @Data //Getter, Setter, RequiredArgsConstructor, ToString, EqualsAndHashCode, Value
-@Entity
 @Builder
-@Table(name = "User")
 @NoArgsConstructor
 @AllArgsConstructor
+
+@Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
+
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Column(name = "age", unique = false, nullable = false)
-    private int age;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
+    @Column(name = "age", nullable = false)
+    private Integer age;
+
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private List<BookUser> bookUsers;
 
-    @OneToMany(cascade = CascadeType.ALL )
-    @JoinColumn(name = "userId")
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private List<Review> reviews;
 }

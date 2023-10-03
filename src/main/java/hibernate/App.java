@@ -3,32 +3,51 @@ package hibernate;
 import hibernate.entity.Book;
 import hibernate.entity.BookUser;
 import hibernate.entity.User;
+import hibernate.repository.BookRepository;
+import hibernate.utils.ComponentFactory;
 import hibernate.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 public class App {
     public static void main(String[] args) {
+//        BookRepository bookRepository = ComponentFactory.createRepository(BookRepository.class);
+
         Book book = Book.builder()
-                .name("example")
+                .name(String.valueOf(new Random().nextInt()))
                 .dateOfIssue(LocalDate.now())
                 .build();
-
         User user = User.builder()
-                .name("Piter")
-                .age(16)
+                .age(20)
+                .name(String.valueOf(new Random().nextInt()))
                 .build();
 
-        Transaction transaction = null;
-        try (Session session1 = HibernateUtils.getSessionFactory().openSession()) {
-            transaction = session1.beginTransaction();
+        BookUser bookUser = BookUser.builder()
+                .user(user)
+                .book(book)
+                .dateFrom(LocalDateTime.now())
+                .dateTo(LocalDateTime.now())
+                .build();
 
-            session1.persist(book);
-            session1.persist(user);
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            session.persist(bookUser);
 
             transaction.commit();
+        }
+
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            Query<Book> query = session.createQuery("from Book b JOIN FETCH b.bookUsers bUsers", Book.class);
+            List<Book> list = query.list();
+            System.out.println(list);
         }
     }
 }

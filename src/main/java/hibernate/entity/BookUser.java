@@ -1,33 +1,54 @@
-/**
- * Создал Андрей Антонов 01.10.2023 12:05
- **/
 package hibernate.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
-@Data //Getter, Setter, RequiredArgsConstructor, ToString, EqualsAndHashCode, Value
-@Entity
+
+@Data
 @Builder
-@Table(name = "BookUser")
 @NoArgsConstructor
 @AllArgsConstructor
+
+@Entity
+@Table(name = "book_user")
 public class BookUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    private Long bookId;
-    private Long userId;
+
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "book_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_bookuser_book")
+    )
+    private Book book;
+
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "user_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_bookuser_user")
+    )
+    private User user;
     private LocalDateTime dateFrom;
     private LocalDateTime dateTo;
     private LocalDateTime returnDateTime;
