@@ -2,9 +2,11 @@ package hibernate;
 
 import hibernate.entity.Book;
 import hibernate.entity.BookUser;
+import hibernate.entity.Review;
 import hibernate.entity.User;
 import hibernate.repository.BookRepository;
 import hibernate.repository.BookUserRepository;
+import hibernate.repository.ReviewRepository;
 import hibernate.repository.UserRepository;
 import hibernate.utils.ComponentFactory;
 
@@ -32,16 +34,28 @@ public class App {
                 .dateTo(LocalDateTime.now())
                 .build();
 
+        Review review = Review.builder()
+                .book(book)
+                .user(user)
+                .comment("asdfasdfasdf")
+                .build();
+
         BookRepository bookRepository = ComponentFactory.createRepository(BookRepository.class);
         UserRepository userRepository = ComponentFactory.createRepository(UserRepository.class);
         BookUserRepository bookUserRepository = ComponentFactory.createRepository(BookUserRepository.class);
-        bookRepository.save(book);
+        ReviewRepository reviewRepository = ComponentFactory.createRepository(ReviewRepository.class);
+        // TODO: не получается сохранить review
+        reviewRepository.save(review);
+/*        bookRepository.save(book);
         userRepository.save(user);
         bookUserRepository.save(bookUser);
+*/
+         // TODO: почему то возвращает только первые две записи
+/*        List<User> userAll = userRepository.findAll();
+        System.out.println(userAll);
 
-        List<Book> bookAll = bookRepository.findAll();
-        System.out.println(bookAll);
-
-
+        List<BookUser> bookUsers = bookUserRepository.findAll();
+        System.out.println(bookUsers);
+*/
     }
 }

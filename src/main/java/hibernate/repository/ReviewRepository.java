@@ -3,15 +3,15 @@
  **/
 package hibernate.repository;
 
+import hibernate.entity.Review;
 import hibernate.utils.HibernateUtils;
-import library.entity.Review;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 import java.util.Optional;
 
-public class ReviewRopository implements CrudRepository<Review, Long> {
+public class ReviewRepository implements CrudRepository<Review, Long> {
     @Override
     public Review save(final Review review) {
 

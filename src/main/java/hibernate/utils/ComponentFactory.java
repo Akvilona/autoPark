@@ -2,6 +2,7 @@ package hibernate.utils;
 
 import hibernate.repository.BookRepository;
 import hibernate.repository.BookUserRepository;
+import hibernate.repository.ReviewRepository;
 import hibernate.repository.UserRepository;
 import library.entity.Review;
 import lombok.experimental.UtilityClass;
@@ -20,7 +21,7 @@ public class ComponentFactory {
             return (T) new BookUserRepository();
 
         } else if (clazz.equals(Review.class)) {
-            return (T) new Review();
+            return (T) new ReviewRepository();
         }
 
         throw new IllegalArgumentException("Unknown repository type: " + clazz.getName());
