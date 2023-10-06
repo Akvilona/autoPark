@@ -1,10 +1,9 @@
-package hibernate.utils;
+package hibernate.library.utils;
 
-import hibernate.repository.BookRepository;
-import hibernate.repository.BookUserRepository;
-import hibernate.repository.ReviewRepository;
-import hibernate.repository.UserRepository;
-import library.entity.Review;
+import hibernate.library.repository.BookRepository;
+import hibernate.library.repository.BookUserRepository;
+import hibernate.library.repository.ReviewRepository;
+import hibernate.library.repository.UserRepository;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

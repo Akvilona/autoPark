@@ -1,11 +1,9 @@
-/**
- * Создал Андрей Антонов 01.10.2023 12:05
- **/
-package hibernate.entity;
+package hibernate.library.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +15,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -24,28 +25,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "review")
-public class Review {
+@Table(name = "book_user")
+public class BookUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id",
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "book_id",
             nullable = false,
-            foreignKey = @ForeignKey(name = "fk_review_book")
+            foreignKey = @ForeignKey(name = "fk_bookuser_book")
     )
     private Book book;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id",
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "user_id",
             nullable = false,
-            foreignKey = @ForeignKey(name = "fk_review_user")
+            foreignKey = @ForeignKey(name = "fk_bookuser_user")
     )
     private User user;
-
-    @Column(nullable = false)
-    private String comment;
-
+    private LocalDateTime dateFrom;
+    private LocalDateTime dateTo;
+    private LocalDateTime returnDateTime;
 }

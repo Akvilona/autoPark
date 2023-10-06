@@ -1,4 +1,4 @@
-package hibernate.entity;
+package hibernate.library.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,19 +15,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDate;
 import java.util.List;
 
-
-@Data
+@Data //Getter, Setter, RequiredArgsConstructor, ToString, EqualsAndHashCode, Value
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 
 @Entity
-@Table(name = "book")
-public class Book {
-
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -36,14 +33,14 @@ public class Book {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @Column(name = "date_of_issue", nullable = false)
-    private LocalDate dateOfIssue;
+    @Column(name = "age", nullable = false)
+    private Integer age;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private List<BookUser> bookUsers;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private List<Review> reviews;
 }

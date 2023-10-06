@@ -1,4 +1,4 @@
-package hibernate.repository;
+package hibernate.library.repository;
 
 import java.util.List;
 import java.util.Optional;

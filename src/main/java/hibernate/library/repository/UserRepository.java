@@ -1,7 +1,7 @@
-package hibernate.repository;
+package hibernate.library.repository;
 
-import hibernate.entity.User;
-import hibernate.utils.HibernateUtils;
+import hibernate.library.entity.User;
+import hibernate.library.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
