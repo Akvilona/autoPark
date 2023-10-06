@@ -20,7 +20,7 @@ public class ComponentFactory {
         } else if (clazz.equals(BookUserRepository.class)) {
             return (T) new BookUserRepository();
 
-        } else if (clazz.equals(Review.class)) {
+        } else if (clazz.equals(ReviewRepository.class)) {
             return (T) new ReviewRepository();
         }
 

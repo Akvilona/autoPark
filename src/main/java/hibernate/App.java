@@ -27,12 +27,12 @@ public class App {
                 .name(String.valueOf(new Random().nextInt()))
                 .build();
 
-        BookUser bookUser = BookUser.builder()
-                .user(user)
-                .book(book)
-                .dateFrom(LocalDateTime.now())
-                .dateTo(LocalDateTime.now())
-                .build();
+//        BookUser bookUser = BookUser.builder()
+//                .user(user)
+//                .book(book)
+//                .dateFrom(LocalDateTime.now())
+//                .dateTo(LocalDateTime.now())
+//                .build();
 
         Review review = Review.builder()
                 .book(book)
@@ -44,6 +44,10 @@ public class App {
         UserRepository userRepository = ComponentFactory.createRepository(UserRepository.class);
         BookUserRepository bookUserRepository = ComponentFactory.createRepository(BookUserRepository.class);
         ReviewRepository reviewRepository = ComponentFactory.createRepository(ReviewRepository.class);
+
+
+//        bookUserRepository.save(bookUser);
+
         // TODO: не получается сохранить review
         reviewRepository.save(review);
 /*        bookRepository.save(book);

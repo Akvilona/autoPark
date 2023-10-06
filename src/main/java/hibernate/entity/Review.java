@@ -3,6 +3,7 @@
  **/
 package hibernate.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -30,16 +31,18 @@ public class Review {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id",
             nullable = false,
-            foreignKey = @ForeignKey(name = "fk_review_book"))
+            foreignKey = @ForeignKey(name = "fk_review_book")
+    )
     private Book book;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id",
             nullable = false,
-            foreignKey = @ForeignKey(name = "fk_review_user"))
+            foreignKey = @ForeignKey(name = "fk_review_user")
+    )
     private User user;
 
     @Column(nullable = false)
