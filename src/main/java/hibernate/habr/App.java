@@ -10,15 +10,12 @@ import hibernate.habr.repository.FPostRepository;
 import hibernate.habr.utils.FComponentFactory;
 import net.datafaker.Faker;
 
-import java.time.LocalDate;
 import java.util.List;
 
-//import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
-
-public class app {
+public class App {
     // todo: реализовать модель постов и комментариев
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         FPostRepository fPostRepository = FComponentFactory.fCreateRepository(FPostRepository.class);
         FCommentRepository fCommentRepository = FComponentFactory.fCreateRepository(FCommentRepository.class);
@@ -33,7 +30,7 @@ public class app {
         FComment fComment = FComment.builder()
                 .comment(faker.name().title())
                 .dateCreate(faker.date().birthday().toLocalDateTime().toLocalDate())
-                .FPost(fPost)
+                .fPost(fPost)
                 .build();
 
         fCommentRepository.save(fComment);

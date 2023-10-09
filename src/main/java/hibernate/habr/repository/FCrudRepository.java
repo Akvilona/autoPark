@@ -1,7 +1,5 @@
 package hibernate.habr.repository;
 
-import hibernate.habr.entity.FPost;
-
 import java.util.List;
 import java.util.Optional;
 

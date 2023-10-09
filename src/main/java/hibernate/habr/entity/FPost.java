@@ -32,7 +32,7 @@ public class FPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "f_post")
-    private Long FPost;
+    private Long fPost;
 
     @Column(name = "name", unique = true, nullable = false)
     private String name;
@@ -42,7 +42,7 @@ public class FPost {
 
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "FComment", fetch = FetchType.LAZY)
-    private List<FComment> FComments;
+    private List<FComment> fComments;
 
 
 }

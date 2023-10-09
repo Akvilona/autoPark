@@ -34,9 +34,9 @@ public class FComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "f_comment")
-    private Long FComment;
+    private Long fComment;
 
-    @Column(name = "commetn" )
+    @Column(name = "commetn")
     private String comment;
 
     @Column(name = "dateCreate", nullable = false)
@@ -53,5 +53,5 @@ public class FComment {
             nullable = false,
             foreignKey = @ForeignKey(name = "fk_fcomment_fpost")
     )
-    private FPost FPost;
+    private FPost fPost;
 }

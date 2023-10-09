@@ -4,7 +4,6 @@
 package hibernate.habr.repository;
 
 import hibernate.habr.entity.FComment;
-import hibernate.habr.entity.FPost;
 import hibernate.habr.utils.FHibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,7 +14,7 @@ import java.util.Optional;
 public class FCommentRepository implements FCrudRepository<FComment, Long> {
     @Override
     public FComment save(final FComment fComment) {
-        try (Session session = FHibernateUtils.getSessionFactory().openSession()){
+        try (Session session = FHibernateUtils.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.persist(fComment);
             transaction.commit();
@@ -41,7 +40,7 @@ public class FCommentRepository implements FCrudRepository<FComment, Long> {
     }
 
     @Override
-    public Optional<FComment> findById(Long id) {
+    public Optional<FComment> findById(final Long id) {
         try (Session session = FHibernateUtils.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(FComment.class, id));
         }
