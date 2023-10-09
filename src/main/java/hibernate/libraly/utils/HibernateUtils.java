@@ -1,4 +1,4 @@
-package hibernate.utils;
+package hibernate.libraly.utils;
 
 import lombok.experimental.UtilityClass;
 import org.hibernate.SessionFactory;

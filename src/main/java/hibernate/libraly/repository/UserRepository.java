@@ -1,7 +1,7 @@
-package hibernate.repository;
+package hibernate.libraly.repository;
 
-import hibernate.entity.User;
-import hibernate.utils.HibernateUtils;
+import hibernate.libraly.entity.User;
+import hibernate.libraly.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -29,8 +29,10 @@ public class UserRepository implements CrudRepository<User, Long> {
     @Override
     public List<User> findAll() {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            return session.createQuery("from User u JOIN FETCH u.bookUsers bUsers",
-                    User.class).list();
+            List<User> list = session.createNativeQuery("select * from library.users", User.class).list();
+            return list;
+/*            return session.createQuery("from User u JOIN FETCH u.bookUsers bUsers",
+                    User.class).list();*/
         }
     }
 

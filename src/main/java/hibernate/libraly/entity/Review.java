@@ -1,9 +1,11 @@
-package hibernate.entity;
+/**
+ * Создал Андрей Антонов 01.10.2023 12:05
+ **/
+package hibernate.libraly.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,9 +17,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -25,31 +24,34 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "book_user")
-public class BookUser {
+@Table(name = "review")
+public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "book_id",
+    @ManyToOne(
+                cascade = {
+                        CascadeType.PERSIST,
+                        CascadeType.MERGE })
+    @JoinColumn(name = "book_id",
             nullable = false,
-            foreignKey = @ForeignKey(name = "fk_bookuser_book")
+            foreignKey = @ForeignKey(name = "fk_review_book")
     )
     private Book book;
 
-    @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "user_id",
+    @ManyToOne(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE })
+    @JoinColumn(name = "user_id",
             nullable = false,
-            foreignKey = @ForeignKey(name = "fk_bookuser_user")
+            foreignKey = @ForeignKey(name = "fk_review_user")
     )
     private User user;
-    private LocalDateTime dateFrom;
-    private LocalDateTime dateTo;
-    private LocalDateTime returnDateTime;
+
+    @Column(nullable = false)
+    private String comment;
+
 }

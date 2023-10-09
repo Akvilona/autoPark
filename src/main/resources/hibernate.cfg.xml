@@ -11,15 +11,18 @@
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="default_schema">library</property>
         <property name="hibernate.physical_naming_strategy">org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy</property>
-        <property name="hbm2ddl.auto">create</property>
+        <property name="hbm2ddl.auto">update</property>
 
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
-        <mapping class="hibernate.entity.Book"/>
-        <mapping class="hibernate.entity.User"/>
-        <mapping class="hibernate.entity.BookUser"/>
-        <mapping class="hibernate.entity.Review"/>
+        <mapping class="hibernate.libraly.entity.Book"/>
+        <mapping class="hibernate.libraly.entity.User"/>
+        <mapping class="hibernate.libraly.entity.BookUser"/>
+        <mapping class="hibernate.libraly.entity.Review"/>
+
+        <mapping class="hibernate.habr.entity.FComment"/>
+        <mapping class="hibernate.habr.entity.FPost"/>
 
     </session-factory>
 </hibernate-configuration>

@@ -1,10 +1,10 @@
 /**
  * Создал Андрей Антонов 03.10.2023 11:10
  **/
-package hibernate.repository;
+package hibernate.libraly.repository;
 
-import hibernate.entity.BookUser;
-import hibernate.utils.HibernateUtils;
+import hibernate.libraly.entity.BookUser;
+import hibernate.libraly.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

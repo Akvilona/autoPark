@@ -1,10 +1,10 @@
 /**
  * Создал Андрей Антонов 03.10.2023 11:45
  **/
-package hibernate.repository;
+package hibernate.libraly.repository;
 
-import hibernate.entity.Review;
-import hibernate.utils.HibernateUtils;
+import hibernate.libraly.entity.Review;
+import hibernate.libraly.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -27,7 +27,14 @@ public class ReviewRepository implements CrudRepository<Review, Long> {
     @Override
     public void delete(final Long id) {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+//            Query<Review> query = session.createQuery("delete Review r where r.id = :id", Review.class);
+//            query.setParameter("id", id);
+//            query.executeUpdate();
+//            transaction.commit();
+
             session.remove(session.get(Review.class, id));
+            transaction.commit();
         }
 
     }
@@ -35,8 +42,7 @@ public class ReviewRepository implements CrudRepository<Review, Long> {
     @Override
     public List<Review> findAll() {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            return session.createQuery("from Review r JOIN FETCH r.review bReview",
-                    Review.class).list();
+            return session.createQuery("from Review r", Review.class).list();
         }
     }
 

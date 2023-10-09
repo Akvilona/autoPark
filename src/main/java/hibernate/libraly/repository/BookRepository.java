@@ -1,7 +1,7 @@
-package hibernate.repository;
+package hibernate.libraly.repository;
 
-import hibernate.entity.Book;
-import hibernate.utils.HibernateUtils;
+import hibernate.libraly.entity.Book;
+import hibernate.libraly.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

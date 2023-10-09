@@ -27,6 +27,7 @@
         <postgresql.version>42.5.4</postgresql.version>
         <hibernate-core.version>6.3.0.Final</hibernate-core.version>
         <hibernate-types.version>2.21.1</hibernate-types.version>
+        <datafaker.version>2.0.2</datafaker.version>
     </properties>
 
     <dependencies>
@@ -59,6 +60,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${datafaker.version}</version>
         </dependency>
     </dependencies>
 
