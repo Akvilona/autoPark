@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/hibernate/libraly/entity/Book.java
 package hibernate.libraly.entity;
+========
+package hibernate.library.entity;
+>>>>>>>> origin/master:src/main/java/hibernate/library/entity/Book.java
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -9,8 +13,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import library.entity.BookUser;
-import library.entity.Review;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

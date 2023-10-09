@@ -1,8 +1,18 @@
+<<<<<<<< HEAD:src/main/java/hibernate/libraly/utils/ComponentFactory.java
 package hibernate.libraly.utils;
-import library.repository.list.BookRepository;
-import library.repository.list.BookUserRepository;
-import library.repository.list.ReviewRepository;
-import library.repository.list.UserRepository;
+
+import hibernate.libraly.repository.BookRepository;
+import hibernate.libraly.repository.BookUserRepository;
+import hibernate.libraly.repository.ReviewRepository;
+import hibernate.libraly.repository.UserRepository;
+========
+package hibernate.library.utils;
+
+import hibernate.library.repository.BookRepository;
+import hibernate.library.repository.BookUserRepository;
+import hibernate.library.repository.ReviewRepository;
+import hibernate.library.repository.UserRepository;
+>>>>>>>> origin/master:src/main/java/hibernate/library/utils/ComponentFactory.java
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

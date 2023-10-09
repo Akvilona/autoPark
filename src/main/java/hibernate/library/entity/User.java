@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/hibernate/libraly/entity/User.java
 package hibernate.libraly.entity;
+========
+package hibernate.library.entity;
+>>>>>>>> origin/master:src/main/java/hibernate/library/entity/User.java
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -9,27 +13,22 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import library.entity.BookUser;
-import library.entity.Review;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDate;
 import java.util.List;
 
-
-@Data
+@Data //Getter, Setter, RequiredArgsConstructor, ToString, EqualsAndHashCode, Value
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 
 @Entity
-@Table(name = "book")
-public class Book {
-
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -38,14 +37,14 @@ public class Book {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @Column(name = "date_of_issue", nullable = false)
-    private LocalDate dateOfIssue;
+    @Column(name = "age", nullable = false)
+    private Integer age;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private List<BookUser> bookUsers;
 
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private List<Review> reviews;
 }
