@@ -9,20 +9,20 @@
         <property name="connection.password">postgres</property>
 
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="default_schema">library</property>
-        <property name="hibernate.physical_naming_strategy">org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy</property>
-        <property name="hbm2ddl.auto">update</property>
+        <property name="default_schema">habr</property>
+<!--        <property name="hibernate.physical_naming_strategy">org.db.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy</property>-->
+        <property name="hbm2ddl.auto">create-drop</property>
 
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
-        <mapping class="hibernate.libraly.entity.Book"/>
-        <mapping class="hibernate.libraly.entity.User"/>
-        <mapping class="hibernate.libraly.entity.BookUser"/>
-        <mapping class="hibernate.libraly.entity.Review"/>
+        <!--        <mapping class="db.hibernate.library.entity.Book"/>-->
+        <!--        <mapping class="db.hibernate.library.entity.User"/>-->
+        <!--        <mapping class="db.hibernate.library.entity.BookUser"/>-->
+        <!--        <mapping class="db.hibernate.library.entity.Review"/>-->
 
-        <mapping class="hibernate.habr.entity.FComment"/>
-        <mapping class="hibernate.habr.entity.FPost"/>
+        <mapping class="db.hibernate.habr.entity.Comment"/>
+        <mapping class="db.hibernate.habr.entity.Post"/>
 
     </session-factory>
 </hibernate-configuration>

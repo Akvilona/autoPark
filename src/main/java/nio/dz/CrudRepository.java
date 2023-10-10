@@ -1,5 +1,5 @@
 package nio.dz;
-import library.utils.DbUtils;
+import db.jdbc.library.utils.DbUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import static library.constant.SqlQuery.DELETE_BY_ID_SQL;
-import static library.constant.SqlQuery.FIND_BY_ID;
+import static db.jdbc.library.constant.SqlQuery.DELETE_BY_ID_SQL;
+import static db.jdbc.library.constant.SqlQuery.FIND_BY_ID;
 
 public interface CrudRepository<T, K> {
 
