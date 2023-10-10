@@ -1,8 +1,8 @@
 package db.hibernate.library.repository;
 
 import db.hibernate.library.entity.User;
-import db.hibernate.utils.HibernateUtils;
 import db.hibernate.repository.CrudRepository;
+import db.hibernate.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -32,8 +32,9 @@ public class UserRepository implements CrudRepository<User, Long> {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
             List<User> list = session.createNativeQuery("select * from library.users", User.class).list();
             return list;
-/*            return session.createQuery("from User u JOIN FETCH u.bookUsers bUsers",
-                    User.class).list();*/
+            /*            return session.createQuery("from User u JOIN FETCH u.bookUsers bUsers",
+                    User.class).list();
+            */
         }
     }
 

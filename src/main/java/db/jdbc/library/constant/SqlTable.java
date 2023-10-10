@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 26.09.2023 13:10
  **/
+
 package db.jdbc.library.constant;
 
 import lombok.AllArgsConstructor;

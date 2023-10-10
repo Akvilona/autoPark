@@ -7,7 +7,9 @@ import java.util.List;
 
 public class UserMapper {
     private static final String POLE_SEPARATOR = ";";
+
     public static User getUser(final String line) {
+
         String[] cols = line.split(POLE_SEPARATOR);
         return User.builder()
                 .id(Integer.parseInt(cols[0]))

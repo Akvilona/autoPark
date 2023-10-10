@@ -1,15 +1,21 @@
 /**
  * Создал Андрей Антонов 24.07.2023 16:54
  **/
+
 package generic.teory;
 
 public final class SimpleGenApp {
     private SimpleGenApp() {
 
     }
+
+    protected Object cloneMy() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public static void main(final String[] args) {
 
-// создаем объект twoGenObj класса с двумя параметрами T=Integer, V=String
+        // создаем объект twoGenObj класса с двумя параметрами T=Integer, V=String
         final int fi = 555;
         final String fs = "Hello";
 

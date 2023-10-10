@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 29.08.2023 6:49
  **/
+
 package db.jdbc.library.repository.list;
 
 import db.jdbc.library.entity.User;
@@ -15,6 +16,9 @@ import java.util.Optional;
 import static db.jdbc.library.constant.SqlTable.USER;
 
 public class UserRepository implements CrudRepository<User, Long> {
+
+    private final List<User> userList = new ArrayList<>();
+
     @Override
     public User convert(final ResultSet resultSet) throws SQLException {
         return null;
@@ -24,8 +28,6 @@ public class UserRepository implements CrudRepository<User, Long> {
     public String getTableName() {
         return USER.getTableName();
     }
-
-    private final List<User> userList = new ArrayList<>();
 
     @Override
     public Optional<User> findById(final Long id) {

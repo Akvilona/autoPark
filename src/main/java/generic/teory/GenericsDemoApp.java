@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 24.07.2023 16:25
  **/
+
 package generic.teory;
 
 public final class GenericsDemoApp {

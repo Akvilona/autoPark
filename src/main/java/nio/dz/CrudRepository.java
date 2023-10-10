@@ -1,5 +1,7 @@
 package nio.dz;
+
 import db.jdbc.library.utils.DbUtils;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +15,7 @@ import static db.jdbc.library.constant.SqlQuery.FIND_BY_ID;
 public interface CrudRepository<T, K> {
 
     T save(T t);
+
     default void delete(Long id) {
         Connection connection = DbUtils.getConnection();
         var findBySqlQuery = DELETE_BY_ID_SQL.getValue().formatted(getTableName());
@@ -20,10 +23,10 @@ public interface CrudRepository<T, K> {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             connection.commit();
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
-    };
+    }
 
     List<T> findAll();
 
@@ -45,8 +48,8 @@ public interface CrudRepository<T, K> {
                 return Optional.of(convert(resultSet));
             }
             return Optional.empty();
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 
@@ -62,7 +65,7 @@ public interface CrudRepository<T, K> {
         }
     }
 
-    default ResultSet getResultSetSQL(final Long id, final PreparedStatement preparedStatement) throws SQLException {
+    default ResultSet getresultsetsql(final Long id, final PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setLong(1, id);
         return preparedStatement.executeQuery();
     }

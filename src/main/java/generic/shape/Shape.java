@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 27.07.2023 9:21
  **/
+
 package generic.shape;
 
 public abstract class Shape {

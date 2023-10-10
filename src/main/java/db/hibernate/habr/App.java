@@ -30,7 +30,6 @@ public class App {
 
         fCommentRepository.save(fComment);
 
-
         List<Post> all = fPostRepository.findAll();
         System.out.println(all);
 
@@ -38,6 +37,5 @@ public class App {
 
         List<Post> all1 = fPostRepository.findAll();
         System.out.println(all1);
-
     }
 }

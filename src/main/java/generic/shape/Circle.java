@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 27.07.2023 11:22
  **/
+
 package generic.shape;
 
 //abstract class -> extends. Только 1 наследник

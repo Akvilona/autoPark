@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 02.08.2023 18:30
  **/
+
 package collections;
 
 import java.util.HashMap;
@@ -20,7 +21,6 @@ import java.util.Set;
  *  проверки телефонного справочника.
  */
 public class MyPhoneBook {
-
     private final HashMap<String, Set<String>> addressBook = new HashMap<>();
 
     public void add(final String surname, final String phoneNumber) {
@@ -34,5 +34,4 @@ public class MyPhoneBook {
 
         return addressBook.get(surname);
     }
-
 }

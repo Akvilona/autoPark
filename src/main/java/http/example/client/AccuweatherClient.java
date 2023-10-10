@@ -2,6 +2,7 @@
  * Создал Андрей Антонов 22.08.2023 15:45
  * 59:30
  **/
+
 package http.example.client;
 
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 27.07.2023 11:09
  **/
+
 package generic.shape;
 
 public final class Main {
@@ -9,7 +10,6 @@ public final class Main {
 
     public static void main(final String[] args) {
         ShapeContainer<Rectangle> rectangleContainer = new ShapeContainer<>();
-
 
         final int width1 = 5;
         final int width2 = 3;

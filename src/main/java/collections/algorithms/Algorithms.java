@@ -1,6 +1,5 @@
 package collections.algorithms;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,8 +15,8 @@ public class Algorithms {
      * из обоих списков без повторений. Воспользуйтесь HashSet для устранения дубликатов.
      * Списки должны быть одного типа (generic один для обоих списков)
      *
-     * @param lists
-     * @param <T>
+     * @param lists example
+     * @param <T> example
      * @return the name of the object
      */
     public static <T> List<T> mergeLists(final List<T>... lists) {
@@ -45,7 +44,7 @@ public class Algorithms {
      * (словам, образованным из одних и тех же букв). Ключом в HashMap будет отсортированное по
      * алфавиту слово, а значением - список анаграмм этого слова.
      *
-     * @param words
+     * @param words example
      * @return the name of the object
      */
     public static Map<String, List<String>> groupAnagrams(final List<String> words) {
@@ -69,7 +68,7 @@ public class Algorithms {
      * и находит все дубликаты (числа, которые повторяются более одного раза).
      * Метод должен возвращать Set дубликатов слов
      *
-     * @param integerList
+     * @param integerList example
      * @return the name of the object
      */
     public Set<Integer> findDuplicate(final List<Integer> integerList) {
@@ -82,7 +81,7 @@ public class Algorithms {
      * pop (удаление и возврат верхнего элемента стека)
      * isEmpty (проверка, пуст ли стек).
      *
-     * @param <T>
+     * @param <T> example
      */
     private static class Stack<T> {
         private final List<T> list = new ArrayList<>();

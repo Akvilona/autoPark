@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationRoot {
@@ -12,5 +11,9 @@ public class LocationRoot {
     private String key;
     @JsonProperty("EnglishName")
     private String englishName;
+
+    protected Object cloneMy() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
 

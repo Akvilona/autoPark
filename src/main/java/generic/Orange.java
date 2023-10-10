@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 18.07.2023 6:34
  **/
+
 package generic;
 
 public class Orange extends Fruit {

@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class FileUserCrudRepository implements CrudRepository<User, Integer> {
+
+    private final File file;
 
     @Override
     public User convert(final ResultSet resultSet) throws SQLException {
@@ -28,13 +31,9 @@ public class FileUserCrudRepository implements CrudRepository<User, Integer> {
         return null;
     }
 
-    private final File file;
-
     @Override
     public Optional<User> findById(final Long id) {
-        return findAll().stream()
-                .filter(user -> user.getId() == id)
-                .findFirst();
+        return findAll().stream().filter(user -> user.getId() == id).findFirst();
     }
 
     @SneakyThrows
@@ -55,24 +54,31 @@ public class FileUserCrudRepository implements CrudRepository<User, Integer> {
         throw new RuntimeException();
     }
 
-/*
     @Override
-    public void delete(final Integer id) {
-        List<User> userList = findAll().stream()
-                .filter(user -> user.getId() != id)
-                .toList();
-        saveAll(userList);
+    public Long getGeneratedKeys(final PreparedStatement preparedStatement) {
+        return CrudRepository.super.getGeneratedKeys(preparedStatement);
     }
-*/
+
+    @Override
+    public void delete(final Long id) {
+        CrudRepository.super.delete(id);
+    }
+
+    /*
+        @Override
+        public void delete(final Integer id) {
+            List<User> userList = findAll().stream()
+                    .filter(user -> user.getId() != id)
+                    .toList();
+            saveAll(userList);
+        }
+    */
 
     @SneakyThrows
     @Override
     public List<User> findAll() {
         try (Stream<String> fileLines = Files.lines(getPath())) {
-            return fileLines
-                    .skip(1)
-                    .map(UserMapper::getUser)
-                    .toList();
+            return fileLines.skip(1).map(UserMapper::getUser).toList();
         }
     }
 
@@ -82,8 +88,7 @@ public class FileUserCrudRepository implements CrudRepository<User, Integer> {
 
     @SneakyThrows
     private void saveAll(final List<User> userList) {
-        Files.writeString(getPath(), "id;name;age;salary" + System.lineSeparator(),
-                StandardOpenOption.TRUNCATE_EXISTING);
+        Files.writeString(getPath(), "id;name;age;salary" + System.lineSeparator(), StandardOpenOption.TRUNCATE_EXISTING);
         Files.writeString(getPath(), UserMapper.formatUserLine(userList), StandardOpenOption.APPEND);
     }
 }

@@ -1,6 +1,3 @@
-/**
- * 01:13:45
- */
 package http.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,9 +1,9 @@
 package db.jdbc.library;
 
-import db.jdbc.library.repository.db.BookDBRepository;
-import db.jdbc.library.repository.db.BookUserDBRepository;
-import db.jdbc.library.repository.db.ReviewDBRepository;
-import db.jdbc.library.repository.db.UserDBRepository;
+import db.jdbc.library.repository.db.BookDbRepository;
+import db.jdbc.library.repository.db.BookUserDbRepository;
+import db.jdbc.library.repository.db.ReviewDbRepository;
+import db.jdbc.library.repository.db.Userdbrepository;
 import db.jdbc.library.service.BookService;
 import db.jdbc.library.service.BookUserService;
 import db.jdbc.library.service.ReviewService;
@@ -16,20 +16,30 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class App {
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return super.equals(obj);
+    }
+
     @SneakyThrows
     public static void main(final String[] args) {
         Class.forName("org.postgresql.Driver");
 
-        UserDBRepository userDBRepository = new UserDBRepository();
-        BookDBRepository bookDBRepository = new BookDBRepository();
-        BookUserDBRepository bookUserDBRepository = new BookUserDBRepository();
-        ReviewDBRepository reviewDBRepository = new ReviewDBRepository();
+        Userdbrepository userDbRepositoryMy = new Userdbrepository();
+        BookDbRepository bookDbRepositoryMy = new BookDbRepository();
+        BookUserDbRepository bookUserDbRepositoryMy = new BookUserDbRepository();
+        ReviewDbRepository dbRepositoryMy = new ReviewDbRepository();
 
-        UserService userService = new UserService(userDBRepository);
-        BookService bookService = new BookService(bookDBRepository);
-        ReviewService reviewService = new ReviewService(reviewDBRepository);
+        UserService userService = new UserService(userDbRepositoryMy);
+        BookService bookService = new BookService(bookDbRepositoryMy);
+        ReviewService reviewService = new ReviewService(dbRepositoryMy);
 
-        BookUserService bookUserService = new BookUserService(bookService, userService, bookUserDBRepository);
+        BookUserService bookUserService = new BookUserService(bookService, userService, bookUserDbRepositoryMy);
         //======//======//======//======//======//======//======//======//======
 
         initDataBase();

@@ -1,23 +1,26 @@
 /**
  * Создал Андрей Антонов 24.07.2023 15:39
  **/
+
 package generic.teory;
 
 public final class BoxDemoApp {
+
     private BoxDemoApp() {
 
     }
+
     public static void main(final String[] args) {
         final int a = 20;
         final int b = 30;
         SimpleBox intBox1 = new SimpleBox(a); // создаем объект intBox1
         SimpleBox intBox2 = new SimpleBox(b); // создаем объект intBox2
 
-//здесь делаем сложение: сначала проверяем, что геттер нам передает значение Integer
+        //здесь делаем сложение: сначала проверяем, что геттер нам передает значение Integer
 
         if (intBox1.getObj() instanceof Integer && intBox2.getObj() instanceof Integer) {
 
-        // здесь для сложения делаем приведение типов
+            // здесь для сложения делаем приведение типов
             int sum = (Integer) intBox1.getObj() + (Integer) intBox2.getObj();
             System.out.println("sum = " + sum);
         } else {
@@ -30,7 +33,7 @@ public final class BoxDemoApp {
 
         if (intBox1.getObj() instanceof Integer && intBox2.getObj() instanceof Integer) {
 
-        // здесь для сложения делаем приведение типов
+            // здесь для сложения делаем приведение типов
             int sum = (Integer) intBox1.getObj() + (Integer) intBox2.getObj();
             System.out.println("sum = " + sum);
         } else {

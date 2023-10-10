@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 08.10.2023 18:09
  **/
+
 package db.hibernate.habr.entity;
 
 import jakarta.persistence.CascadeType;

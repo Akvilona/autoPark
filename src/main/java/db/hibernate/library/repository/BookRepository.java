@@ -1,8 +1,8 @@
 package db.hibernate.library.repository;
 
 import db.hibernate.library.entity.Book;
-import db.hibernate.utils.HibernateUtils;
 import db.hibernate.repository.CrudRepository;
+import db.hibernate.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

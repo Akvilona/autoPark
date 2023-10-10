@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 19.09.2023 15:21
  **/
+
 package db.jdbc.library.repository.db;
 
 import db.jdbc.library.entity.Review;
@@ -15,13 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static db.jdbc.library.constant.SqlQuery.REVIEW_FIND_BY_ID;
-import static db.jdbc.library.constant.SqlQuery.REVIEW_INSERT_BOOK_USER_SQL;
 import static db.jdbc.library.constant.SqlQuery.REVIEW_FIND_ALL;
 import static db.jdbc.library.constant.SqlQuery.REVIEW_FIND_BY_BOOK_ID;
+import static db.jdbc.library.constant.SqlQuery.REVIEW_FIND_BY_ID;
+import static db.jdbc.library.constant.SqlQuery.REVIEW_INSERT_BOOK_USER_SQL;
 import static db.jdbc.library.constant.SqlTable.REVIEW;
 
-public class ReviewDBRepository implements CrudRepository<Review, Long> {
+public class ReviewDbRepository implements CrudRepository<Review, Long> {
     @Override
     public Review convert(final ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong("id");
@@ -32,35 +33,40 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
     }
 
     @Override
+    public void delete(final Long id) {
+        CrudRepository.super.delete(id);
+    }
+
+    @Override
     public String getTableName() {
-       return REVIEW.getTableName();
+        return REVIEW.getTableName();
     }
 
     @Override
     public Optional<Review> findById(final Long id) {
         Connection connection = DbUtils.getConnection();
         try (var preparedStatement = connection.prepareStatement(REVIEW_FIND_BY_ID.getValue())) {
-            ResultSet resultSet = getResultSetSQL(id, preparedStatement);
+            ResultSet resultSet = getresultsetsql(id, preparedStatement);
             if (resultSet.next()) {
                 return Optional.of(convert(resultSet));
             }
             return Optional.empty();
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 
     public Optional<Review> findByBookId(final Long bookId) {
         Connection connection = DbUtils.getConnection();
         try (var preparedStatement = connection.prepareStatement(REVIEW_FIND_BY_BOOK_ID.getValue())) {
-            ResultSet resultSet = getResultSetSQL(bookId, preparedStatement);
+            ResultSet resultSet = getresultsetsql(bookId, preparedStatement);
             if (resultSet.next()) {
                 return Optional.of(convert(resultSet));
             }
             return Optional.empty();
 
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 
@@ -77,8 +83,8 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
             review.setId(getGeneratedKeys(preparedStatement));
             connection.commit();
             return review;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
 
     }
@@ -94,20 +100,8 @@ public class ReviewDBRepository implements CrudRepository<Review, Long> {
                 result.add(convert(resultSet));
             }
             return result;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
-
-/*    @Override
-    public void delete(final Long id) {
-        Connection connection = DbUtils.getConnection();
-        try (var preparedStatement = connection.prepareStatement(REVIEW_DELETE_BY_ID_SQL.getValue())) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-            connection.commit();
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
-        }
-    }*/
 }

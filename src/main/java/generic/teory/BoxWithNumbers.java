@@ -1,14 +1,15 @@
 /**
  * Создал Андрей Антонов 24.07.2023 17:01
  **/
+
 package generic.teory;
 
 public class BoxWithNumbers<T extends Number> { //пишем класс
     private T[] nums;
 
-//    public BoxWithNumbers(final T[] nums) { // конструктор
-//        this.nums = nums;
-//    }
+    //    public BoxWithNumbers(final T[] nums) { // конструктор
+    //        this.nums = nums;
+    //    }
 
     public BoxWithNumbers(final T... nums) { // создаем конструктор, который на вход принимает набор объектов без явного создания массива
         this.nums = nums;

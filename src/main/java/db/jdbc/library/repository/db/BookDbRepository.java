@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 18.09.2023 9:47
  **/
+
 package db.jdbc.library.repository.db;
 
 import db.jdbc.library.entity.Book;
@@ -24,7 +25,7 @@ import static db.jdbc.library.constant.SqlQuery.BOOK_SELECT_FROM_BOOK;
 import static db.jdbc.library.constant.SqlQuery.BOOK_SELECT_FROM_BOOK_WHERE_ID;
 import static db.jdbc.library.constant.SqlTable.BOOK;
 
-public class BookDBRepository implements CrudRepository<Book, Long> {
+public class BookDbRepository implements CrudRepository<Book, Long> {
 
     @Override
     public Book convert(final ResultSet resultSet) throws SQLException {
@@ -45,7 +46,7 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
     public Optional<Book> findById(final Long id) {
         Connection connection = DbUtils.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(BOOK_SELECT_FROM_BOOK_WHERE_ID.getValue())) {
-            ResultSet resultSet = getResultSetSQL(id, preparedStatement);
+            ResultSet resultSet = getresultsetsql(id, preparedStatement);
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
                 Date date = resultSet.getDate("dateofissue");
@@ -54,8 +55,8 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
                 return Optional.of(book);
             }
             return Optional.empty();
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 
@@ -75,7 +76,7 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
         }
     }
 
-/*
+    /*
     @Override
     public void delete(final Long id) {
         Connection connection = DbUtils.getConnection();
@@ -87,7 +88,7 @@ public class BookDBRepository implements CrudRepository<Book, Long> {
             throw new RuntimeException(a);
         }
     }
-*/
+    */
 
     @Override
     public List<Book> findAll() {

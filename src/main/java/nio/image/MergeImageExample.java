@@ -2,7 +2,6 @@ package nio.image;
 
 import lombok.SneakyThrows;
 
-import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -14,12 +13,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 
 public class MergeImageExample {
+
     @SneakyThrows
     public static void main(final String[] args) {
+
         List<String> filePaths = new ArrayList<>();
-        filePaths.add("4-5.jpg");
+        //        filePaths.add("4-5.jpg");
         filePaths.add("6-7.jpg");
         filePaths.add("8-9.jpg");
         filePaths.add("10-11.png");
@@ -28,6 +30,7 @@ public class MergeImageExample {
         List<BufferedImage> images = new ArrayList<>();
 
         for (String filePath : filePaths) {
+
             File initialFile = new File("src/main/resources/" + filePath);
             InputStream targetStream = new FileInputStream(initialFile);
             BufferedImage image = ImageIO.read(targetStream);
@@ -37,6 +40,7 @@ public class MergeImageExample {
         int totalWidth = 0;
         int maxHeight = 0;
         for (BufferedImage image : images) {
+
             totalWidth += image.getWidth();
             if (image.getHeight() > maxHeight) {
                 maxHeight = image.getHeight();
@@ -56,9 +60,8 @@ public class MergeImageExample {
         }
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        File output = new File("merged_image.jpg");
+        //        File output = new File("merged_image.jpg");
         ImageIO.write(resultImage, "png", outputStream);
-
 
         byte[] byteArray = outputStream.toByteArray();
 

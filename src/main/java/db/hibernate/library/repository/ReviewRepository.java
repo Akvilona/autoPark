@@ -1,8 +1,8 @@
 package db.hibernate.library.repository;
 
 import db.hibernate.library.entity.Review;
-import db.hibernate.utils.HibernateUtils;
 import db.hibernate.repository.CrudRepository;
+import db.hibernate.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -20,22 +20,20 @@ public class ReviewRepository implements CrudRepository<Review, Long> {
         return review;
     }
 
-
     @Override
     public void delete(final Long id) {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-//            Query<Review> query = session.createQuery("delete Review r where r.id = :id", Review.class);
-//            query.setParameter("id", id);
-//            query.executeUpdate();
-//            transaction.commit();
+            //            Query<Review> query = session.createQuery("delete Review r where r.id = :id", Review.class);
+            //            query.setParameter("id", id);
+            //            query.executeUpdate();
+            //            transaction.commit();
 
             session.remove(session.get(Review.class, id));
             Review review = session.get(Review.class, id);
             session.remove(review);
             transaction.commit();
         }
-
     }
 
     @Override

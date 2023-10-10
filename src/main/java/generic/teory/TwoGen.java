@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 24.07.2023 16:46
  **/
+
 package generic.teory;
 
 public class TwoGen<T, V> {

@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 24.07.2023 15:54
  **/
+
 package generic.teory;
 
 public class GenericBox<T> { //создаем класс Дженерик Коробка

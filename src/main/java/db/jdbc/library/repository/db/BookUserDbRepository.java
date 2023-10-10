@@ -23,8 +23,12 @@ import static db.jdbc.library.constant.SqlQuery.BOOK_USER_INSERT_BOOK_USER_SQL;
 import static db.jdbc.library.constant.SqlQuery.BOOK_USER_UPDATE_BOOK_USER_SQL;
 import static db.jdbc.library.constant.SqlTable.BOOK_USER;
 
+public class BookUserDbRepository implements CrudRepository<BookUser, Long> {
 
-public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
+    @Override
+    public void delete(final Long id) {
+        CrudRepository.super.delete(id);
+    }
 
     @Override
     public String getTableName() {
@@ -51,8 +55,8 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
                 return Optional.of(convert(resultSet));
             }
             return Optional.empty();
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 
@@ -60,13 +64,13 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
         Connection connection = DbUtils.getConnection();
         try (PreparedStatement preparedStatement
                      = connection.prepareStatement(BOOK_USER_FIND_BOOK_USER_SQL.getValue())) {
-            ResultSet resultSet = getResultSetSQL(bookId, preparedStatement);
+            ResultSet resultSet = getresultsetsql(bookId, preparedStatement);
             if (resultSet.next()) {
                 return Optional.of(convert(resultSet));
             }
             return Optional.empty();
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 
@@ -87,8 +91,8 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
                 bookUser.setId(getGeneratedKeys(preparedStatement));
                 connection.commit();
                 return bookUser;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            } catch (SQLException sqlException) {
+                throw new RuntimeException(sqlException);
             }
         } else {
             try (PreparedStatement preparedStatement =
@@ -99,13 +103,13 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
                 preparedStatement.executeUpdate();
                 connection.commit();
                 return bookUser;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            } catch (SQLException sqlException) {
+                throw new RuntimeException(sqlException);
             }
         }
     }
 
-/*
+    /*
     @Override
     public void delete(final Long id) {
         Connection connection = DbUtils.getConnection();
@@ -117,7 +121,12 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
             throw new RuntimeException(a);
         }
     }
-*/
+    */
+
+    @Override
+    public ResultSet getresultsetsql(final Long id, final PreparedStatement preparedStatement) throws SQLException {
+        return CrudRepository.super.getresultsetsql(id, preparedStatement);
+    }
 
     @Override
     public List<BookUser> findAll() {
@@ -130,8 +139,8 @@ public class BookUserDBRepository implements CrudRepository<BookUser, Long> {
                 result.add(convert(resultSet));
             }
             return result;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 

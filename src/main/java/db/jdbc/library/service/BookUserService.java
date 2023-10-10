@@ -1,8 +1,8 @@
 package db.jdbc.library.service;
 
-import db.jdbc.library.exception.ServiceException;
 import db.jdbc.library.entity.BookUser;
-import db.jdbc.library.repository.db.BookUserDBRepository;
+import db.jdbc.library.exception.ServiceException;
+import db.jdbc.library.repository.db.BookUserDbRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -15,7 +15,25 @@ public class BookUserService {
 
     private final BookService bookService;
     private final UserService userService;
-    private final BookUserDBRepository bookUserDBRepository;
+    private final BookUserDbRepository dbRepository;
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = bookService != null ? bookService.hashCode() : 0;
+        result = 31 * result + (userService != null ? userService.hashCode() : 0);
+        result = 31 * result + (dbRepository != null ? dbRepository.hashCode() : 0);
+        return result;
+    }
 
     public BookUser bookIssue(final Long userId, final Long bookId) throws ServiceException {
         if (!userService.exist(userId)) {
@@ -26,9 +44,9 @@ public class BookUserService {
             throw new ServiceException(ERR_CODE_03, bookId);
         }
 
-        BookUser bookUser = bookUserDBRepository.findByBookIdAndUserId(bookId, userId).orElse(
+        BookUser bookUser = dbRepository.findByBookIdAndUserId(bookId, userId).orElse(
                 new BookUser(bookId, userId, LocalDateTime.now(), LocalDateTime.now().plusMonths(1)));
-        bookUserDBRepository.save(bookUser);
+        dbRepository.save(bookUser);
         return bookUser;
     }
 
@@ -37,10 +55,9 @@ public class BookUserService {
             throw new ServiceException(ERR_CODE_03, bookId);
         }
 
-        BookUser bookUser = bookUserDBRepository.findByBookIdAndReturnDateTimeIsNull(bookId).orElseThrow();
+        BookUser bookUser = dbRepository.findByBookIdAndReturnDateTimeIsNull(bookId).orElseThrow();
         bookUser.setReturnDateTime(LocalDateTime.now());
-        bookUserDBRepository.save(bookUser);
+        dbRepository.save(bookUser);
         return bookUser;
     }
-
 }

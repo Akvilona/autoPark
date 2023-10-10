@@ -1,14 +1,17 @@
 /**
  * Создал Андрей Антонов 24.07.2023 17:10
  **/
+
 package generic.teory;
 
 public final class BoxWithNumbersDemoApp {
     private BoxWithNumbersDemoApp() {
 
     }
+
     public static void main(final String[] args) {
-//создаем массивы чисел:
+
+        //создаем массивы чисел:
         final int a1 = 1;
         final int a2 = 2;
         final int a3 = 3;
@@ -23,7 +26,7 @@ public final class BoxWithNumbersDemoApp {
         BoxWithNumbers<Integer> int2 = new BoxWithNumbers<>(a2, a1, a3, a4, a5);
         BoxWithNumbers<Double> double1 = new BoxWithNumbers<>(d1, d2, d3, d4, d5);
 
-// сравниваем:
+        // сравниваем:
         System.out.println(int1.sameAvg(int2)); // Так работает
         System.out.println(int1.sameAvg(double1)); // Ошибка
         // (T = Integer) != (T = Double)

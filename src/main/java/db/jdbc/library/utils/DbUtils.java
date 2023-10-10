@@ -12,7 +12,7 @@ import java.sql.SQLException;
 @Getter
 public class DbUtils {
 
-    private static Connection connection = null;
+    private static Connection connection;
 
     public static Connection getConnection() {
         if (connection == null) {

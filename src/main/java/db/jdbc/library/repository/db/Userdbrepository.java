@@ -18,7 +18,7 @@ import static db.jdbc.library.constant.SqlQuery.USER_INSERT_USER_SQL;
 import static db.jdbc.library.constant.SqlQuery.USER_SELECT_ALL_USER_SQL;
 import static db.jdbc.library.constant.SqlQuery.USER_SELECT_BY_ID_SQL;
 
-public class UserDBRepository implements CrudRepository<User, Long> {
+public class Userdbrepository implements CrudRepository<User, Long> {
     @Override
     public User convert(final ResultSet resultSet) throws SQLException {
         long idUser = resultSet.getLong("id");
@@ -31,19 +31,18 @@ public class UserDBRepository implements CrudRepository<User, Long> {
         return SqlTable.USER.getTableName();
     }
 
-
     @Override
     public Optional<User> findById(final Long id) {
         Connection connection = DbUtils.getConnection();
         try (PreparedStatement preparedStatement
                      = connection.prepareStatement(USER_SELECT_BY_ID_SQL.getValue())) {
-            ResultSet resultSet = getResultSetSQL(id, preparedStatement);
+            ResultSet resultSet = getresultsetsql(id, preparedStatement);
             while (resultSet.next()) {
                 return Optional.ofNullable(convert(resultSet));
             }
             return Optional.empty();
-        } catch (SQLException a) {
-            throw new RuntimeException(a);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 
@@ -56,12 +55,12 @@ public class UserDBRepository implements CrudRepository<User, Long> {
             user.setId(getGeneratedKeys(preparedStatement));
             connection.commit();
             return user;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 
-/*
+    /*
     @Override
     public void delete(final Long id) {
         Connection connection = DbUtils.getConnection();
@@ -73,7 +72,7 @@ public class UserDBRepository implements CrudRepository<User, Long> {
             throw new RuntimeException(a);
         }
     }
-*/
+    */
 
     @Override
     public List<User> findAll() {
@@ -85,8 +84,8 @@ public class UserDBRepository implements CrudRepository<User, Long> {
                 result.add(convert(resultSet));
             }
             return result;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
         }
     }
 

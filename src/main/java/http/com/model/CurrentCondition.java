@@ -2,6 +2,7 @@
  * Создал Андрей Антонов 18.08.2023 11:10
  * 1:19:35
  **/
+
 package http.com.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

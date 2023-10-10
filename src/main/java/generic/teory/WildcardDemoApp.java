@@ -1,12 +1,14 @@
 /**
  * Создал Андрей Антонов 24.07.2023 18:13
  **/
+
 package generic.teory;
 
 public final class WildcardDemoApp {
     private WildcardDemoApp() {
 
     }
+
     public static void main(final String[] args) {
         //создаем массивы
         final int a1 = 1;

@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 27.07.2023 11:11
  **/
+
 package generic.shape;
 
 public class Rectangle extends Shape {

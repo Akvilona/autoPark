@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 27.07.2023 9:03
  **/
+
 package generic.shape;
 
 import java.util.ArrayList;

@@ -1,6 +1,7 @@
 /**
  * Создал Андрей Антонов 18.07.2023 6:35
  **/
+
 package generic;
 
 import java.util.ArrayList;
@@ -12,9 +13,11 @@ public class Box<T extends Fruit> {
     public void add(final T fruit) {
         this.box.add(fruit);
     }
+
     public int sizeBox() {
         return box.size();
     }
+
     public void addAll(final T[] fruit) {
         for (int i = 0; i < fruit.length; i++) {
             this.box.add(fruit[i]);
@@ -44,6 +47,7 @@ public class Box<T extends Fruit> {
     public List<T> getBox() {
         return this.box;
     }
+
     public Fruit getFruit(final int i) {
         return this.box.get(i);
     }

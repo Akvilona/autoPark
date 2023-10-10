@@ -1,6 +1,5 @@
 package collections;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,22 +30,20 @@ public class MyLinkedList<E> implements MyList<E> {
     @Override
     public void delete(final int index) {
         if (head == null) {
-            return;
-        }
-        if (index == 0) {
+            head = null;
+        } else if (index == 0) {
             head = head.getNext();
-            return;
-        }
-
-        Node temp = head;
-        int cur = 1;
-        while (temp.getNext() != null) {
-            if (cur == index) {
-                temp.next = temp.getNext().getNext();
-                return;
+        } else {
+            Node temp = head;
+            int cur = 1;
+            while (temp.getNext() != null) {
+                if (cur == index) {
+                    temp.next = temp.getNext().getNext();
+                    break;
+                }
+                temp = temp.getNext();
+                cur++;
             }
-            temp = temp.getNext();
-            cur++;
         }
     }
 
@@ -75,6 +72,4 @@ public class MyLinkedList<E> implements MyList<E> {
             this.data = data;
         }
     }
-
-
 }
