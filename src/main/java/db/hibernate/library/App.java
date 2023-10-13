@@ -4,7 +4,6 @@ import db.hibernate.library.entity.Book;
 import db.hibernate.library.entity.Review;
 import db.hibernate.library.entity.User;
 import db.hibernate.library.repository.ReviewRepository;
-import db.hibernate.utils.ComponentFactory;
 import net.datafaker.Faker;
 
 import java.util.Random;
@@ -12,12 +11,7 @@ import java.util.Random;
 public class App {
     public static void main(final String[] args) {
         Faker faker = new Faker();
-        /*
-                BookRepository bookRepository = ComponentFactory.createRepository(BookRepository.class);
-                UserRepository userRepository = ComponentFactory.createRepository(UserRepository.class);
-                BookUserRepository bookUserRepository = ComponentFactory.createRepository(BookUserRepository.class);
-        */
-        ReviewRepository reviewRepository = ComponentFactory.createRepository(ReviewRepository.class);
+        ReviewRepository reviewRepository = new ReviewRepository();
 
         Review review = Review.builder()
                 .book(Book.builder()
@@ -31,9 +25,6 @@ public class App {
                 .comment(faker.beer().name())
                 .build();
 
-        reviewRepository.save(review);
-
-        //   review.setComment("RENAME");
         reviewRepository.save(review);
     }
 }

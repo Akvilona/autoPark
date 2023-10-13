@@ -4,7 +4,6 @@ import db.hibernate.habr.entity.Comment;
 import db.hibernate.habr.entity.Post;
 import db.hibernate.habr.repository.CommentRepository;
 import db.hibernate.habr.repository.PostRepository;
-import db.hibernate.utils.ComponentFactory;
 import net.datafaker.Faker;
 
 import java.util.List;
@@ -12,8 +11,8 @@ import java.util.List;
 public class App {
     public static void main(final String[] args) {
 
-        PostRepository fPostRepository = ComponentFactory.createRepository(PostRepository.class);
-        CommentRepository fCommentRepository = ComponentFactory.createRepository(CommentRepository.class);
+        PostRepository fPostRepository = new PostRepository();
+        CommentRepository fCommentRepository = new CommentRepository();
 
         Faker faker = new Faker();
 
