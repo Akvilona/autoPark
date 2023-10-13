@@ -17,24 +17,6 @@ public class BookUserService {
     private final UserService userService;
     private final BookUserDbRepository dbRepository;
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = bookService != null ? bookService.hashCode() : 0;
-        result = 31 * result + (userService != null ? userService.hashCode() : 0);
-        result = 31 * result + (dbRepository != null ? dbRepository.hashCode() : 0);
-        return result;
-    }
-
     public BookUser bookIssue(final Long userId, final Long bookId) throws ServiceException {
         if (!userService.exist(userId)) {
             throw new ServiceException(ERR_CODE_02, userId);

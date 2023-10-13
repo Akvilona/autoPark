@@ -19,11 +19,6 @@ public class BookUserRepository implements CrudRepository<BookUser, Long> {
     private final List<BookUser> bookUserList = new ArrayList<>();
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
     public BookUser convert(final ResultSet resultSet) throws SQLException {
         return null;
     }
@@ -90,15 +85,5 @@ public class BookUserRepository implements CrudRepository<BookUser, Long> {
                 .filter(bookUser -> bookUser.getBookId().equals(bookId)
                         && bookUser.getUserId().equals(userId))
                 .findFirst();
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
     }
 }
